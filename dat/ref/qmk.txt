@@ -1,0 +1,32 @@
+===================
+QMK Quick Reference
+===================
+
+Build firmare::
+
+    $ qmk compile -kb <KEYBOARD> -km <KEYMAP>
+
+
+dztech/dz60rgb
+==============
+
+Flash firmware::
+
+    # mount <DEVICE> /mnt/keyboard
+    # dd if=<FIRMWARE_BIN> of=/mnt/keyboard/FLASH.BIN bs=512 conv=notrunc oflag=direct,sync
+    # sync
+    # umount /mnt/keyboard
+
+annepro2
+========
+
+Require annepro2-tools and AnnePro2-Shine.
+
+Put keyboard in boot mode.
+
+Flash firmware::
+
+    # annepro2-tools <FIRMWARE_BIN>
+    # annepro2-tools --boot -t led <SHINE_BIN>
+
+.. vim: set ft=rst:

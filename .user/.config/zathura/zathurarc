@@ -1,0 +1,15 @@
+## ~/home/.config/zathurarc/zathurarc ::
+
+include zathura.colors
+set font "Hack normal 10"
+
+set selection-clipboard clipboard
+set window-title-basename true
+set statusbar-home-tilde true
+set show-hidden true
+set scroll-step 64
+set page-cache-size 32
+set zoom-step 4
+set recolor true
+
+map ;'i toggle_statusbar

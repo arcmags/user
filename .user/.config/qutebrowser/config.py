@@ -1,0 +1,523 @@
+## ~/.config/qutebrowser/config.py ::
+
+import subprocess
+
+config.load_autoconfig(False)
+
+c.aliases = {
+    'q': 'close',
+    'qa': 'quit',
+    'w': 'session-save',
+    'wq': 'quit --save',
+    'wqa': 'quit --save'
+}
+
+## fonts ::
+c.fonts.default_family = [ 'Hack', 'monospace' ]
+c.fonts.default_size = '14px'
+c.fonts.completion.category = 'bold default_size default_family'
+c.fonts.completion.entry = 'default_size default_family'
+c.fonts.contextmenu = 'default_size default_family'
+c.fonts.debug_console = 'default_size default_family'
+c.fonts.downloads = 'default_size default_family'
+c.fonts.hints = 'bold default_size default_family'
+c.fonts.keyhint = 'default_size default_family'
+c.fonts.messages.error = 'default_size default_family'
+c.fonts.messages.info = 'default_size default_family'
+c.fonts.messages.warning = 'default_size default_family'
+c.fonts.prompts = 'default_size default_family'
+c.fonts.statusbar = 'bold default_size default_family'
+c.fonts.tabs.selected = 'bold default_size default_family'
+c.fonts.tabs.unselected = 'bold default_size default_family'
+c.fonts.web.size.default = 16
+c.fonts.web.size.default_fixed = 14
+c.fonts.web.size.minimum = 4
+c.fonts.web.size.minimum_logical = 6
+
+## colors ::
+def hex_to_rgba(hex, alpha):
+    hex = hex.strip('#')
+    return 'rgba(' + str(int('0x' + hex[0:2], 0)) + ',' + str(int('0x' + \
+        hex[2:4], 0)) + ',' + str(int('0x' + hex[4:6], 0)) + ',' + str(alpha) + ')'
+
+def read_xresources(prefix):
+    props = {}
+    x = subprocess.run(['xrdb', '-query'], stdout=subprocess.PIPE)
+    lines = x.stdout.decode().split('\n')
+    for line in filter(lambda l : l.startswith(prefix), lines):
+        prop, _, value = line.partition(':\t')
+        props[prop] = value
+    return props
+
+xresources = read_xresources('*')
+color_0 = xresources['*.color0']
+color_1 = xresources['*.color1']
+color_2 = xresources['*.color2']
+color_3 = xresources['*.color3']
+color_4 = xresources['*.color4']
+color_5 = xresources['*.color5']
+color_6 = xresources['*.color6']
+color_7 = xresources['*.color7']
+color_8 = xresources['*.color8']
+color_9 = xresources['*.color9']
+color_10 = xresources['*.color10']
+color_11 = xresources['*.color11']
+color_12 = xresources['*.color12']
+color_13 = xresources['*.color13']
+color_14 = xresources['*.color14']
+color_15 = xresources['*.color15']
+
+color_bg = color_0
+color_warn = color_13
+color_bar = color_4
+color_menu = color_5
+color_special = color_6
+color_fg = color_7
+color_inactive = color_8
+color_error = color_9
+color_title = color_10
+color_info = color_12
+color_link = color_14
+
+# completion menu:
+c.colors.completion.category.bg = color_menu
+c.colors.completion.category.border.bottom = color_menu
+c.colors.completion.category.border.top = color_menu
+c.colors.completion.category.fg = color_info
+c.colors.completion.even.bg = color_menu
+c.colors.completion.fg = [color_fg, color_inactive, color_special]
+c.colors.completion.item.selected.bg = color_bar
+c.colors.completion.item.selected.border.bottom = color_bar
+c.colors.completion.item.selected.border.top = color_bar
+c.colors.completion.item.selected.fg = color_title
+c.colors.completion.item.selected.match.fg = color_warn
+c.colors.completion.match.fg = color_warn
+c.colors.completion.odd.bg = color_menu
+c.colors.completion.scrollbar.bg = color_bar
+c.colors.completion.scrollbar.fg = color_inactive
+
+# context menu:
+c.colors.contextmenu.disabled.bg = color_menu
+c.colors.contextmenu.disabled.fg = color_inactive
+c.colors.contextmenu.menu.bg = color_menu
+c.colors.contextmenu.menu.fg = color_fg
+c.colors.contextmenu.selected.bg = color_bar
+c.colors.contextmenu.selected.fg = color_fg
+
+# downloads bar:
+c.colors.downloads.bar.bg = color_bar
+c.colors.downloads.error.bg = color_bar
+c.colors.downloads.error.fg = color_warn
+c.colors.downloads.start.bg = color_bar
+c.colors.downloads.start.fg = color_info
+c.colors.downloads.stop.bg = color_bar
+c.colors.downloads.stop.fg = color_title
+c.colors.downloads.system.bg = 'none'
+c.colors.downloads.system.fg = 'none'
+
+# hints:
+c.colors.hints.bg = color_link
+#c.colors.hints.bg = hex_to_rgba(color_link, 0.8)
+c.colors.hints.fg = color_bg
+c.colors.hints.match.fg = color_inactive
+c.hints.border = '2px solid ' + color_bg
+
+# hints: mapping:
+c.colors.keyhint.bg = color_menu
+c.colors.keyhint.fg = color_fg
+c.colors.keyhint.suffix.fg = color_link
+
+# messages:
+c.colors.messages.error.bg = color_bg
+c.colors.messages.error.border = color_bg
+c.colors.messages.error.fg = color_warn
+c.colors.messages.info.bg = color_bg
+c.colors.messages.info.border = color_bg
+c.colors.messages.info.fg = color_info
+c.colors.messages.warning.bg = color_bg
+c.colors.messages.warning.border = color_bg
+c.colors.messages.warning.fg = color_warn
+
+# prompts:
+c.colors.prompts.bg = color_menu
+c.colors.prompts.border = '2px solid ' + color_inactive
+c.colors.prompts.fg = color_fg
+c.colors.prompts.selected.bg = color_bar
+c.colors.prompts.selected.fg = color_fg
+
+# statusbar:
+c.colors.statusbar.caret.bg = color_bar
+c.colors.statusbar.caret.fg = color_title
+c.colors.statusbar.caret.selection.bg = color_bar
+c.colors.statusbar.caret.selection.fg = color_title
+c.colors.statusbar.command.bg = color_bg
+c.colors.statusbar.command.fg = color_fg
+c.colors.statusbar.command.private.bg = color_bg
+c.colors.statusbar.command.private.fg = color_fg
+c.colors.statusbar.insert.bg = color_bar
+c.colors.statusbar.insert.fg = color_title
+c.colors.statusbar.normal.bg = color_bar
+c.colors.statusbar.normal.fg = color_info
+c.colors.statusbar.passthrough.bg = color_bar
+c.colors.statusbar.passthrough.fg = color_title
+c.colors.statusbar.private.bg = color_bar
+c.colors.statusbar.private.fg = color_warn
+c.colors.statusbar.progress.bg = color_inactive
+c.colors.statusbar.url.error.fg = color_warn
+c.colors.statusbar.url.fg = color_title
+c.colors.statusbar.url.hover.fg = color_special
+c.colors.statusbar.url.success.http.fg = color_title
+c.colors.statusbar.url.success.https.fg = color_title
+c.colors.statusbar.url.warn.fg = color_warn
+
+# tabs:
+c.colors.tabs.bar.bg = color_bar
+c.colors.tabs.even.bg = color_bar
+c.colors.tabs.even.fg = color_fg
+c.colors.tabs.indicator.error = color_inactive
+c.colors.tabs.indicator.start = color_inactive
+c.colors.tabs.indicator.stop = color_inactive
+c.colors.tabs.indicator.system = 'none'
+c.colors.tabs.odd.bg = color_bar
+c.colors.tabs.odd.fg = color_fg
+c.colors.tabs.pinned.even.bg = color_bar
+c.colors.tabs.pinned.even.fg = color_fg
+c.colors.tabs.pinned.odd.bg = color_bar
+c.colors.tabs.pinned.odd.fg = color_fg
+c.colors.tabs.pinned.selected.even.bg = color_bar
+c.colors.tabs.pinned.selected.even.fg = color_title
+c.colors.tabs.pinned.selected.odd.bg = color_bar
+c.colors.tabs.pinned.selected.odd.fg = color_title
+c.colors.tabs.selected.even.bg = color_bar
+c.colors.tabs.selected.even.fg = color_title
+c.colors.tabs.selected.odd.bg = color_bar
+c.colors.tabs.selected.odd.fg = color_title
+
+# darkmode:
+c.colors.webpage.preferred_color_scheme = 'dark'
+c.colors.webpage.darkmode.enabled = True
+c.colors.webpage.darkmode.algorithm = 'lightness-cielab'
+c.colors.webpage.darkmode.policy.images = 'smart'
+c.colors.webpage.darkmode.threshold.text = 150
+c.colors.webpage.darkmode.threshold.background = 180
+
+## content  ::
+c.content.default_encoding = 'utf-8'
+c.content.headers.accept_language = 'en-US,en;q=0.9'
+
+# adblock:
+c.content.blocking.enabled = True
+c.content.blocking.method = 'both'
+c.content.blocking.hosts.block_subdomains = True
+#c.content.blocking.adblock.lists = ['https://easylist.to/easylist/easylist.txt', 'https://easylist.to/easylist/easyprivacy.txt']
+#c.content.blocking.hosts.lists = ['https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts']
+c.content.blocking.whitelist = []
+
+# privacy/security:
+c.content.desktop_capture = False
+c.content.geolocation = False
+c.content.headers.do_not_track = True
+c.content.headers.referer = 'same-domain'
+c.content.media.audio_capture = False
+c.content.media.audio_video_capture = False
+c.content.media.video_capture = False
+c.content.register_protocol_handler = 'ask'
+c.content.tls.certificate_errors = 'ask'
+c.content.unknown_url_scheme_policy = 'allow-from-user-interaction'
+c.content.mouse_lock = False
+c.content.local_storage = True
+c.content.persistent_storage = False
+c.content.plugins = False
+c.content.xss_auditing = True
+
+# cookies:
+c.content.cookies.accept = 'all'
+c.content.cookies.store = True
+
+# javascript:
+c.content.javascript.enabled = True
+c.content.javascript.alert = True
+c.content.javascript.can_access_clipboard = False
+c.content.javascript.can_close_tabs = False
+c.content.javascript.can_open_tabs_automatically = False
+c.content.javascript.modal_dialog = False
+c.content.javascript.prompt = True
+c.content.local_content_can_access_file_urls = True
+c.content.local_content_can_access_remote_urls = False
+
+# media:
+c.content.autoplay = False
+c.content.mute = False
+c.content.images = True
+
+# notifications:
+c.content.notifications.enabled = False
+c.content.notifications.presenter = 'messages'
+c.content.notifications.show_origin = True
+
+# style:
+c.content.frame_flattening = True
+c.content.fullscreen.overlay_timeout = 0
+c.content.prefers_reduced_motion = True
+c.content.user_stylesheets = ['css/user.css']
+
+# pdfjs:
+c.content.pdfjs = False
+
+## completion ::
+c.completion.favorite_paths = [ '/home/mags/user/' ]
+c.completion.height = '40%'
+c.completion.scrollbar.padding = 0
+c.completion.scrollbar.width = 16
+c.completion.show = 'always'
+c.completion.web_history.exclude = ['https://*.google.com', 'https://duckduckgo.com']
+
+## downloads ::
+subprocess.run(['mkdir', '-p', '/tmp/web-dl'])
+c.downloads.location.directory = '/tmp/web-dl'
+c.downloads.location.prompt = False
+c.downloads.location.remember = True
+c.downloads.location.suggestion = 'path'
+c.downloads.position = 'bottom'
+c.downloads.remove_finished = 4000
+#c.downloads.open_dispatcher = None
+c.downloads.prevent_mixed_content = True
+
+## editor ::
+c.editor.command = ['xterm', '-title', 'xterm_float', '-e', 'vim', '{file}']
+c.editor.encoding = 'utf-8'
+c.editor.remove_file = True
+
+c.fileselect.handler = 'external'
+c.fileselect.folder.command = ['xterm', '-title', 'xterm_float', '-e', 'ranger', '--choosedir={}']
+c.fileselect.multiple_files.command = ['xterm', '-title', 'xterm_float', '-e', 'ranger', '--choosefiles={}']
+c.fileselect.single_file.command = ['xterm', '-title', 'xterm_float', '-e', 'ranger', '--choosefile={}']
+
+## hints ::
+#c.hints.chars = 'asdfghjkl'
+#c.hints.padding = {'top': 0, 'bottom': 0, 'left': 3, 'right': 3}
+#c.hints.find_implementation = 'python'
+c.hints.find_implementation = 'javascript'
+c.hints.auto_follow = 'unique-match'
+c.hints.leave_on_load = False
+c.hints.radius = 0
+c.hints.uppercase = False
+
+## input ::
+c.input.media_keys = False
+
+## keyhint ::
+#c.keyhint.blacklist = []
+c.keyhint.delay = 200
+c.keyhint.radius = 0
+
+## logging ::
+c.logging.level.console = 'critical'
+c.logging.level.ram = 'debug'
+
+## messages ::
+c.messages.timeout = 2000
+
+## new instance ::
+#c.new_instance_open_target = 'tab'
+#c.new_instance_open_target_window = 'last-focused'
+
+## prompt ::
+#c.prompt.filebrowser = True
+c.prompt.radius = 0
+
+## qt webengine ::
+#c.qt.args = []
+#c.qt.chromium.low_end_device_mode = 'auto'
+#c.qt.chromium.process_model = 'process-per-site-instance'
+#c.qt.chromium.sandboxing = 'enable-all'
+#c.qt.environ = {}
+#c.qt.force_platform = None
+#c.qt.force_platformtheme = None
+#c.qt.force_software_rendering = 'none'
+#c.qt.highdpi = False
+#c.qt.workarounds.locale = False
+#c.qt.workarounds.remove_service_workers = False
+
+## scrolling ::
+c.scrolling.bar = 'always'
+#c.scrolling.smooth = False
+
+## search ::
+#c.search.ignore_case = 'smart'
+#c.search.incremental = True
+#c.search.wrap = True
+
+## session ::
+#c.session.default_name = None
+#c.session.lazy_restore = False
+
+## spellcheck ::
+c.spellcheck.languages = ['en-US']
+
+## statusbar ::
+c.statusbar.padding = {'top': 1, 'bottom': 1, 'left': 0, 'right': 10}
+c.statusbar.position = 'bottom'
+c.statusbar.show = 'always'
+c.statusbar.widgets = ['keypress', 'url', 'scroll', 'tabs']
+
+## tabs ::
+c.tabs.background = True
+c.tabs.close_mouse_button = 'middle'
+c.tabs.close_mouse_button_on_bar = 'new-tab'
+c.tabs.favicons.show = 'never'
+c.tabs.indicator.padding = {'top': 0, 'bottom': 0, 'left': 0, 'right': 10}
+c.tabs.indicator.width = 2
+c.tabs.last_close = 'close'
+c.tabs.max_width = 320
+c.tabs.padding = {'top': 1, 'bottom': 2, 'left': 0, 'right': 8}
+c.tabs.position = 'top'
+c.tabs.show = 'always'
+c.tabs.tabs_are_windows = False
+c.tabs.title.alignment = 'left'
+c.tabs.title.format = '{current_title}'
+c.tabs.title.format_pinned = '{current_title}'
+c.tabs.tooltips = False
+c.tabs.undo_stack_size = 24
+
+## url ::
+c.url.auto_search = 'naive'
+c.url.default_page = 'file:///home/mags/user/sync/www/link/index.html'
+c.url.open_base_url = True
+c.url.searchengines = {
+    'DEFAULT': 'https://google.com/search?q={}',
+    'apkg': 'https://archlinux.org/packages/?q={}',
+    'aur': 'https://aur.archlinux.org/packages?K={}',
+    'aw': 'https://wiki.archlinux.org/index.php?search={}',
+    'ddg': 'https://duckduckgo.com/?q={}',
+    'gh': 'https://github.com/search?q={}',
+    'irc': 'https://netsplit.de/channels/?chat={}',
+    'wp': 'https://en.wikipedia.org/w/index.php?search={}',
+    'yt': 'https://www.youtube.com/results?search_query={}'
+}
+c.url.start_pages = 'file:///home/mags/user/sync/www/link/index.html'
+
+## window ::
+c.window.hide_decoration = True
+c.window.title_format = 'qtb: {current_title}'
+c.window.transparent = False
+
+## zoom ::
+c.zoom.default = '100%'
+#c.zoom.levels = ['25%', '33%', '50%', '67%', '75%', '90%', '100%', '110%', '125%', '150%', '175%', '200%', '250%', '300%', '400%', '500%']
+#c.zoom.mouse_divider = 512
+#c.zoom.text_only = False
+
+## domain settings ::
+config.set('content.cookies.accept', 'all', 'devtools://*')
+config.set('content.images', True, 'chrome-devtools://*')
+config.set('content.images', True, 'devtools://*')
+config.set('content.javascript.enabled', True, 'chrome-devtools://*')
+config.set('content.javascript.enabled', True, 'chrome://*/*')
+config.set('content.javascript.enabled', True, 'devtools://*')
+config.set('content.javascript.enabled', True, 'qute://*/*')
+config.set('content.register_protocol_handler', True, 'https://mail.google.com?extsrc=mailto&url=%25s')
+
+## bindings ::
+#c.bindings.key_mappings = {
+    #'<Ctrl-[>': '<Escape>',
+    #'<Ctrl-6>': '<Ctrl-^>',
+    #'<Shift-Return>': '<Return>',
+    #'<Enter>': '<Return>',
+    #'<Shift-Enter>': '<Return>',
+    #'<Ctrl-Enter>': '<Ctrl-Return>'
+#}
+config.unbind('<Ctrl-Shift-w>')
+config.unbind('<Ctrl-w>')
+config.bind(',h', 'history')
+config.bind(',v', 'spawn --detach mpv {url}')
+config.bind(';p', 'hint links run open -p {hint-url}')
+config.bind(';v', 'hint links spawn --detach mpv {hint-url}')
+config.bind(';w', 'hint links window')
+config.bind(";'i", 'config-cycle tabs.show always multiple never')
+config.bind(";'I", 'config-cycle statusbar.show always in-mode never')
+config.bind('<Alt-h>', 'fake-key <Left>')
+config.bind('<Alt-j>', 'fake-key <Down>')
+config.bind('<Alt-k>', 'fake-key <Up>')
+config.bind('<Alt-l>', 'fake-key <Right>')
+config.bind('<Alt-v>', 'spawn --userscript edit-source {url}')
+config.bind('<Backspace>', 'back')
+config.bind('<Ctrl-Shift-c>', 'fake-key <Ctrl-c>')
+config.bind('<Ctrl-Shift-q>', 'quit')
+config.bind('<Ctrl-c>', 'tab-close')
+config.bind('<Ctrl-e>', 'open -w')
+config.bind('<Ctrl-l>', 'reload -f')
+config.bind('<Ctrl-n>', 'fake-key <Tab>')
+config.bind('<Ctrl-o>', 'set-cmd-text -s :open -w')
+config.bind('<Ctrl-o>', 'set-cmd-text -s :open -w')
+config.bind('<Ctrl-p>', 'fake-key <Shift-Tab>')
+config.bind('<Ctrl-q>', 'tab-close')
+config.bind('<Ctrl-r>', 'reload -f')
+config.bind('<Shift-Backspace>', 'forward')
+config.bind('<Shift-Escape>', 'fake-key <Escape>')
+config.bind('gT', 'tab-prev')
+config.bind('gt', 'tab-next')
+config.bind('<Space>', 'scroll-page 0 0.5')
+config.bind('<Shift-Space>', 'scroll-page 0 -0.5')
+config.unbind('D')
+config.unbind('d')
+
+# caret:
+config.bind('<Ctrl-d>', 'run-with-count 8 move-to-next-line', mode='caret')
+config.bind('<Ctrl-e>', 'scroll down', mode='caret')
+config.bind('<Ctrl-u>', 'run-with-count 8 move-to-prev-line', mode='caret')
+config.bind('<Ctrl-y>', 'scroll up', mode='caret')
+config.bind('<Alt-h>', 'fake-key <Left>', mode='caret')
+config.bind('<Alt-j>', 'fake-key <Down>', mode='caret')
+config.bind('<Alt-k>', 'fake-key <Up>', mode='caret')
+config.bind('<Alt-l>', 'fake-key <Right>', mode='caret')
+
+# command:
+config.bind('<Alt-h>', 'fake-key <Left>', mode='command')
+config.bind('<Alt-j>', 'fake-key <Down>', mode='command')
+config.bind('<Alt-k>', 'fake-key <Up>', mode='command')
+config.bind('<Alt-l>', 'fake-key <Right>', mode='command')
+config.bind('<Alt-r>', 'rl-backward-kill-word', mode='command')
+config.bind('<Alt-u>', 'rl-kill-line', mode='command')
+config.bind('<Ctrl-Shift-c>', 'fake-key --global <Ctrl-c>', mode='command')
+config.bind('<Ctrl-Shift-v>', 'fake-key --global <Ctrl-v>', mode='command')
+config.bind('<Ctrl-d>', 'rl-delete-char', mode='command')
+config.bind('<Ctrl-j>', 'command-history-next', mode='command')
+config.bind('<Ctrl-k>', 'command-history-prev', mode='command')
+config.bind('<Ctrl-n>', 'completion-item-focus next', mode='command')
+config.bind('<Ctrl-p>', 'completion-item-focus prev', mode='command')
+config.bind('<Ctrl-x>', 'completion-item-del', mode='command')
+
+# insert:
+config.bind('<Alt-b>', 'fake-key <Ctrl-Left>', mode='insert')
+config.bind('<Alt-d>', 'fake-key <Ctrl-Delete>', mode='insert')
+config.bind('<Alt-f>', 'fake-key <Ctrl-Right>', mode='insert')
+config.bind('<Alt-h>', 'fake-key <Left>', mode='insert')
+config.bind('<Alt-j>', 'fake-key <Down>', mode='insert')
+config.bind('<Alt-k>', 'fake-key <Up>', mode='insert')
+config.bind('<Alt-l>', 'fake-key <Right>', mode='insert')
+config.bind('<Alt-r>', 'fake-key <Ctrl-Backspace>', mode='insert')
+config.bind('<Alt-v>', 'edit-text', mode='insert')
+config.bind('<Alt-w>', 'fake-key <Ctrl-Right>', mode='insert')
+config.bind('<Ctrl-Shift-c>', 'fake-key --global <Ctrl-c>', mode='insert')
+config.bind('<Ctrl-Shift-v>', 'fake-key --global <Ctrl-v>', mode='insert')
+config.bind('<Ctrl-a>', 'fake-key <Home>', mode='insert')
+config.bind('<Ctrl-b>', 'fake-key <Left>', mode='insert')
+config.bind('<Ctrl-d>', 'fake-key <Delete>', mode='insert')
+config.bind('<Ctrl-e>', 'fake-key <End>', mode='insert')
+config.bind('<Ctrl-f>', 'fake-key <Right>', mode='insert')
+config.bind('<Ctrl-h>', 'fake-key <Backspace>', mode='insert')
+config.bind('<Ctrl-j>', 'fake-key <Down>', mode='insert')
+config.bind('<Ctrl-k>', 'fake-key <Up>', mode='insert')
+config.bind('<Ctrl-n>', 'fake-key <Down>', mode='insert')
+config.bind('<Ctrl-p>', 'fake-key <Up>', mode='insert')
+config.bind('<Ctrl-w>', 'fake-key <Ctrl-Backspace>', mode='insert')
+
+# prompt:
+config.bind('<Alt-k>', 'rl-kill-line', mode='command')
+config.bind('<Alt-r>', 'rl-backward-kill-word', mode='command')
+config.bind('<Ctrl-d>', 'rl-delete-char', mode='command')
+config.bind('<Ctrl-j>', 'command-history-next', mode='command')
+config.bind('<Ctrl-k>', 'command-history-prev', mode='command')
+config.bind('<Ctrl-n>', 'completion-item-focus next', mode='command')
+config.bind('<Ctrl-p>', 'completion-item-focus prev', mode='command')

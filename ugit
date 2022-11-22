@@ -1,0 +1,105 @@
+#!/bin/bash
+
+dir="$HOME/user"
+files=(
+    bin/img-web
+    bin/ucolors
+    bin/usync
+    bin/uvpn
+    bin/uirc
+    bin/uln
+    bin/dl-watch
+    dat/figlet/
+    dat/gdnsd/gdnsd
+    dat/gdnsd/gdnsd.service
+    dat/mc-server/datapacks/
+    dat/qmk/layouts/
+    dat/qmk/layouts_ascii.txt
+    dat/ref/git.txt
+    dat/ref/gui.txt
+    dat/ref/nspawn.txt
+    dat/ref/qemu.txt
+    dat/ref/qmk.txt
+    dat/ref/vim.txt
+    dat/ref/readline.txt
+    dat/ramroot/
+    dat/text/Meditations.txt
+    .root/etc/X11/
+    .root/etc/vconsole.conf
+    .root/etc/vconsole.map
+    .user/.config/feh/
+    .user/.config/i3/
+    .user/.config/i3status/
+    .user/.config/imv/
+    .user/.config/mpv/input.conf
+    .user/.config/mpv/mpv.conf
+    .user/.config/nordvpn/
+    .user/.config/picom.conf
+    .user/.config/pycodestyle
+    .user/.config/qutebrowser/css/
+    .user/.config/qutebrowser/config.py
+    .user/.config/ranger/
+    .user/.config/ttyper/
+    .user/.config/wal/
+    .user/.config/zathura/
+    .user/.ipython/profile_default/ipython_config.py
+    .user/.ipython/profile_default/startup/ipythonrc.py
+    .user/.irssi/scripts/
+    .user/.irssi/config
+    .user/.irssi/utheme.theme
+    .user/.local/share/applications/vim.desktop
+    .user/.local/share/fonts/
+    .user/.local/share/qutebrowser/userscripts/
+    .user/.moc/config
+    .user/.moc/keymap.conf
+    .user/.moc/themes/
+    .user/.mozilla/firefox/default/chrome/
+    .user/.themes/
+    .user/.vim/colors/utheme.vim
+    .user/.w3m/config
+    .user/.w3m/keymap
+    .user/.Xmodmap
+    .user/.Xresources
+    .user/.Xtheme
+    .user/.bash_profile
+    .user/.bashrc
+    .user/.gallery-dl.conf
+    .user/.gdbinit
+    .user/.infokey
+    .user/.inputrc
+    .user/.lesskey
+    .user/.lscolors
+    .user/.nanorc
+    .user/.pinforc
+    .user/.profile
+    .user/.pythonrc
+    .user/.shellcheckrc
+    .user/.sqliterc
+    .user/.tmux.conf
+    .user/.vimrc
+    .user/.xhost
+    .user/.xinitrc
+    .user/.xprofile
+    .user/.uln
+)
+for file in "${files[@]}"; do
+
+    # process target/file names:
+    file_path="$dir/$file"
+    file_dir="${file_path%/*}"
+
+    target_path="$PWD/$file"
+    target_dir="${target_path%/*}"
+    target_name="${target_path##*/}"
+    target_path="$target_dir/$target_name"
+
+    [ -e "$file_path" ] &&
+    ! diff -rq --no-dereference "$file_path" "$target_path" &>/dev/null &&
+    mkdir -p "${target_path%/*}" &>/dev/null &&
+    rm -rf "$target_path" &>/dev/null &&
+    cp -r "$file_path" "$target_path" &>/dev/null
+done
+
+
+
+# vim: set ft=bash

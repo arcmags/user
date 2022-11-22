@@ -1,0 +1,48 @@
+====================
+Qemu Quick Reference
+====================
+
+gui control
+===========
+
+    C-M-g   release focus
+    C-M-1   show guest operating system
+    C-M-2   show qemu monitor
+    C-M-f   fullscreen
+    C-M-m   toggle menubar
+
+basic commands
+==============
+
+Create image::
+
+    $ qemu-img create -f raw <IMAGE_FILE> <SIZE>G
+
+Boot image and install iso::
+
+    $ qemu-system-x86_64 -cdrom <ISO_FILE> -boot order=d -m 4G -drive file=<IMAGE_FILE>,format=raw
+
+Boot image::
+
+    $ qemu-system-x86_64 -m 4G -drive file=<IMAGE_FILE>,format=raw
+
+options
+=======
+
+-vga virtio
+
+    Use Virtio VGA card.  Allows display resizing.
+
+-enable-kvm
+
+    Start QEMU in KVM mode.
+
+-m <MEMORY>G
+
+    Set machine RAM size.
+
+-display gtk,show-cursor=yes
+
+    GTK display window, always show the mouse cursor.
+
+.. vim: set ft=rst:

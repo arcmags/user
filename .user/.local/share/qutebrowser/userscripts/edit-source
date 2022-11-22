@@ -1,0 +1,10 @@
+#!/bin/bash
+## ~/.local/share/qutebrowser/userscripts/edit-source ::
+
+mkdir -p /tmp/web-dl
+file_tmp="$(mktemp -p /tmp/web-dl)"
+if curl -s "$1" > "$file_tmp"; then
+    exec xterm -title 'xterm_float' -e vim "$file_tmp"
+else
+    rm -f "$file_tmp"
+fi

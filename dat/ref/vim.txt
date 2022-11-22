@@ -1,0 +1,339 @@
+===================
+Vim Quick Reference
+===================
+This is a quick reference list of commonly used Vim key bindings.
+It is not a complete list.
+
+Help
+====
+    :help X    view help for X
+    :help ^X   view help for <Ctrl-X>
+    :help m_X  view help for X in mode m
+
+Normal Mode
+===========
+    h           left
+    j           down
+    k           up
+    l           right
+    H           top of screen
+    M           middle of screen
+    L           bottom of screen
+    w           forward to start of word
+    W           forward to start of word (w/punctuation)
+    b           backward to start of word
+    B           backward to start of word (w/punctuation)
+    e           forward to end of word
+    E           forward to end of word (w/punctuation)
+    ge          backward to end of word
+    gE          backward to end of word (w/punctuation)
+    0           to start of line
+    ^           to first non-blank character in line
+    $           to end of line
+    g_          to last non-blank character in line
+    }           to next blank line
+    {           to previous blank line
+    %           to matching bracket
+    gg          to first line
+    G           to last line
+    7gg         to line 7
+    fX          to next X
+    tX          to before next X
+    FX          to previous X
+    TX          to after previous X
+    ;           repeat previous f,t,F,T movement
+    ,           repeat previous f,t,F,T movement backwards
+    <C-d>       down half page
+    <C-u>       up half page
+    <C-f>       down one page
+    <C-b>       up one page
+    <C-o>       to previous jump position
+    <C-i>       to next jump position
+    `X          to mark X`
+    'X          to line with mark X
+
+scroll
+------
+    <C-e>       down one line without moving cursor
+    <C-y>       up one line without moving cursor
+    zz          center line in window
+
+enter insert mode
+-----------------
+    i           before cursor
+    a           after cursor
+    I           at beginning of line
+    A           at end of line
+    o           on new line below
+    O           on new line above
+
+delete
+------
+    x           character
+    dd          line
+    D           to end of line
+    5x          5 characters
+    7dd         7 lines
+    dw          to start of next word
+    diw         word
+    daw         word and space
+    d^          to first non-blank character in line
+
+change
+------
+    s           character
+    cc          entire line
+    C           to end of line
+
+replace
+-------
+    r           single character
+    R           enter replace mode
+
+format
+------
+    gq          selected text
+    gqip        paragraph
+    gq}         to next blank line
+
+indent
+------
+    >>          indent line
+    <<          de-indent line
+
+join
+----
+    J           with line below with a space in between
+    gJ          with line below without a space in between
+
+repeat
+-----
+    .           repeat last text changing command
+
+undo/redo
+---------
+    u           undo
+    <C-r>       redo
+    U           restore last changed line
+
+yank/put
+--------
+    yy          yank a line
+    Y           yank to end of line (`noremap Y y$`)
+    p           put after cursor
+    P           put before cursor
+    ]p          put and indent to current line
+
+search
+------
+    /X          search for pattern X
+    ?X          search backwards for pattern X
+    n           repeat search
+    N           repeat search backwards
+
+move (while searching)
+~~~~~~~~~~~~~~~~~~~~~~
+    <C-g>       to next match
+    <C-t>       to previous match
+
+
+enter visual mode
+-----------------
+    v           visual
+    V           visual line
+    <C-v>       visual block
+    gv          reselect last visual selection
+
+spelling
+--------
+    ]s          next misspelled word
+    [s          previous misspelled word
+    z=          show suggestions
+    zg          add word to dictionary
+    zw          remove word from dictionary
+
+buffers
+-------
+    <C-n>       next (`noremap <C-n> :bnext<CR>`)
+    <C-p>       previous (`noremap <C-p> :bprevious<CR>`)
+    <C-s>       save (`noremap <C-s> :write<CR>`)
+
+registers
+---------
+    "Xy         yank into register X
+    "Xp         put from register X
+
+macros
+------
+    qX          record macro X
+    q           stop recording macro
+    @X          run macro X
+    @@          rerun last macro
+
+windows
+-------
+    <C-w>q      quit
+    <C-c>       quit (`noremap <C-c> <C-w>q`)
+    <C-w>s      split
+    <C-w>v      split vertically
+    <C-w>w      focus next
+    <C-w>h      focus left
+    <C-w>l      focus right
+    <C-w>j      focus below
+    <C-w>k      focus above
+    <C-w>H      move left
+    <C-w>L      move right
+    <C-w>J      move down
+    <C-w>L      move up
+    <C-w>x      exchange next
+    <C-w><      increase columns
+    <C-w>>      decrease columns
+    <C-w>+      increase rows
+    <C-w>-      decrease rows
+    <C-w>=      make all widows equal size
+
+Insert Mode
+===========
+    <C-f>       move right (`inoremap <C-f> <Right>`)
+    <C-b>       move left (`inoremap <C-b> <Left>`)
+    <C-a>       move to beginning of line (`inoremap <C-a> <Home>`)
+    <C-e>       move to end of line (`inoremap <C-e> <End>`)
+    <C-t>       indent line
+    <C-g>       de-indent line (`inoremap <C-g> <C-d>`)
+    <C-h>       delete character before cursor (`inoremap <C-h> <BS>`)
+    <C-d>       delete character under cursor (`inoremap <C-d> <Del>`)
+    <C-w>       delete word before cursor
+    <C-n>       auto-complete next match
+    <C-p>       auto-complete previous match
+    <C-r>X      insert contents of register X
+    <C-o>X      issue command X in normal mode
+    <Esc>       exit insert mode
+
+Command Mode
+============
+    <C-f>       move right (`cnoremap <C-f> <Right>`)
+    <C-b>       move left (`cnoremap <C-b> <Left>`)
+    <C-a>       move to beginning of line (`cnoremap <C-a> <Home>`)
+    <C-e>       move to end of line (`cnoremap <C-e> <End>`)
+    <C-h>       delete character before cursor (`cnoremap <C-h> <BS>`)
+    <C-d>       delete character under cursor (`cnoremap <C-d> <Del>`)
+    <C-w>       delete word before cursor
+    <C-r>X      insert contents of register X
+    <Esc>       exit command mode
+
+Visual Mode
+===========
+    y           yank
+    d           delete
+    >           indent text
+    <           de-indent text
+    u           change to lowercase
+    U           change to uppercase
+    ~           switch case
+    gq          format
+
+Terminal Mode
+=============
+    <C-f>       move right
+    <C-b>       move left
+    <C-a>       move to beginning of line
+    <C-e>       move to end of line
+    <C-h>       delete character before cursor
+    <C-d>       delete character under cursor
+    <C-\><C-n>  enter normal mode
+    <C-w>N      enter normal mode
+
+Regex
+=====
+This regex assumes `:set magic`. See `:help pattern.txt` for complete documentation.
+
+characters
+----------
+    .           anything
+    ^           start of line
+    $           end of line
+    \<          beginning of word
+    \>          end of word
+    \%V         inside visual selection
+    \b          <BS>
+    \e          <Esc>
+    \n          end of line
+    \t          <Tab>
+    \r          <CR>
+
+multiples
+---------
+    X*          zero or more X
+    X\+         one or more X
+    X\?         zero or one X
+    X\=         zero or one X
+    X\{n}       n number of X
+    X\{n,m}     n to m X
+    X\{,m}      0 to m X
+    X\{-}       the least amount of X possible
+
+groups
+------
+    \(\)        group
+    \|          or
+
+collections/ranges
+------------------
+    [A-Z]       every character from A to Z
+    [^A-Z]      every character except A to Z
+    [A-Za-z0-9] every character A to Z or a to z or 0 to 9
+    [A-Z-]      every character from A to Z or -
+
+predefined collections
+----------------------
+These generally cannot be nested inside brackets [].
+    \a          alpha: [A-Za-z]
+    \A          non-alpha: [^A-Za-z]
+    \h          alpha, underscore: [A-Za-z_]
+    \w          alpha, digit, underscore: [0-9A-Za-z_]
+    \d          digit: [0-9]
+    \D          non-digit: [^0-9]
+    \x          hex digit: [0-9a-fA-F]
+    \X          non-hex digit: [^0-9a-fA-F]
+    \s          <Space>, <Tab>
+    \S          not <Space>, <Tab>
+    \l          lowercase alpha: [a-z]
+    \L          non-lowercase alpha: [^a-z}
+    \u          uppercase alpah: [A-Z]
+    \U          non-uppercase alpah: [^A-Z]
+    \_X         any `\X` from above including line breaks
+
+collection character classes
+----------------------------
+Intended to include inside brackets [].
+    [:alnum:]   alpha, digit: [A-Za-z0-9]
+    [:alpha:]   alpha: [A-Za-z]
+    [:blank:]   <Space>, <Tab>
+    [:digit:]   digit: [0-9]
+    [:lower:]   lowercase alpha: [a-z]
+    [:upper:]   uppercase alpha: [A-Z]
+
+examples
+--------
+    "\_[^"]*"   text inside double quotes split over multiple lines
+
+Search and Replace
+==================
+    :%s/X/Y/    replace first on all lines X with Y
+    :%s/X/Y/g   replace all X with Y
+    :%s/X/Y/gc  replace all X with Y with confirmations
+
+Registers
+=========
+    0           last yank
+    "           last delete, yank
+    %           current file name
+    /           last search pattern
+    :           last command-line
+
+Marks
+=====
+    <           first character of last selected visual area
+    >           last character of last selected visual area
+
+.. vim: set ft=rst:

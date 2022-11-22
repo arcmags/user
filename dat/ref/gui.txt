@@ -1,0 +1,77 @@
+==========
+GUI Config
+==========
+
+This is a rough list of GUI configuration options I generally try to set in new
+window managers/desktop environments.
+
+firefox
+=======
+
++ create new profile with folder *~/.mozilla/firefox/default*
++ link/copy any configuration files to *~/.mozilla/firefox/default*
++ *about:config*: ``legacyUserProfileCustomizations true``
++ *about:config*: ``browser.compactmode.show true``
++ *about:config*: ``search.openintab true``
++ *about:config*: ``browser.backspace_action 0``
++ View: Toolbars: bookmarks toolbar (never)
++ Add-ons: Ublock Origin
++ Add-ons: Ublock Origin: number on icon (disable)
++ Add-ons: NoScript
++ Add-ons: NoScript: number on icon (disable)
++ Add-ons: Reddit Enhancement Suite
++ Add-ons: Vimium-FF
++ GUI: navigation bar: layout
++ GUI: navigation bar: pocket icon (disable)
++ GUI: navigation bar: download icon (show button when empty)
++ GUI: navigation bar: Density: Compact
++ Preferences: Language and Appearance: Fonts and Colors: Advanced: Monospace: Hack 14
++ Preferences: General: warn you when closing multiple tabs (disable)
++ Preferences: General: always ask where to save files (enable)
++ Preferences: General: play DRM-controlled content (enable)
++ Preferences: General: recommend extensions (disable)
++ Preferences: General: recommend features (disable)
++ Preferences: Home: homepage (~/arc/dev/html/links.html)
++ Preferences: Home: new tab (blank)
++ Preferences: Search: default search engine (Google)
++ Preferences: Search: search suggestions in address bar (disable)
++ Preferences: Privacy: send websites do not track signal (always)
++ Preferences: Privacy: autofill credit cards (disable)
++ Preferences: Privacy: allow firefox to send technical data (disable)
++ Preferences: Privacy: allow firefox to install/run studies (disable)
+
+gimp
+====
+
++ GUI: remove all dockable dialogs on the right
++ GUI: dock dialogs to left: Brushes, Colors, Tool Options, Layers, Paths
++ GUI: dialog: tab style: text
++ GUI: dialog: lock tab to dock
+
+lxappearance
+============
+
++ link/copy any theme files to *~/.themes*
++ Widget: theme (oomox-outrun-dark)
++ Widget: font (Hack 10)
++ Icon Theme: icons (Menta)
++ Other: toolbar style (icons only)
++ Other: icon size (small)
++ Other: event sounds (disable)
+
+thunar
+======
+
++ Preferences: Side Pane: icon size (smallest)
++ Preferences: Side Pane: show icon emblems (disable)
++ Preferences: Behavior: open folders in new tabs on middle click (enable)
++ Preferences: Advanced: volume management (disable)
++ GUI: side pane: Network (disable)
++ GUI: side pane: Places: Computer, home, Desktop (disable)
++ View: show hidden files (enable)
++ View: location selector (pathbar)
++ View: view (compact)
++ View: side pane (disable)
++ View: menubar (disable)
+
+.. vim: set ft=rst:

@@ -1,0 +1,55 @@
+========
+Readline
+========
+
+cursor
+------
+    C-f   move cursor right (forward)
+    C-b   move cursor left (backward)
+    C-a   move cursor to beginning of line
+    C-e   move cursor to end of line
+
+line
+----
+    C-k   clear all characters from cursor forward
+    C-w   clear word before cursor
+    C-u   clear all characters before cursor
+    C-h   delete character left of cursor (BACKSPACE)
+    C-d   delete character under cursor (DEL), if no character, exit terminal
+    C-t   switch character before cursor with character under cursor, mover cursor right
+
+history
+-------
+    C-p   previous command
+    C-n   next command
+    C-/   undo change made to previous command
+    C-r   reverse search commands
+
+process
+-------
+    C-c   send KILL signal: kill process
+    C-z   suspend process and send to background
+
+screen
+------
+    C-l   clear screen
+    C-s   send XOFF signal: disable terminal output
+    C-q   send XON signal: enable terminal output
+
+character
+---------
+    C-v   input keystroke
+    C-m   CARRIGE RETURN
+    C-j   CARRIGE RETURN
+    C-i   TAB
+
+unused
+------
+    C-e   return terminal status ?
+    C-o   execute command without clearing line ?
+    C-y   enter previous command without clearing line ?
+    C-g   BELL ?
+    C-[   TAB ?
+    C-x   ?
+
+.. vim: set ft=rst:

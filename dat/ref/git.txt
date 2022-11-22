@@ -1,0 +1,121 @@
+===================
+Git Quick Reference
+===================
+
+Create
+======
+
+github
+------
+
+Create a repo using github's web interface.
+
+local
+-----
+
+Create a local repo::
+
+    $ git init [-b <BRANCH>]
+
+Add remote repo::
+
+    $ git remote add <REMOTE> <URL>
+
+Push or pull from remote for first time::
+
+    $ git <push|pull> <REMOTE> <BRANCH>
+
+Clone
+=====
+
+Clone repo::
+
+    $ git clone [--recurse-submodules] <URL> [DIR]
+
+Add, Commit, Push
+=================
+
+Add files, commit, and push changes::
+
+    $ git add [--all] [FILES]
+    $ git commit [-S] -m <MESSAGE>
+    $ git push [REMOTE] [BRANCH]
+
+Branch
+======
+
+local
+-----
+
+List branches::
+
+    $ git branch [-v]
+
+Create branch::
+
+    $ git checkout -b <BRANCH>
+
+Checkout (switch to) branch::
+
+    $ git checkout <BRANCH>
+
+remote
+------
+
+List remote branches::
+
+    $ git branch -r [-v]
+
+Checkout (download and switch to) remote branch::
+
+    $ git checkout -b <BRANCH> <REMOTE>/<BRANCH>
+
+Fetch, Merge
+============
+
+Add another (upstream) remote::
+
+    $ git remote add <REMOTE2> <URL>
+
+Fetch from new remote::
+
+    $ git fetch <REMOTE2>
+
+Merge changes from new remote::
+
+    $ git checkout <BRANCH>
+    $ git merge <REMOTE2>/<BRANCH>
+
+.. TODO : check
+
+Push to original remote::
+
+    $ git push
+
+Rebase
+======
+
+Rebase branch to main/master::
+
+    $ git checkout <BRANCH>
+    $ git rebase <main|master>
+
+Push to remote::
+
+    $ git push --force
+
+Submodules
+==========
+
+Add submodule::
+
+    $ git submodule add <URL>
+    $ git push
+
+Init and pull submodules::
+
+    $ git submodule init
+    $ git submodule update
+
+
+.. vim: set ft=rst:

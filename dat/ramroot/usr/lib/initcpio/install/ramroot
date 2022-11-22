@@ -1,0 +1,21 @@
+#!/bin/bash
+
+build() {
+    add_binary cp
+    add_binary mkfs.ext4
+    add_binary zramctl
+    add_dir /local_root
+    add_dir /zram_root
+    add_file /etc/ramroot.conf
+    add_module ext4
+    add_module lzo
+    add_module vfat
+    add_module zram
+    add_runscript
+}
+
+help() {
+    cat <<HELPEOF
+This hook optionally loads the root filesystem into zram during boot
+HELPEOF
+}

@@ -1,0 +1,20 @@
+#!/bin/sh
+
+## uirc ::
+# Connect to arch-pi, start bitlbee daemon, attach/create tmux irssi session.
+
+set -e
+
+if [ "$(hostname)" != 'arch-pi' ]; then
+    exec ssh -t arch-pi 'bash -li -c uirc'
+fi
+
+if ! pidof -q bitlbee; then
+    sudo -u bitlbee bitlbee -D && sleep 4
+fi
+
+if (tmux -L uirc has-session >/dev/null 2>&1); then
+    exec tmux -L uirc attach-session
+else
+    exec tmux -L uirc new-session -s uirc 'tmux set -g status off; printf "\033]0;irssi\007"; irssi'
+fi

@@ -1,0 +1,158 @@
+## ~/.themes/ArcDark/gtk-2.0/gtkrc ::
+
+gtk-color-scheme = "bg_base: #303030"
+gtk-color-scheme = "bg_box: #000000"
+gtk-color-scheme = "bg_button: #424242"
+gtk-color-scheme = "bg_hover: #0000aa"
+gtk-color-scheme = "bg_insensitive: #383838"
+gtk-color-scheme = "bg_selected: #0000cc"
+gtk-color-scheme = "text_background: #888888"
+gtk-color-scheme = "text_base: #fcfcfc"
+gtk-color-scheme = "text_hover: #fcfcfc"
+gtk-color-scheme = "text_insensitive: #666666"
+gtk-color-scheme = "text_link: #005fff"
+gtk-color-scheme = "text_selected: #fcfcfc"
+gtk-icon-sizes   = "gtk-button=16,16"
+gtk-font-name    = "Hack 10"
+
+style "default" {
+    font_name           = "Hack 10"
+
+    bg[NORMAL]          = @bg_base
+    bg[PRELIGHT]        = @bg_hover
+    bg[SELECTED]        = @bg_selected
+    bg[ACTIVE]          = @bg_box
+    bg[INSENSITIVE]     = @bg_insensitive
+
+    base[NORMAL]        = @bg_box
+    base[PRELIGHT]      = @bg_hover
+    base[SELECTED]      = @bg_hover
+    base[ACTIVE]        = @bg_selected
+    base[INSENSITIVE]   = @bg_insensitive
+
+    fg[NORMAL]          = @text_base
+    fg[PRELIGHT]        = @text_base
+    fg[SELECTED]        = @text_base
+    fg[ACTIVE]          = @text_base
+    fg[INSENSITIVE]     = @text_insensitive
+
+    text[NORMAL]        = @text_base
+    text[PRELIGHT]      = @text_base
+    text[SELECTED]      = @text_base
+    text[ACTIVE]        = @text_base
+    text[INSENSITIVE]   = @text_insensitive
+
+    GtkEntry::cursor_color              = @text_base
+    GtkEntry::secondary_cursor_color    = @text_base
+    GtkTextView::cursor_color           = @text_base
+    GtkTextView::secondary_cursor_color = @text_base
+
+    GnomeHRef::link_color               = @text_link
+    GtkHTML::link-color                 = @text_link
+    GtkIMHtmlr::hyperlink-color         = @text_link
+    GtkIMHtml::hyperlink-color          = @text_link
+    GtkWidget::link-color               = @text_link
+    GtkWidget::visited-link-color       = @text_base
+
+    xthickness                          = 0
+    ythickness                          = 0
+    GtkWidget::focus-line-width         = 0
+    GtkWidget::focus_padding            = 0
+    GtkWidget::interior_focus           = 0
+    GtkWidget::internal_padding         = 0
+
+    GtkButton::default_border           = {0, 0, 0, 0}
+    GtkButton::default_outside_border   = {0, 0, 0, 0}
+    GtkButton::child_displacement_x     = 0
+    GtkButton::child_displacement_y     = 0
+    GtkButton::default_spacing          = 4
+    GtkButton::focus-padding            = 0
+    GtkCheckButton::indicator_size      = 9
+    GtkRadioButton::indicator_size      = 9
+
+    GtkMenu::horizontal-padding         = 0
+    GtkMenu::vertical-padding           = 0
+    GtkMenuBar::shadow-type             = GTK_SHADOW_NONE
+    GtkMenuBar::internal-padding        = 0
+
+    GtkProgressBar::min-horizontal-bar-height   = 8
+    GtkProgressBar::min-vertical-bar-width      = 8
+
+    # Paned (split windows):
+    GtkPaned::handle_full_size  = 0
+    GtkPaned::handle_size       = 4
+
+    GtkRange::slider_width      = 12
+    GtkRange::stepper_size      = 10
+    GtkRange::stepper_spacing   = 0
+    GtkRange::trough_border     = 0
+
+    GtkScale::slider_length     = 24
+    GtkScale::slider_width      = 12
+
+    GtkScrollbar::has_backward_stepper              = 0
+    GtkScrollbar::has_forward_stepper               = 0
+    GtkScrollbar::has_secondary_backward_stepper    = 0
+    GtkScrollbar::has_secondary_forward_stepper     = 0
+    GtkScrollbar::min_slider_length                 = 20
+    GtkScrollbar::trough-border                     = 0
+
+    #GtkSeparatorMenuItem::horizontal-padding   = 3
+    #GtkSeparatorMenuItem::wide-separators      = 1
+    #GtkSeparatorMenuItem::separator-height     = 1
+
+    GtkSpinButton::shadow_type  = GTK_SHADOW_NONE
+    GtkStatusbar::shadow_type   = GTK_SHADOW_NONE
+    GtkToolbar::shadow-type     = GTK_SHADOW_NONE
+
+    GtkScrolledWindow::scrollbar-spacing    = 0
+    GtkToolbar::internal-padding            = 0
+    GtkToolButton::icon-spacing             = 0
+
+    #GtkTreeView::row_ending_details    = 0
+    #GtkTreeView::expander-size         = 11
+    #GtkExpander::expander-size         = 11
+    #GtkTreeView::vertical-separator    = 4
+    #GtkTreeView::horizontal-separator  = 4
+    #GtkTreeView::allow-rules           = 1
+}
+
+style "menuitem" {
+    xthickness = 1
+    ythickness = 1
+}
+style "button" {
+    xthickness = 1
+    ythickness = 1
+    bg[NORMAL] = @bg_button
+}
+style "checkbutton" {
+    fg[ACTIVE] = @text_base
+    fg[INSENSITIVE] = @text_insensitive
+}
+style "notebook" {
+    bg[NORMAL] = @bg_button
+    bg[ACTIVE] = @bg_base
+    fg[ACTIVE] = @text_background
+}
+style "separator" {
+    xthickness = 1
+    ythickness = 1
+}
+
+widget_class "*"                    style   "default"
+widget_class "*<GtkMenuItem>*"      style   "menuitem"
+widget_class "*<GtkButton>*"        style   "button"
+widget_class "*<GtkCheckButton>*"   style   "checkbutton"
+widget_class "*<GtkSeparator>*"     style   "separator"
+widget_class "*<GtkNotebook>*"      style   "notebook"
+
+# remove shitty shadows from insensitive text:
+style "text" {
+    engine "murrine" { textstyle = 0 }
+}
+widget_class "*<GtkLabel>"                      style   "text"
+widget_class "*<GtkMenu>*<GtkLabel>"            style   "text"
+widget_class "*<GtkComboBox>*<GtkCellLayout>"   style   "text"
+widget_class "*<GtkNotebook>*<GtkLabel>"        style   "text"
+widget_class "*<GtkNotebook>*<GtkCellLayout>"   style   "text"

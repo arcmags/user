@@ -1,0 +1,9 @@
+## ~/.config/feh/themes ::
+
+feh --fontpath /usr/share/fonts/TTF --font 'Hack-Bold/10' --draw-tinted \
+    --info 'echo " %n | %wx%h | $(du -h %F | cut -f1) | $(sed -E "s/0*\.//" <<<%z)%% | (%u/%l) "' \
+    --auto-zoom --cache-size 64 --geometry 1800x1000 --image-bg '#00002A' --scale-down \
+    --zoom-step 4 --action1 ';i3-msg fullscreen toggle' --stretch --limit-width 1800 \
+    --thumb-width 220 --thumb-height 160 --no-menus --action2 ';imv %F'
+
+# vim: set ft=sh:

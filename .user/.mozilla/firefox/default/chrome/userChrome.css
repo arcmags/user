@@ -1,0 +1,48 @@
+/*/* ~/.mozilla/firefox/default/chrome/userChrome.css ::*/
+
+:root {
+    --background:   #888888;
+    --color:        #fcfcfc;
+    --font-family:  Hack, monospace;
+    --font-size:    10pt;
+    --nav-height:   30px;
+    --tab-height:   28px;
+    --url-height:   26px;
+}
+* {
+    font-family: var(--font-family) !important;
+    font-size: var(--font-size) !important;
+    text-shadow: none !important;
+}
+/* display: none: */
+#fullscr-toggler,
+.autocomplete-history-dropmarker,
+.tab-close-button,
+.tab-icon-image,
+.tab-icon-image:not([pinned]),
+.tabs-newtab-button,
+.tab-throbber,
+.urlbar-history-dropmarker {
+    display: none !important;
+}
+/* tags: */
+tab {
+    height: var(--tab-height) !important;
+}
+/* ids */
+#nav-bar {
+    height: var(--nav-height) !important;
+}
+#tabbrowser-tabs {
+    height: var(--tab-height) !important;
+}
+#TabsToolbar {
+    height: var(--tab-height) !important;
+    min-height: var(--tab-height) !important;
+    margin-top: -3px !important;
+}
+/* classes: */
+#tabbrowser-tabs .tabbrowser-arrowscrollbox,
+#tabbrowser-tabs .tabbrowser-arrowscrollbox .box-inherit.scrollbox-innerbox {
+    max-height: var(--tab-height) !important;
+}

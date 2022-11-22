@@ -1,0 +1,82 @@
+#!/bin/bash
+
+## uvpn ::
+# Establish tcp vpn connection with a random top-ranked nordvpn server.
+
+# settings:
+auth="$HOME/.config/nordvpn/auth.txt"
+
+# internal control:
+config=
+ip=
+server=
+url_api='https://api.nordvpn.com/v1'
+url_configs='https://downloads.nordcdn.com/configs'
+
+## functions ::
+msg() {
+	printf "\e[1;38;5;12m==> \e[0;38;5;15m$1\e[0m\n" "${@:2}"
+}
+
+msg2() {
+	printf "\e[1;38;5;12m -> \e[0;38;5;15m$1\e[0m\n" "${@:2}"
+}
+
+msg_error() {
+	printf "\e[1;38;5;9m==> ERROR: \e[0;38;5;15m$1\e[0m\n" "${@:2}" >&2
+}
+
+status_internet() {
+    ping -q -c1 -W2 google.com &>/dev/null || \
+        ping -q -c1 -W2 archlinux.org &>/dev/null || \
+        ping -q -c1 -W4 google.com &>/dev/null
+}
+
+## main ::
+# ERROR: openvpn not installed:
+if ! command -v openvpn &>/dev/null; then
+   msg_error 'openvpn is not installed'
+   exit 3
+fi
+
+# ERROR: no internet connection:
+if ! status_internet; then
+    msg_error 'no internet connection'
+    exit 2
+fi
+
+# get server hostname:
+server="$(curl --silent "$url_api/servers/recommendations?limit=20" | \
+    jq --raw-output '.[].hostname' | sort -R | head -n1)"
+
+# ERROR: unable to download server list:
+if [ -z "$server" ]; then
+    msg_error 'unable to download server list'
+    exit 4
+fi
+msg "$server"
+
+# download openvpn config:
+config="$(mktemp -p /tmp "$server.XXX.opvn")"
+curl -s -o "$config" "$url_configs/files/ovpn_tcp/servers/$server.tcp.ovpn"
+
+# ERROR: unable to download server config:
+ip="$(grep -Po '^remote \K[^ ]+' "$config")"
+if [ -z "$ip" ]; then
+    msg_error 'unable to download server config'
+    exit 5
+fi
+msg2 "$ip"
+
+# add auth-user-pass to config:
+if [ -f "$auth" ]; then
+    echo "auth-user-pass $auth" >> "$config"
+fi
+
+echo 'user nobody' >> "$config"
+
+# launch openvpn:
+sudo openvpn "$config"
+
+# cleanup:
+rm -f "$config"
