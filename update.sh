@@ -1,7 +1,11 @@
 #!/bin/bash
 
-dir="$HOME/user"
-files=(
+## update.sh ::
+# Copy source files to target directory preserving relative paths.
+
+dir_target="$PWD"
+dir_src="$HOME/user"
+files_src=(
     bin/img-web
     bin/ucolors
     bin/usync
@@ -63,7 +67,6 @@ files=(
     .user/.Xtheme
     .user/.bash_profile
     .user/.bashrc
-    .user/.gallery-dl.conf
     .user/.gdbinit
     .user/.infokey
     .user/.inputrc
@@ -77,29 +80,17 @@ files=(
     .user/.sqliterc
     .user/.tmux.conf
     .user/.vimrc
-    .user/.xhost
     .user/.xinitrc
     .user/.xprofile
     .user/.uln
 )
-for file in "${files[@]}"; do
 
-    # process target/file names:
-    file_path="$dir/$file"
-    file_dir="${file_path%/*}"
+cd "$dir_src"
 
-    target_path="$PWD/$file"
-    target_dir="${target_path%/*}"
-    target_name="${target_path##*/}"
-    target_path="$target_dir/$target_name"
-
-    [ -e "$file_path" ] &&
-    ! diff -rq --no-dereference "$file_path" "$target_path" &>/dev/null &&
-    mkdir -p "${target_path%/*}" &>/dev/null &&
-    rm -rf "$target_path" &>/dev/null &&
-    cp -r "$file_path" "$target_path" &>/dev/null
+files=()
+for file in "${files_src[@]}"; do
+    [ -e "$file" ] && files+=("$file")
 done
-
-
+cp -r --parents "${files[@]}" "$dir_target"
 
 # vim: set ft=bash
