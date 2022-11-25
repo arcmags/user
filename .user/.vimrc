@@ -10,6 +10,7 @@ filetype plugin on
 # TODO: comment navigation function
 # TODO: move line(s) function?
 # TODO: comment toggle comment char?
+# TODO: fix <C-Space> mapping in tmux?
 
 # file:
 set autoread
@@ -322,7 +323,7 @@ tnoremap <silent> <C-w>N <C-w>N<Cmd>setlocal nonumber<CR>
 command! -bang BufList BufList(<q-bang>)
 command! -nargs=+ -complete=command OutCap OutCap(<q-args>)
 command! -nargs=? Cmd CmdExec(<q-args>)
-command! -nargs=? IncSet IncSet(<q-args>)
+command! -nargs=? CntSet CntSet(<args>)
 command! -nargs=? Sh execute 'silent ! ' .. <q-args> | redraw!
 command! BufWipeHidden BufWipeHidden()
 command! TabLeft TabLeft()
@@ -337,12 +338,8 @@ def BufClose(bang = '')
     const filetype = getbufvar(buf, '&filetype')
     const buftype = filetype == 'netrw' ? 'netrw' : getbufvar(buf, '&buftype')
     const wincurrent = winnr()
-    #var cmd = 'bdelete'
     var cmd = 'bwipeout'
     var cmdbang = bang
-    #if index(['help', 'netrw', 'terminal'], buftype) >= 0 || bufname == '[no name]' || !buflisted(buf)
-        #cmd = 'bwipeout'
-    #endif
     if index(['help', 'netrw', 'terminal'], buftype) >= 0
         cmdbang = '!'
     endif
@@ -429,7 +426,8 @@ def BufList(bang = '')
 enddef
 
 def BufNext()
-    if &filetype == 'netrw'
+    if ! &buflisted && &filetype == 'netrw'
+        echo 'netrw'
         const buf = bufnr('%')
         if len(filter(range(1, bufnr('$')), 'buflisted(v:val)')) == 0
             silent enew
@@ -440,15 +438,11 @@ def BufNext()
     else
         silent bnext
     endif
-    #if &filetype == 'netrw' && len(filter(range(1, bufnr('$')), 'buflisted(v:val)')) == 0
-        #execute 'enew'
-    #else
-        #silent bnext
-    #endif
 enddef
 
 def BufPrev()
-    if &filetype == 'netrw'
+    if ! &buflisted && &filetype == 'netrw'
+        echo 'netrw'
         const buf = bufnr('%')
         if len(filter(range(1, bufnr('$')), 'buflisted(v:val)')) == 0
             silent enew
@@ -459,15 +453,10 @@ def BufPrev()
     else
         silent bprevious
     endif
-    #if &filetype == 'netrw' && len(filter(range(1, bufnr('$')), 'buflisted(v:val)')) == 0
-        #execute 'enew'
-    #else
-        #silent bprevious
-    #endif
 enddef
 
 def BufWipeHidden()
-    const bufs = filter(range(1, bufnr('$')), 'bufexists(v:val) && !(buflisted(v:val) && bufloaded(v:val))')
+    const bufs = filter(range(1, bufnr('$')), 'bufexists(v:val) && !(bufloaded(v:val)) && !(buflisted(v:val))')
     for buf in bufs
         execute 'bwipeout! ' .. buf
     endfor
@@ -538,6 +527,16 @@ def CommentToggle(bang = '')
     endfor
 enddef
 
+var C = 1
+def g:Cnt(pad = 2): string
+	C = C + 1
+	return printf('%0' .. pad .. 'd', C - 1)
+enddef
+
+def CntSet(start = 1)
+    C = start
+enddef
+
 def Date(bang = '')
     const c = getpos('.')[2]
     const text = getline('.')
@@ -590,16 +589,6 @@ def HTMLToggle()
             setline(line, text_out)
         endif
     endfor
-enddef
-
-var I = 1
-def g:Inc(pad = 3): string
-	I = I + 1
-	return printf('%0' .. pad .. 'd', I - 1)
-enddef
-
-def IncSet(start = 1)
-    I = start
 enddef
 
 # TODO: next, prev, last, first; same, more, less, diff; skip blank lines
