@@ -4,13 +4,14 @@ vim9script
 set nocompatible
 filetype plugin on
 
-# TODO: setup fzf
-# TODO: ranger?
+# TODO: fzf integration
+# TODO: ranger?, vifm?
 # TODO: tweak indent navigation funcion
 # TODO: comment navigation function
 # TODO: move line(s) function?
 # TODO: comment toggle comment char?
-# TODO: fix <C-Space> mapping in tmux?
+# TODO: fix <C-Space> mapping inside tmux?
+# TODO: path substitution $HOME > ~ in statusbar
 
 # file:
 set autoread

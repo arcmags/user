@@ -362,7 +362,7 @@ c.statusbar.show = 'always'
 c.statusbar.widgets = ['keypress', 'url', 'scroll', 'tabs']
 
 ## tabs ::
-c.tabs.background = True
+c.tabs.background = False
 c.tabs.close_mouse_button = 'middle'
 c.tabs.close_mouse_button_on_bar = 'new-tab'
 c.tabs.favicons.show = 'never'
@@ -429,19 +429,18 @@ config.set('content.register_protocol_handler', True, 'https://mail.google.com?e
 #}
 config.unbind('<Ctrl-Shift-w>')
 config.unbind('<Ctrl-w>')
+config.bind(";'I", 'config-cycle statusbar.show always in-mode never')
+config.bind(";'i", 'config-cycle tabs.show always multiple never')
 config.bind(',h', 'history')
 config.bind(',v', 'spawn --detach mpv {url}')
 config.bind(';p', 'hint links run open -p {hint-url}')
 config.bind(';v', 'hint links spawn --detach mpv {hint-url}')
 config.bind(';w', 'hint links window')
-config.bind(";'i", 'config-cycle tabs.show always multiple never')
-config.bind(";'I", 'config-cycle statusbar.show always in-mode never')
 config.bind('<Alt-h>', 'fake-key <Left>')
 config.bind('<Alt-j>', 'fake-key <Down>')
 config.bind('<Alt-k>', 'fake-key <Up>')
 config.bind('<Alt-l>', 'fake-key <Right>')
 config.bind('<Alt-v>', 'spawn --userscript edit-source {url}')
-config.bind('<Backspace>', 'back')
 config.bind('<Ctrl-Shift-c>', 'fake-key <Ctrl-c>')
 config.bind('<Ctrl-Shift-q>', 'quit')
 config.bind('<Ctrl-c>', 'tab-close')
@@ -453,24 +452,25 @@ config.bind('<Ctrl-o>', 'set-cmd-text -s :open -w')
 config.bind('<Ctrl-p>', 'fake-key <Shift-Tab>')
 config.bind('<Ctrl-q>', 'tab-close')
 config.bind('<Ctrl-r>', 'reload -f')
-config.bind('<Shift-Backspace>', 'forward')
 config.bind('<Shift-Escape>', 'fake-key <Escape>')
+config.bind('<Shift-Space>', 'scroll-page 0 -0.5')
+config.bind('<Space>', 'scroll-page 0 0.5')
+config.bind('I', ':hint images run open -t -- {hint-url}')
 config.bind('gT', 'tab-prev')
 config.bind('gt', 'tab-next')
-config.bind('<Space>', 'scroll-page 0 0.5')
-config.bind('<Shift-Space>', 'scroll-page 0 -0.5')
+config.bind('r', 'hint --rapid links tab-bg')
 config.unbind('D')
 config.unbind('d')
 
 # caret:
-config.bind('<Ctrl-d>', 'run-with-count 8 move-to-next-line', mode='caret')
-config.bind('<Ctrl-e>', 'scroll down', mode='caret')
-config.bind('<Ctrl-u>', 'run-with-count 8 move-to-prev-line', mode='caret')
-config.bind('<Ctrl-y>', 'scroll up', mode='caret')
 config.bind('<Alt-h>', 'fake-key <Left>', mode='caret')
 config.bind('<Alt-j>', 'fake-key <Down>', mode='caret')
 config.bind('<Alt-k>', 'fake-key <Up>', mode='caret')
 config.bind('<Alt-l>', 'fake-key <Right>', mode='caret')
+config.bind('<Ctrl-d>', 'run-with-count 8 move-to-next-line', mode='caret')
+config.bind('<Ctrl-e>', 'scroll down', mode='caret')
+config.bind('<Ctrl-u>', 'run-with-count 8 move-to-prev-line', mode='caret')
+config.bind('<Ctrl-y>', 'scroll up', mode='caret')
 
 # command:
 config.bind('<Alt-h>', 'fake-key <Left>', mode='command')
@@ -487,6 +487,15 @@ config.bind('<Ctrl-k>', 'command-history-prev', mode='command')
 config.bind('<Ctrl-n>', 'completion-item-focus next', mode='command')
 config.bind('<Ctrl-p>', 'completion-item-focus prev', mode='command')
 config.bind('<Ctrl-x>', 'completion-item-del', mode='command')
+
+# hint:
+config.bind('<Ctrl-d>', 'hint links download', mode='hint')
+config.bind('<Ctrl-f>', 'hint all', mode='hint')
+config.bind('<Ctrl-i>', 'hint inputs', mode='hint')
+config.bind('<Ctrl-o>', 'hint links fill :open {hint-url}', mode='hint')
+config.bind('<Ctrl-t>', 'hint links tab-fg', mode='hint')
+config.bind('<Ctrl-w>', 'hint links window', mode='hint')
+config.bind('<Ctrl-y>', 'hint links yank', mode='hint')
 
 # insert:
 config.bind('<Alt-b>', 'fake-key <Ctrl-Left>', mode='insert')
