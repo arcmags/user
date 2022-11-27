@@ -273,7 +273,9 @@ c.completion.show = 'always'
 c.completion.web_history.exclude = ['https://*.google.com', 'https://duckduckgo.com']
 
 ## downloads ::
-c.downloads.location.directory = '/tmp/web-dl'
+dir_downloads = '/tmp/web-dl'
+subprocess.run(['mkdir', '-p', dir_downloads])
+c.downloads.location.directory = dir_downloads
 c.downloads.location.prompt = False
 c.downloads.location.remember = True
 c.downloads.location.suggestion = 'path'
@@ -281,7 +283,6 @@ c.downloads.position = 'bottom'
 c.downloads.remove_finished = 4000
 #c.downloads.open_dispatcher = None
 c.downloads.prevent_mixed_content = True
-subprocess.run(['mkdir', '-p', c.downloads.location.directory])
 
 ## editor ::
 c.editor.command = ['xterm', '-title', 'xterm_float', '-e', 'vim', '{file}']
@@ -457,10 +458,10 @@ config.bind('T', 'hint links tab-fg')
 config.bind('I', 'hint images run open -t -- {hint-url}')
 config.bind('R', 'hint --rapid links tab-bg')
 config.bind('W', 'hint links window')
-config.bind('dV', 'spawn -d yt-dlp -P ' + c.downloads.location.directory + ' {url}')
+config.bind('dV', 'spawn -d yt-dlp -P ' + dir_downloads + ' {url}')
 config.bind('df', 'hint links download')
 config.bind('di', 'hint images download')
-config.bind('dv', 'hint links spawn -d yt-dlp -P ' + c.downloads.location.directory + ' {hint-url}')
+config.bind('dv', 'hint links spawn -d yt-dlp -P ' + dir_downloads + ' {hint-url}')
 config.bind('eV', 'spawn -d mpv {url}')
 config.bind('ev', 'hint links spawn -d mpv {hint-url}')
 config.bind('gT', 'tab-prev')
