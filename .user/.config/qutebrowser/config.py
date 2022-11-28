@@ -1,9 +1,14 @@
 ## ~/.config/qutebrowser/config.py ::
+# required:
+#   apps: mpv, ranger, vim, xterm, yt-dlp, zathura
+#   fonts: Hack
+#   userscripts: mpv.sh, yt-dlp.sh
+#   xresources: *.color_0 - *.color_15
 
-import subprocess
+dir_downloads = '/tmp/web-dl'
+exc_xterm = ['xterm', '-T', 'xterm_float', '-e']
 
 config.load_autoconfig(False)
-
 c.aliases = {
     'q': 'close',
     'qa': 'quit',
@@ -11,6 +16,22 @@ c.aliases = {
     'wq': 'quit --save',
     'wqa': 'quit --save'
 }
+
+## functions ::
+def hex_to_rgba(hex, alpha):
+    hex = hex.strip('#')
+    return 'rgba(' + str(int('0x' + hex[0:2], 0)) + ',' + str(int('0x' + \
+        hex[2:4], 0)) + ',' + str(int('0x' + hex[4:6], 0)) + ',' + str(alpha) + ')'
+
+import subprocess
+def read_xresources(prefix):
+    xresources = {}
+    x = subprocess.run(['xrdb', '-query'], stdout=subprocess.PIPE)
+    lines = x.stdout.decode().split('\n')
+    for line in filter(lambda l : l.startswith(prefix), lines):
+        prop, _, value = line.partition(':\t')
+        xresources[prop] = value
+    return xresources
 
 ## fonts ::
 c.fonts.default_family = [ 'Hack', 'monospace' ]
@@ -35,55 +56,24 @@ c.fonts.web.size.minimum = 4
 c.fonts.web.size.minimum_logical = 6
 
 ## colors ::
-def hex_to_rgba(hex, alpha):
-    hex = hex.strip('#')
-    return 'rgba(' + str(int('0x' + hex[0:2], 0)) + ',' + str(int('0x' + \
-        hex[2:4], 0)) + ',' + str(int('0x' + hex[4:6], 0)) + ',' + str(alpha) + ')'
-
-def read_xresources(prefix):
-    props = {}
-    x = subprocess.run(['xrdb', '-query'], stdout=subprocess.PIPE)
-    lines = x.stdout.decode().split('\n')
-    for line in filter(lambda l : l.startswith(prefix), lines):
-        prop, _, value = line.partition(':\t')
-        props[prop] = value
-    return props
-
 xresources = read_xresources('*')
-color_0 = xresources['*.color0']
-color_1 = xresources['*.color1']
-color_2 = xresources['*.color2']
-color_3 = xresources['*.color3']
-color_4 = xresources['*.color4']
-color_5 = xresources['*.color5']
-color_6 = xresources['*.color6']
-color_7 = xresources['*.color7']
-color_8 = xresources['*.color8']
-color_9 = xresources['*.color9']
-color_10 = xresources['*.color10']
-color_11 = xresources['*.color11']
-color_12 = xresources['*.color12']
-color_13 = xresources['*.color13']
-color_14 = xresources['*.color14']
-color_15 = xresources['*.color15']
-
-color_bg = color_0
-color_warn = color_13
-color_bar = color_4
-color_menu = color_5
-color_special = color_6
-color_fg = color_7
-color_inactive = color_8
-color_error = color_9
-color_title = color_10
-color_info = color_12
-color_link = color_14
+color_bg = xresources['*.color0']
+color_warn = xresources['*.color3']
+color_bar = xresources['*.color4']
+color_menu = xresources['*.color5']
+color_special = xresources['*.color6']
+color_fg = xresources['*.color7']
+color_inactive = xresources['*.color8']
+color_error = xresources['*.color9']
+color_title = xresources['*.color10']
+color_heading = xresources['*.color12']
+color_link = xresources['*.color14']
 
 # completion menu:
 c.colors.completion.category.bg = color_menu
 c.colors.completion.category.border.bottom = color_menu
 c.colors.completion.category.border.top = color_menu
-c.colors.completion.category.fg = color_info
+c.colors.completion.category.fg = color_heading
 c.colors.completion.even.bg = color_menu
 c.colors.completion.fg = [color_fg, color_inactive, color_special]
 c.colors.completion.item.selected.bg = color_bar
@@ -109,7 +99,7 @@ c.colors.downloads.bar.bg = color_bar
 c.colors.downloads.error.bg = color_bar
 c.colors.downloads.error.fg = color_warn
 c.colors.downloads.start.bg = color_bar
-c.colors.downloads.start.fg = color_info
+c.colors.downloads.start.fg = color_heading
 c.colors.downloads.stop.bg = color_bar
 c.colors.downloads.stop.fg = color_title
 c.colors.downloads.system.bg = 'none'
@@ -130,10 +120,10 @@ c.colors.keyhint.suffix.fg = color_link
 # messages:
 c.colors.messages.error.bg = color_bg
 c.colors.messages.error.border = color_bg
-c.colors.messages.error.fg = color_warn
+c.colors.messages.error.fg = color_error
 c.colors.messages.info.bg = color_bg
 c.colors.messages.info.border = color_bg
-c.colors.messages.info.fg = color_info
+c.colors.messages.info.fg = color_title
 c.colors.messages.warning.bg = color_bg
 c.colors.messages.warning.border = color_bg
 c.colors.messages.warning.fg = color_warn
@@ -157,7 +147,7 @@ c.colors.statusbar.command.private.fg = color_fg
 c.colors.statusbar.insert.bg = color_bar
 c.colors.statusbar.insert.fg = color_title
 c.colors.statusbar.normal.bg = color_bar
-c.colors.statusbar.normal.fg = color_info
+c.colors.statusbar.normal.fg = color_heading
 c.colors.statusbar.passthrough.bg = color_bar
 c.colors.statusbar.passthrough.fg = color_title
 c.colors.statusbar.private.bg = color_bar
@@ -209,8 +199,6 @@ c.content.headers.accept_language = 'en-US,en;q=0.9'
 c.content.blocking.enabled = True
 c.content.blocking.method = 'both'
 c.content.blocking.hosts.block_subdomains = True
-#c.content.blocking.adblock.lists = ['https://easylist.to/easylist/easylist.txt', 'https://easylist.to/easylist/easyprivacy.txt']
-#c.content.blocking.hosts.lists = ['https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts']
 c.content.blocking.whitelist = []
 
 # privacy/security:
@@ -265,7 +253,7 @@ c.content.user_stylesheets = ['css/user.css']
 c.content.pdfjs = False
 
 ## completion ::
-c.completion.favorite_paths = [ '/home/mags/user/' ]
+c.completion.favorite_paths = ['/home/mags/user/']
 c.completion.height = '40%'
 c.completion.scrollbar.padding = 0
 c.completion.scrollbar.width = 16
@@ -273,7 +261,6 @@ c.completion.show = 'always'
 c.completion.web_history.exclude = ['https://*.google.com', 'https://duckduckgo.com']
 
 ## downloads ::
-dir_downloads = '/tmp/web-dl'
 subprocess.run(['mkdir', '-p', dir_downloads])
 c.downloads.location.directory = dir_downloads
 c.downloads.location.prompt = False
@@ -285,14 +272,14 @@ c.downloads.remove_finished = 4000
 c.downloads.prevent_mixed_content = True
 
 ## editor ::
-c.editor.command = ['xterm', '-title', 'xterm_float', '-e', 'vim', '{file}']
+c.editor.command = exc_xterm + ['vim', '{file}']
 c.editor.encoding = 'utf-8'
 c.editor.remove_file = True
 
 c.fileselect.handler = 'external'
-c.fileselect.folder.command = ['xterm', '-title', 'xterm_float', '-e', 'ranger', '--choosedir={}']
-c.fileselect.multiple_files.command = ['xterm', '-title', 'xterm_float', '-e', 'ranger', '--choosefiles={}']
-c.fileselect.single_file.command = ['xterm', '-title', 'xterm_float', '-e', 'ranger', '--choosefile={}']
+c.fileselect.folder.command = exc_xterm = ['ranger', '--choosedir={}']
+c.fileselect.multiple_files.command = exc_xterm + ['ranger', '--choosefiles={}']
+c.fileselect.single_file.command = exc_xterm + ['ranger', '--choosefile={}']
 
 ## hints ::
 c.hints.chars = 'asdfghjkl'
@@ -317,7 +304,7 @@ c.logging.level.console = 'critical'
 c.logging.level.ram = 'debug'
 
 ## messages ::
-c.messages.timeout = 2000
+c.messages.timeout = 4000
 
 ## new instance ::
 #c.new_instance_open_target = 'tab'
@@ -387,12 +374,16 @@ c.url.default_page = 'file:///home/mags/user/sync/www/link/index.html'
 c.url.open_base_url = True
 c.url.searchengines = {
     'DEFAULT': 'https://google.com/search?q={}',
-    'apkg': 'https://archlinux.org/packages/?q={}',
+    'ap': 'https://archlinux.org/packages/?q={}',
     'aur': 'https://aur.archlinux.org/packages?K={}',
     'aw': 'https://wiki.archlinux.org/index.php?search={}',
     'ddg': 'https://duckduckgo.com/?q={}',
+    'g': 'https://google.com/search?q={}',
     'gh': 'https://github.com/search?q={}',
+    'imdb': 'https://www.imdb.com/find?q={}',
     'irc': 'https://netsplit.de/channels/?chat={}',
+    'lw': 'https://en.wikibooks.org/wiki/Special:Search?prefix=LaTeX%2F&search={}',
+    'mc': 'https://minecraft.fandom.com/wiki/Special:Search?query={}',
     'wp': 'https://en.wikipedia.org/w/index.php?search={}',
     'yt': 'https://www.youtube.com/results?search_query={}'
 }
@@ -439,11 +430,12 @@ config.bind('<Alt-h>', 'fake-key <Left>')
 config.bind('<Alt-j>', 'fake-key <Down>')
 config.bind('<Alt-k>', 'fake-key <Up>')
 config.bind('<Alt-l>', 'fake-key <Right>')
-config.bind('<Alt-v>', 'spawn -u edit-source {url}')
 config.bind('<Ctrl-Shift-c>', 'fake-key <Ctrl-c>')
 config.bind('<Ctrl-Shift-q>', 'quit')
 config.bind('<Ctrl-c>', 'tab-close')
 config.bind('<Ctrl-e>', 'open -w')
+config.bind('<Ctrl-j>', 'scroll-page 0 0.125')
+config.bind('<Ctrl-k>', 'scroll-page 0 -0.125')
 config.bind('<Ctrl-l>', 'reload -f')
 config.bind('<Ctrl-n>', 'fake-key <Tab>')
 config.bind('<Ctrl-o>', 'set-cmd-text -s :open -w')
@@ -454,16 +446,20 @@ config.bind('<Ctrl-r>', 'reload -f')
 config.bind('<Shift-Escape>', 'fake-key <Escape>')
 config.bind('<Shift-Space>', 'scroll-page 0 -0.5')
 config.bind('<Space>', 'scroll-page 0 0.5')
-config.bind('T', 'hint links tab-fg')
+config.bind('D', 'download')
+config.bind('E', 'viewsource -e')
 config.bind('I', 'hint images run open -t -- {hint-url}')
 config.bind('R', 'hint --rapid links tab-bg')
+config.bind('T', 'hint links tab-fg')
 config.bind('W', 'hint links window')
-config.bind('dV', 'spawn -d yt-dlp -P ' + dir_downloads + ' {url}')
+config.bind('dV', 'spawn -u yt-dlp.sh')
 config.bind('df', 'hint links download')
 config.bind('di', 'hint images download')
-config.bind('dv', 'hint links spawn -d yt-dlp -P ' + dir_downloads + ' {hint-url}')
-config.bind('eV', 'spawn -d mpv {url}')
-config.bind('ev', 'hint links spawn -d mpv {hint-url}')
+config.bind('dv', 'hint links userscript yt-dlp.sh')
+config.bind('eR', 'spawn -d zathura {url}')
+config.bind('eV', 'spawn -u mpv.sh {url}')
+config.bind('er', 'hint links spawn -d zathura {hint-url}')
+config.bind('ev', 'hint links userscript mpv.sh {hint-url}')
 config.bind('gT', 'tab-prev')
 config.bind('gt', 'tab-next')
 
