@@ -1,6 +1,5 @@
 !! ~/.Xtheme ::
 
-! outrun-blue:
 *.background: #00002a
 *.foreground: #d0d0fa
 *.highlightColor: #20204a
@@ -21,4 +20,4 @@
 *.color14: #4dffff
 *.color15: #f5f5ff
 
-! vim: filetype=xdefaults
+! vim: set ft=xdefaults:

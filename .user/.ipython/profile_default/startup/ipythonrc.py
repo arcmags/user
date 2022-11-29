@@ -9,10 +9,6 @@ from prompt_toolkit.key_binding.bindings import named_commands
 
 ip = get_ipython()
 
-def switch_to_navigation_mode(event):
-    vi_state = event.cli.vi_state
-    vi_state.input_mode = InputMode.NAVIGATION
-
 if getattr(ip, 'pt_app', None):
     registry = ip.pt_app.key_bindings
     registry.add_binding('c-k', filter=(HasFocus(DEFAULT_BUFFER)))(named_commands.previous_history)

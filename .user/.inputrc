@@ -1,6 +1,6 @@
 ## ~/.inputrc ::
 
-# TODO: uniform insert bindings: bash, qutebrowser, vim, python, less, ...
+# TODO: uniform bindings: bash, qutebrowser, vim, python, less, info, w3m, ipython, newsboat, firefox (vimium), tmux, ranger, mocp, vifm, irssi, zsh, zathura, i3, ...
 
 set bell-style none
 set colored-stats on

@@ -2,28 +2,19 @@
 # required:
 #   apps: mpv, ranger, vim, xterm, yt-dlp, zathura
 #   fonts: Hack
-#   userscripts: mpv.sh, yt-dlp.sh
+#   userscripts: mpv.sh, vim.sh, yt-dlp.sh, zathura.sh
 #   xresources: *.color_0 - *.color_15
 
-dir_downloads = '/tmp/web-dl'
-exc_xterm = ['xterm', '-T', 'xterm_float', '-e']
+import subprocess
 
-config.load_autoconfig(False)
-c.aliases = {
-    'q': 'close',
-    'qa': 'quit',
-    'w': 'session-save',
-    'wq': 'quit --save',
-    'wqa': 'quit --save'
-}
+dir_dl = '/tmp/web-dl'
+exe_term = ['xterm', '-T', 'xterm_float', '-e']
 
-## functions ::
 def hex_to_rgba(hex, alpha):
     hex = hex.strip('#')
     return 'rgba(' + str(int('0x' + hex[0:2], 0)) + ',' + str(int('0x' + \
         hex[2:4], 0)) + ',' + str(int('0x' + hex[4:6], 0)) + ',' + str(alpha) + ')'
 
-import subprocess
 def read_xresources(prefix):
     xresources = {}
     output = subprocess.run(['xrdb', '-query'], stdout=subprocess.PIPE)
@@ -32,6 +23,11 @@ def read_xresources(prefix):
         prop, _, value = line.partition(':\t')
         xresources[prop] = value
     return xresources
+
+xresources = read_xresources('*')
+subprocess.run(['mkdir', '-p', dir_dl])
+
+config.load_autoconfig(False)
 
 ## fonts ::
 c.fonts.default_family = [ 'Hack', 'monospace' ]
@@ -56,7 +52,6 @@ c.fonts.web.size.minimum = 4
 c.fonts.web.size.minimum_logical = 6
 
 ## colors ::
-xresources = read_xresources('*')
 color_bg = xresources['*.color0']
 color_warn = xresources['*.color3']
 color_bar = xresources['*.color4']
@@ -261,8 +256,7 @@ c.completion.show = 'always'
 c.completion.web_history.exclude = ['https://*.google.com', 'https://duckduckgo.com']
 
 ## downloads ::
-subprocess.run(['mkdir', '-p', dir_downloads])
-c.downloads.location.directory = dir_downloads
+c.downloads.location.directory = dir_dl
 c.downloads.location.prompt = False
 c.downloads.location.remember = True
 c.downloads.location.suggestion = 'path'
@@ -272,14 +266,14 @@ c.downloads.remove_finished = 4000
 c.downloads.prevent_mixed_content = True
 
 ## editor ::
-c.editor.command = exc_xterm + ['vim', '{file}']
+c.editor.command = exe_term + ['vim', '{file}']
 c.editor.encoding = 'utf-8'
 c.editor.remove_file = True
 
 c.fileselect.handler = 'external'
-c.fileselect.folder.command = exc_xterm = ['ranger', '--choosedir={}']
-c.fileselect.multiple_files.command = exc_xterm + ['ranger', '--choosefiles={}']
-c.fileselect.single_file.command = exc_xterm + ['ranger', '--choosefile={}']
+c.fileselect.folder.command = exe_term = ['ranger', '--choosedir={}']
+c.fileselect.multiple_files.command = exe_term + ['ranger', '--choosefiles={}']
+c.fileselect.single_file.command = exe_term + ['ranger', '--choosefile={}']
 
 ## hints ::
 c.hints.chars = 'asdfghjkl'
@@ -423,8 +417,7 @@ config.unbind('<Ctrl-Shift-w>')
 config.unbind('<Ctrl-w>')
 config.unbind('D')
 config.unbind('d')
-config.bind(";'I", 'config-cycle statusbar.show always in-mode never')
-config.bind(";'i", 'config-cycle tabs.show always multiple never')
+config.bind(';i', 'hint images download')
 config.bind(';p', 'hint links run open -p {hint-url}')
 config.bind('<Alt-h>', 'fake-key <Left>')
 config.bind('<Alt-j>', 'fake-key <Down>')
@@ -446,22 +439,21 @@ config.bind('<Ctrl-r>', 'reload -f')
 config.bind('<Shift-Escape>', 'fake-key <Escape>')
 config.bind('<Shift-Space>', 'scroll-page 0 -0.5')
 config.bind('<Space>', 'scroll-page 0 0.5')
-config.bind('D', 'download')
-config.bind('E', 'viewsource -e')
+config.bind('Em', 'hint links userscript mpv.sh')
+config.bind('Ev', 'hint links userscript vim.sh')
+config.bind('Ey', 'hint links userscript yt-dlp.sh')
+config.bind('Ez', 'hint links userscript zathura.sh')
 config.bind('I', 'hint images run open -t -- {hint-url}')
 config.bind('R', 'hint --rapid links tab-bg')
 config.bind('T', 'hint links tab-fg')
 config.bind('W', 'hint links window')
-config.bind('dV', 'spawn -u yt-dlp.sh')
-config.bind('df', 'hint links download')
-config.bind('di', 'hint images download')
-config.bind('dv', 'hint links userscript yt-dlp.sh')
-config.bind('eR', 'spawn -d zathura {url}')
-config.bind('eV', 'spawn -u mpv.sh {url}')
-config.bind('er', 'hint links spawn -d zathura {hint-url}')
-config.bind('ev', 'hint links userscript mpv.sh {hint-url}')
+config.bind('em', 'spawn -u mpv.sh')
+config.bind('ev', 'spawn -u vim.sh')
+config.bind('ey', 'spawn -u yt-dlp.sh')
 config.bind('gT', 'tab-prev')
 config.bind('gt', 'tab-next')
+config.bind('tb', 'config-cycle statusbar.show always in-mode never')
+config.bind('tt', 'config-cycle tabs.show always multiple never')
 
 # caret:
 config.bind('<Alt-h>', 'fake-key <Left>', mode='caret')
@@ -491,7 +483,7 @@ config.bind('<Ctrl-x>', 'completion-item-del', mode='command')
 
 # hint:
 config.bind('<Ctrl-i>', ':hint images run open -t -- {hint-url}', mode='hint')
-config.bind('B', 'hint all tab-bg', mode='hint')
+config.bind('B', 'hint links tab-bg', mode='hint')
 config.bind('D', 'hint links download', mode='hint')
 config.bind('F', 'hint all', mode='hint')
 config.bind('I', 'hint inputs', mode='hint')

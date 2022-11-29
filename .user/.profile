@@ -120,7 +120,6 @@ export SUDO_PROMPT="$(printf '\e[1;38;5;9m::> \e[0;38;5;15mpassword: ')"
 export QT_QPA_PLATFORMTHEME='qt5ct'
 
 ## aliases ::
-[ -d "$UDIR/.user" ] && cdc() { cd "$UDIR/.user"; }
 [ -d "$UDIR/dat" ] && cdd() { cd "$UDIR/dat"; }
 [ -d "$UDIR/git" ] && cdg() { cd "$UDIR/git"; }
 [ -d "$UDIR/sync/img" ] && cdi() { cd "$UDIR/sync/img"; }
@@ -146,6 +145,8 @@ is_bin gpg && gpg() { command gpg --no-greeting -q "$@"; }
 ip() { command ip -color=auto "$@"; }
 
 ls() { LANG=C command ls -ALh --color=auto --group-directories-first "$@"; }
+ls1() { ls -1 "$@"; }
+lsl() { ls -l "$@"; }
 
 su() { printf '\e[1;38;5;9m::> \e[0;38;5;15m'; command su "$@"; }
 

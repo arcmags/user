@@ -5,13 +5,14 @@ cd "$QUTE_DOWNLOAD_DIR"
 file_dl="$(yt-dlp --restrict-filenames --get-filename "$QUTE_URL")"
 
 if [ -z "$file_dl" ]; then
-    printf 'message-error "yt-dlp: unsupported URL: %s"' "$QUTE_URL" > "$QUTE_FIFO"
+    printf 'message-error "yt-dlp: unsupported URL: %s"\n' "$QUTE_URL" > "$QUTE_FIFO"
     exit 0
 fi
 
-printf 'message-info "mpv: %s"' "$file_dl" > "$QUTE_FIFO"
 if [ -e "$file_dl" ]; then
+    printf 'message-info "mpv: %s"\n' "$file_dl" > "$QUTE_FIFO"
     mpv "$file_dl"
 else
+    printf 'message-info "mpv: %s"\n' "$QUTE_URL" > "$QUTE_FIFO"
     mpv "$QUTE_URL"
 fi
