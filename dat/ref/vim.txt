@@ -56,7 +56,9 @@ scroll
 ------
     <C-e>       down one line without moving cursor
     <C-y>       up one line without moving cursor
-    zz          center line in window
+    zb          current line to bottom of window
+    zz          current line to center of window
+    zt          current line to top of window
 
 enter insert mode
 -----------------

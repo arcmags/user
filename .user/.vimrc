@@ -1,17 +1,20 @@
-"" ~/.vimrc ::
-
 vim9script
+## ~/.vimrc ::
+
 set nocompatible
 filetype plugin on
 
 # TODO: fzf integration
 # TODO: ranger?, vifm?
 # TODO: tweak indent navigation funcion
+# TODO: tweak vismode
 # TODO: comment navigation function
 # TODO: move line(s) function?
 # TODO: comment toggle comment char?
 # TODO: fix <C-Space> mapping inside tmux?
 # TODO: path substitution $HOME > ~ in statusbar
+# TODO: add comments to everything
+# TODO: make BufClose take args: hidden, all, etc, ...
 
 # file:
 set autoread
@@ -335,7 +338,6 @@ command! VidirTitle VidirTitle()
 ## functions ::
 def BufClose(bang = '')
     const buf = bufnr('%')
-    const bufname = bufname(buf) == '' ? '[no name]' : bufname(buf)
     const filetype = getbufvar(buf, '&filetype')
     const buftype = filetype == 'netrw' ? 'netrw' : getbufvar(buf, '&buftype')
     const wincurrent = winnr()

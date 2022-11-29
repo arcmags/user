@@ -58,9 +58,9 @@ color_bar = xresources['*.color4']
 color_menu = xresources['*.color5']
 color_special = xresources['*.color6']
 color_fg = xresources['*.color7']
-color_inactive = xresources['*.color8']
+color_comment = xresources['*.color8']
 color_error = xresources['*.color9']
-color_title = xresources['*.color10']
+color_good = xresources['*.color10']
 color_heading = xresources['*.color12']
 color_link = xresources['*.color14']
 
@@ -70,20 +70,20 @@ c.colors.completion.category.border.bottom = color_menu
 c.colors.completion.category.border.top = color_menu
 c.colors.completion.category.fg = color_heading
 c.colors.completion.even.bg = color_menu
-c.colors.completion.fg = [color_fg, color_inactive, color_special]
+c.colors.completion.fg = [color_fg, color_comment, color_special]
 c.colors.completion.item.selected.bg = color_bar
 c.colors.completion.item.selected.border.bottom = color_bar
 c.colors.completion.item.selected.border.top = color_bar
-c.colors.completion.item.selected.fg = color_title
+c.colors.completion.item.selected.fg = color_good
 c.colors.completion.item.selected.match.fg = color_warn
 c.colors.completion.match.fg = color_warn
 c.colors.completion.odd.bg = color_menu
 c.colors.completion.scrollbar.bg = color_bar
-c.colors.completion.scrollbar.fg = color_inactive
+c.colors.completion.scrollbar.fg = color_comment
 
 # context menu:
 c.colors.contextmenu.disabled.bg = color_menu
-c.colors.contextmenu.disabled.fg = color_inactive
+c.colors.contextmenu.disabled.fg = color_comment
 c.colors.contextmenu.menu.bg = color_menu
 c.colors.contextmenu.menu.fg = color_fg
 c.colors.contextmenu.selected.bg = color_bar
@@ -96,7 +96,7 @@ c.colors.downloads.error.fg = color_warn
 c.colors.downloads.start.bg = color_bar
 c.colors.downloads.start.fg = color_heading
 c.colors.downloads.stop.bg = color_bar
-c.colors.downloads.stop.fg = color_title
+c.colors.downloads.stop.fg = color_good
 c.colors.downloads.system.bg = 'none'
 c.colors.downloads.system.fg = 'none'
 
@@ -104,7 +104,7 @@ c.colors.downloads.system.fg = 'none'
 c.colors.hints.bg = color_link
 #c.colors.hints.bg = hex_to_rgba(color_link, 0.8)
 c.colors.hints.fg = color_bg
-c.colors.hints.match.fg = color_inactive
+c.colors.hints.match.fg = color_comment
 c.hints.border = '2px solid ' + color_bg
 
 # hints: mapping:
@@ -118,50 +118,50 @@ c.colors.messages.error.border = color_bg
 c.colors.messages.error.fg = color_error
 c.colors.messages.info.bg = color_bg
 c.colors.messages.info.border = color_bg
-c.colors.messages.info.fg = color_title
+c.colors.messages.info.fg = color_good
 c.colors.messages.warning.bg = color_bg
 c.colors.messages.warning.border = color_bg
 c.colors.messages.warning.fg = color_warn
 
 # prompts:
 c.colors.prompts.bg = color_menu
-c.colors.prompts.border = '2px solid ' + color_inactive
+c.colors.prompts.border = '2px solid ' + color_comment
 c.colors.prompts.fg = color_fg
 c.colors.prompts.selected.bg = color_bar
 c.colors.prompts.selected.fg = color_fg
 
 # statusbar:
 c.colors.statusbar.caret.bg = color_bar
-c.colors.statusbar.caret.fg = color_title
+c.colors.statusbar.caret.fg = color_good
 c.colors.statusbar.caret.selection.bg = color_bar
-c.colors.statusbar.caret.selection.fg = color_title
+c.colors.statusbar.caret.selection.fg = color_good
 c.colors.statusbar.command.bg = color_bg
 c.colors.statusbar.command.fg = color_fg
 c.colors.statusbar.command.private.bg = color_bg
 c.colors.statusbar.command.private.fg = color_fg
 c.colors.statusbar.insert.bg = color_bar
-c.colors.statusbar.insert.fg = color_title
+c.colors.statusbar.insert.fg = color_good
 c.colors.statusbar.normal.bg = color_bar
 c.colors.statusbar.normal.fg = color_heading
 c.colors.statusbar.passthrough.bg = color_bar
-c.colors.statusbar.passthrough.fg = color_title
+c.colors.statusbar.passthrough.fg = color_good
 c.colors.statusbar.private.bg = color_bar
 c.colors.statusbar.private.fg = color_warn
-c.colors.statusbar.progress.bg = color_inactive
+c.colors.statusbar.progress.bg = color_comment
 c.colors.statusbar.url.error.fg = color_warn
-c.colors.statusbar.url.fg = color_title
+c.colors.statusbar.url.fg = color_good
 c.colors.statusbar.url.hover.fg = color_special
-c.colors.statusbar.url.success.http.fg = color_title
-c.colors.statusbar.url.success.https.fg = color_title
+c.colors.statusbar.url.success.http.fg = color_good
+c.colors.statusbar.url.success.https.fg = color_good
 c.colors.statusbar.url.warn.fg = color_warn
 
 # tabs:
 c.colors.tabs.bar.bg = color_bar
 c.colors.tabs.even.bg = color_bar
 c.colors.tabs.even.fg = color_fg
-c.colors.tabs.indicator.error = color_inactive
-c.colors.tabs.indicator.start = color_inactive
-c.colors.tabs.indicator.stop = color_inactive
+c.colors.tabs.indicator.error = color_comment
+c.colors.tabs.indicator.start = color_comment
+c.colors.tabs.indicator.stop = color_comment
 c.colors.tabs.indicator.system = 'none'
 c.colors.tabs.odd.bg = color_bar
 c.colors.tabs.odd.fg = color_fg
@@ -170,13 +170,13 @@ c.colors.tabs.pinned.even.fg = color_fg
 c.colors.tabs.pinned.odd.bg = color_bar
 c.colors.tabs.pinned.odd.fg = color_fg
 c.colors.tabs.pinned.selected.even.bg = color_bar
-c.colors.tabs.pinned.selected.even.fg = color_title
+c.colors.tabs.pinned.selected.even.fg = color_good
 c.colors.tabs.pinned.selected.odd.bg = color_bar
-c.colors.tabs.pinned.selected.odd.fg = color_title
+c.colors.tabs.pinned.selected.odd.fg = color_good
 c.colors.tabs.selected.even.bg = color_bar
-c.colors.tabs.selected.even.fg = color_title
+c.colors.tabs.selected.even.fg = color_good
 c.colors.tabs.selected.odd.bg = color_bar
-c.colors.tabs.selected.odd.fg = color_title
+c.colors.tabs.selected.odd.fg = color_good
 
 # darkmode:
 c.colors.webpage.preferred_color_scheme = 'dark'
