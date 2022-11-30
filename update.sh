@@ -45,6 +45,7 @@ files_src=(
     .user/.config/ranger/
     .user/.config/ttyper/
     .user/.config/wal/
+    .user/.config/yt-dlp/
     .user/.config/zathura/
     .user/.ipython/profile_default/ipython_config.py
     .user/.ipython/profile_default/startup/ipythonrc.py

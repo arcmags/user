@@ -30,6 +30,7 @@
 .config/transmission-daemon/settings.json
 .config/ttyper/
 .config/wal/
+.config/yt-dlp/
 .config/zathura/
 .gnupg/gpg-agent.conf
 .gnupg/gpg.conf
