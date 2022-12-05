@@ -10,6 +10,8 @@ Build firmare::
 dztech/dz60rgb_ansi
 ===================
 
+Put keyboard in boot mode.
+
 Flash firmware::
 
     # mount <DEVICE> /mnt/keyboard
@@ -20,7 +22,7 @@ Flash firmware::
 annepro2
 ========
 
-Require annepro2-tools and AnnePro2-Shine.
+Requires annepro2-tools and AnnePro2-Shine.
 
 Put keyboard in boot mode.
 
