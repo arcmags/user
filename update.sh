@@ -18,7 +18,7 @@ files_src=(
     dat/gdnsd/gdnsd.service
     dat/mc-server/datapacks/
     dat/qmk/layouts/
-    dat/qmk/layouts_ascii.txt
+    dat/qmk/layouts.txt
     dat/ref/git.txt
     dat/ref/gui.txt
     dat/ref/nspawn.txt

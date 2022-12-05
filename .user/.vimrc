@@ -119,10 +119,18 @@ augroup END
 g:mapleader = ";"
 set cedit=<C-q>
 set wildcharm=<C-n>
-nnoremap <silent> <leader>w <ScriptCmd>call WinMode()<CR>
-nnoremap <silent> <leader>v <ScriptCmd>call VisMode('v')<CR>
-nnoremap <silent> <leader>V <ScriptCmd>call VisMode('V')<CR>
 nnoremap <silent> <C-w>M <C-w>x
+nnoremap <silent> <leader>V <ScriptCmd>call VisMode('V')<CR>
+nnoremap <silent> <leader>v <ScriptCmd>call VisMode('v')<CR>
+nnoremap <silent> <leader>w <ScriptCmd>call WinMode()<CR>
+noremap <silent> <M-b> <End>
+noremap <silent> <M-h> <Left>
+noremap <silent> <M-j> <Down>
+noremap <silent> <M-k> <Up>
+noremap <silent> <M-l> <Right>
+noremap <silent> <M-n> <PageDown>
+noremap <silent> <M-p> <PageUp>
+noremap <silent> <M-t> <Home>
 noremap <silent> <M-x> <C-x>
 noremap \ ;
 
@@ -209,10 +217,10 @@ vnoremap <silent> <leader>S :sort<CR>:echo 'sorted'<CR>
 vnoremap <silent> <leader>s :sort /^[^A-Za-z0-9]*/<CR>:echo 'sorted'<CR>
 
 # text: move lines:
-nnoremap <silent> <M-j> mz:m+<CR>`z
-nnoremap <silent> <M-k> mz:m-2<CR>`z
-vnoremap <silent> <M-j> :m'>+<CR>`<my`>mzgv`yo`z
-vnoremap <silent> <M-k> :m'<-2<CR>`>my`<mzgv`yo`z
+#nnoremap <silent> <M-j> mz:m+<CR>`z
+#nnoremap <silent> <M-k> mz:m-2<CR>`z
+#vnoremap <silent> <M-j> :m'>+<CR>`<my`>mzgv`yo`z
+#vnoremap <silent> <M-k> :m'<-2<CR>`>my`<mzgv`yo`z
 
 # text: put/yank:
 noremap <silent> Y yg_

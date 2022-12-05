@@ -32,5 +32,4 @@ keymap  t   NEW_TAB
 keymap  T   TAB_LINK
 keymap  x   CLOSE_TAB
 
-
 # vim: set ft=config:

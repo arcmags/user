@@ -20,6 +20,7 @@
 .config/mpv/mpv.conf
 .config/nordvpn/
 .config/nvim/
+.config/openai/
 .config/picom.conf
 .config/pycodestyle
 .config/qmk/qmk.ini
@@ -29,6 +30,7 @@
 .config/shodan/
 .config/transmission-daemon/settings.json
 .config/ttyper/
+.config/ucoin/
 .config/wal/
 .config/yt-dlp/
 .config/zathura/
