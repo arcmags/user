@@ -7,8 +7,8 @@ Build firmare::
     $ qmk compile -kb <KEYBOARD> -km <KEYMAP>
 
 
-dztech/dz60rgb
-==============
+dztech/dz60rgb_ansi
+===================
 
 Flash firmware::
 

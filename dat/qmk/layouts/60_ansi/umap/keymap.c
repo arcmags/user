@@ -56,9 +56,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     /* keyboard ::
     ,-----------------------------------------------------------.
-    |Bt | ~ | ~ | ~ | ~ | ~ | ~ | ~ | ~ | ~ |Tog|VaD|VaI|   ~   |
+    |Bt | ~ | ~ | ~ | ~ | ~ | ~ | ~ | ~ | ~ | ~ |VaD|VaI|Toggle |
     |-----------------------------------------------------------|
-    |  ~  | ~ | ~ | ~ | ~ | ~ | ~ | ~ | ~ | ~ |Mod|HuD|HuI|  ~  |
+    |  ~  | ~ | ~ | ~ | ~ | ~ | ~ | ~ | ~ | ~ | ~ |HuD|HuI|Mode |
     |-----------------------------------------------------------|
     | Tg2  | ~ | ~ | ~ | ~ | ~ | ~ | ~ | ~ |   |SaD|SaI|   ~    |
     |-----------------------------------------------------------|
@@ -67,8 +67,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     | ~  | ~  | ~  |           ~            | ~  | ~  | ~  | ~  |
     `-----------------------------------------------------------'*/
     [2] = LAYOUT_60_ansi(
-        QK_BOOT, KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   RGB_TOG, RGB_VAD, RGB_VAI, KC_NO,
-        KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   RGB_MOD, RGB_HUD, RGB_HUI, KC_NO,
+        QK_BOOT, KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   RGB_VAD, RGB_VAI, RGB_TOG,
+        KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   RGB_HUD, RGB_HUI, RGB_MOD,
         TG(2),   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   RGB_SAD, RGB_SAI,          KC_NO,
         KC_NO,            KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   RGB_SPD, RGB_SPI, KC_NO,            KC_NO,
         KC_NO,   KC_NO,   KC_NO,                              KC_NO,                              KC_NO,   KC_NO,   KC_NO,   KC_NO
