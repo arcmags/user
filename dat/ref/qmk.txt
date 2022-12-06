@@ -19,6 +19,8 @@ Flash firmware::
     # sync
     # umount /mnt/keyboard
 
+Unplug and replug keyboard from USB.
+
 annepro2
 ========
 
