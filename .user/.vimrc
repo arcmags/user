@@ -11,6 +11,7 @@ filetype plugin on
 # TODO: comment navigation function
 # TODO: move line(s) function?
 # TODO: comment toggle comment char?
+# TODO: bool toggle function
 # TODO: fix <C-Space> mapping inside tmux?
 # TODO: path substitution $HOME > ~ in statusbar
 # TODO: add comments to everything
@@ -32,16 +33,17 @@ set backspace=eol,indent,start
 set formatoptions=tcq
 set hidden
 set mouse=a
-set notimeout
+set nojoinspaces
 set nopaste
+set notimeout
 set nrformats=bin,hex
 set scrolloff=8
 set splitbelow
 set splitright
+set tags=tags;/
 set textwidth=0
 set timeoutlen=400
 set ttimeout
-set tags=tags;/
 
 # tab:
 set autoindent
@@ -119,7 +121,7 @@ augroup END
 g:mapleader = ";"
 set cedit=<C-q>
 set wildcharm=<C-n>
-nnoremap <silent> <C-w>M <C-w>x
+nnoremap <silent> <C-w>m <C-w>x
 nnoremap <silent> <leader>V <ScriptCmd>call VisMode('V')<CR>
 nnoremap <silent> <leader>v <ScriptCmd>call VisMode('v')<CR>
 nnoremap <silent> <leader>w <ScriptCmd>call WinMode()<CR>

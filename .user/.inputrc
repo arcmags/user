@@ -15,14 +15,14 @@ set editing-mode vi
 set keymap vi-command
 "|": "A | "
 "()": "A)I $(I"
-Control-a: beginning-of-line
-Control-b: backward-char
-Control-d: delete-char
-Control-e: end-of-line
-Control-f: forward-char
-Control-j: next-history
-Control-k: previous-history
-Control-l: clear-screen
+"\C-a": beginning-of-line
+"\C-b": backward-char
+"\C-d": delete-char
+"\C-e": end-of-line
+"\C-f": forward-char
+"\C-j": next-history
+"\C-k": previous-history
+"\C-l": clear-screen
 "G": end-of-history
 Tab: complete
 "ciW": "lBcW"
@@ -40,14 +40,14 @@ Tab: complete
 "yiw": "lbyw"
 
 set keymap vi-insert
-Control-a: beginning-of-line
-Control-b: backward-char
-Control-d: delete-char
-Control-e: end-of-line
-Control-f: forward-char
-Control-j: next-history
-Control-k: previous-history
-Control-l: clear-screen
+"\C-a": beginning-of-line
+"\C-b": backward-char
+"\C-d": delete-char
+"\C-e": end-of-line
+"\C-f": forward-char
+"\C-j": next-history
+"\C-k": previous-history
+"\C-l": clear-screen
 Tab: complete
 "\e": clear-display
 "\eb": backward-word

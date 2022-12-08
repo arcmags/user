@@ -63,6 +63,7 @@ color_error = xresources['*.color9']
 color_good = xresources['*.color10']
 color_heading = xresources['*.color12']
 color_link = xresources['*.color14']
+color_match = xresources['*.color13']
 
 # completion menu:
 c.colors.completion.category.bg = color_menu
@@ -75,8 +76,8 @@ c.colors.completion.item.selected.bg = color_bar
 c.colors.completion.item.selected.border.bottom = color_bar
 c.colors.completion.item.selected.border.top = color_bar
 c.colors.completion.item.selected.fg = color_good
-c.colors.completion.item.selected.match.fg = color_warn
-c.colors.completion.match.fg = color_warn
+c.colors.completion.item.selected.match.fg = color_match
+c.colors.completion.match.fg = color_match
 c.colors.completion.odd.bg = color_menu
 c.colors.completion.scrollbar.bg = color_bar
 c.colors.completion.scrollbar.fg = color_comment
@@ -146,7 +147,7 @@ c.colors.statusbar.normal.fg = color_heading
 c.colors.statusbar.passthrough.bg = color_bar
 c.colors.statusbar.passthrough.fg = color_good
 c.colors.statusbar.private.bg = color_bar
-c.colors.statusbar.private.fg = color_warn
+c.colors.statusbar.private.fg = color_match
 c.colors.statusbar.progress.bg = color_comment
 c.colors.statusbar.url.error.fg = color_warn
 c.colors.statusbar.url.fg = color_good
