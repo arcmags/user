@@ -24,13 +24,13 @@ if [ "$flag_dl" = 'true' ]; then
         fi
     fi
     if [ "$flag_play" != 'true' ]; then
-        printf 'message-info ":yt-dlp %s [%s]"\n' "$file" "$(du -hs "$file")" > "$QUTE_FIFO"
+        printf 'message-info ":yt-dlp %s [%s]"\n' "$file" "$(du -hs "$file" | cut -f1)" > "$QUTE_FIFO"
     fi
 fi
 
 if [ "$flag_play" = 'true' ]; then
     if [ -e "$file" ]; then
-        printf 'message-info ":mpv %s [%s]"\n' "$file" "$(du -hs "$file")" > "$QUTE_FIFO"
+        printf 'message-info ":mpv %s [%s]"\n' "$file" "$(du -hs "$file" | cut -f1)" > "$QUTE_FIFO"
         mpv "$file"
     else
         printf 'message-info ":mpv %s"\n' "$QUTE_URL" > "$QUTE_FIFO"
