@@ -31,6 +31,7 @@ XTerm.ttyModes: erase ^?
 XTerm.vt100.backarrowKey: false
 !XTerm.vt100.boldColors: false
 XTerm.vt100.cursorBlink: 3
+XTerm.vt100.decTerminalID: vt340
 XTerm.vt100.faceName: Hack
 XTerm.vt100.faceSize: 10
 XTerm.vt100.metaSendsEscape: true

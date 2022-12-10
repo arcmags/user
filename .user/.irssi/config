@@ -114,7 +114,7 @@ channels = (
   { chatnet = "libera"; name = "#monero-dev"; autojoin = "no"; },
   { chatnet = "libera"; name = "#monero-markets"; autojoin = "no"; },
   { chatnet = "libera"; name = "#monero-offtopic"; autojoin = "no"; },
-  { chatnet = "libera"; name = "#neovim"; autojoin = "no"; },
+  { chatnet = "libera"; name = "#neovim"; autojoin = "yes"; },
   { chatnet = "libera"; name = "#networking"; autojoin = "no"; },
   { chatnet = "libera"; name = "#nginx"; autojoin = "no"; },
   { chatnet = "libera"; name = "#node.js"; autojoin = "no"; },

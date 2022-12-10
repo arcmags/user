@@ -641,10 +641,10 @@ formats = {
     awl_separator = " ";
     awl_display_key = "%K%_[%_%w$H$N$S:$H$C$S%K%_]%_";
     awl_display_key_active = "%K%_[%G$N%w:%G$C%K]%_";
-    awl_display_key_visible = "%K%_[$N%w:$C%K]%_";
+    awl_display_key_visible = "%K%_[%_%w$H$N$S:$H$C$S%K%_]%_";
     awl_display_nokey = "%K%_[%_%w$H$N$S:$H$C$S%K%_]%_";
     awl_display_nokey_active = "%K%_[%G$N%w:%G$C%K]%_";
-    awl_display_nokey_visible = "%K%_[$N%w:$C%K]%_";
+    awl_display_nokey_visible = "%K%_[%_%w$H$N$S:$H$C$S%K%_]%_";
     awl_display_header = "";
     awl_title = "";
   };
