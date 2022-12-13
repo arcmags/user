@@ -1,9 +1,24 @@
 ## ~/.config/feh/themes ::
 
-feh --fontpath /usr/share/fonts/TTF --font 'Hack-Bold/10' --draw-tinted \
-    --info 'echo " %n | %wx%h | $(du -h %F | cut -f1) | $(sed -E "s/0*\.//" <<<%z)%% | (%u/%l) "' \
-    --auto-zoom --cache-size 64 --geometry 1800x1000 --image-bg '#00002A' --scale-down \
-    --zoom-step 4 --action1 ';i3-msg fullscreen toggle' --stretch --limit-width 1800 \
-    --thumb-width 220 --thumb-height 160 --no-menus --action2 ';imv %F'
+feh \
+  --auto-zoom \
+  --bg trans \
+  --cache-size 64 \
+  --draw-tinted \
+  --font 'Hack-Regular/10' \
+  --fontpath /usr/share/fonts/TTF \
+  --geometry 1800x1000 \
+  --image-bg '#00002A' \
+  --info 'echo " %n | %wx%h | $(du -h %F | cut -f1) | $(sed -E "s/0*\.//" <<<%z)%% | [%u/%l] "' \
+  --limit-width 1800 \
+  --no-menus \
+  --scale-down \
+  --stretch \
+  --thumb-height 160 \
+  --thumb-width 220 \
+  --zoom-step 4 \
+  --action1 ';i3-msg fullscreen toggle >/dev/null' \
+  --action2 ';i3-msg fullscreen disable >/dev/null; imv %F' \
+  --action3 ';identify -format "%%f  %%wx%%h  %%b  %%kc\n" %F'
 
 # vim: set ft=sh:

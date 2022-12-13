@@ -10,7 +10,7 @@ overlay = true
 overlay_position_bottom = true
 overlay_font = Hack:10
 overlay_background_alpha = 80
-overlay_text = " ${imv_current_file##*/} | ${imv_width}x${imv_height} | $(du -h $imv_current_file | cut -f1) | $imv_scale% | -$imv_scaling_mode- ($imv_current_index/$imv_file_count) "
+overlay_text = " ${imv_current_file##*/} | ${imv_width}x${imv_height} | $(du -h $imv_current_file | cut -f1) | $imv_scale% | -$imv_scaling_mode- [$imv_current_index/$imv_file_count] "
 overlay_text_color = 59F176
 
 [aliases]
@@ -49,7 +49,7 @@ o = zoom -1
 x = close
 f = fullscreen
 d = overlay
-<Shift+question> = exec identify -format "%f  %wx%h  %b  %k\n" $imv_current_file
+<Shift+question> = exec identify -format "%f  %wx%h  %b  %kc\n" $imv_current_file
 <Shift+R> = exec i3-msg resize set 1608 1008, move position center
 c = center
 s = scaling next

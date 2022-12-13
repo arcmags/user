@@ -16,6 +16,7 @@ toggle_pause space
 toggle_pointer
 action_1 f
 action_2 backslash
+action_3 question
 close q
 delete Delete
 delete C-x

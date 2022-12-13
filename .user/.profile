@@ -105,6 +105,7 @@ export HISTIGNORE='ls:ls1:lsl:bg:fg:exit:poweroff:reboot:startx'
 export CDHISTSIZE=20
 
 LESS='-i -x4 -M -R --mouse --wheel-lines=4 -PM ?f%f:[stdin]. ?m(%i/%m) .| %L lines | ?eBot:%Pb\%. | %lt-%lb $'
+LESS='-i -x4 -M -R --mouse --wheel-lines=4 -PM ?f%f:[stdin]. | %L | ?eBot:%Pb\%. | %lt-%lb | ?m[%i/%m] .$'
 if less --help | grep -q 'use-color'; then
     LESS="$LESS"' --use-color -DsG$ -DdB$ -DuC$ -DkR$ -DER$ -DNK$ -DPGb$ -DSyb$ -DMg$'
 else
