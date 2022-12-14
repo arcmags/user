@@ -18,10 +18,10 @@ URxvt.secondaryScreen: 1
 URxvt.secondaryScroll: 0
 URxvt.secondaryWheel: 1
 ! bindings:
+URxvt.keysym.Control-B: command:\033]720;64\007
 URxvt.keysym.Control-C: eval:selection_to_clipboard
 URxvt.keysym.Control-D: command:\033]721;16\007
-URxvt.keysym.Control-N: command:\033]721;64\007
-URxvt.keysym.Control-P: command:\033]720;64\007
+URxvt.keysym.Control-F: command:\033]721;64\007
 URxvt.keysym.Control-U: command:\033]720;16\007
 URxvt.keysym.Control-V: eval:paste_clipboard
 
@@ -49,8 +49,6 @@ Ctrl Shift <Key>B: scroll-back(1,page) \n\
 Ctrl Shift <Key>C: copy-selection(CLIPBOARD) \n\
 Ctrl Shift <Key>D: scroll-forw(1,halfpage) \n\
 Ctrl Shift <Key>F: scroll-forw(1,page) \n\
-Ctrl Shift <Key>N: scroll-forw(1,halfpage) \n\
-Ctrl Shift <Key>P: scroll-back(1,halfpage) \n\
 Ctrl Shift <Key>S: secure() \n\
 Ctrl Shift <Key>U: scroll-back(1,halfpage) \n\
 Ctrl Shift <Key>V: insert-selection(CLIPBOARD)

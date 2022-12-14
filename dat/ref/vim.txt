@@ -10,8 +10,8 @@ Help
     :help ^X   view help for <Ctrl-X>
     :help m_X  view help for X in mode m
 
-Normal Mode
-===========
+Normal
+======
     h           left
     j           down
     k           up
@@ -133,12 +133,6 @@ search
     n           repeat search
     N           repeat search backwards
 
-move (while searching)
-~~~~~~~~~~~~~~~~~~~~~~
-    <C-g>       to next match
-    <C-t>       to previous match
-
-
 enter visual mode
 -----------------
     v           visual
@@ -194,8 +188,8 @@ windows
     <C-w>-      decrease rows
     <C-w>=      make all widows equal size
 
-Insert Mode
-===========
+Insert
+======
     <C-f>       move right (`inoremap <C-f> <Right>`)
     <C-b>       move left (`inoremap <C-b> <Left>`)
     <C-a>       move to beginning of line (`inoremap <C-a> <Home>`)
@@ -211,8 +205,8 @@ Insert Mode
     <C-o>X      issue command X in normal mode
     <Esc>       exit insert mode
 
-Command Mode
-============
+Command
+=======
     <C-f>       move right (`cnoremap <C-f> <Right>`)
     <C-b>       move left (`cnoremap <C-b> <Left>`)
     <C-a>       move to beginning of line (`cnoremap <C-a> <Home>`)
@@ -223,8 +217,20 @@ Command Mode
     <C-r>X      insert contents of register X
     <Esc>       exit command mode
 
-Visual Mode
-===========
+Search
+======
+    <C-g>       move to next match
+    <C-t>       move to previous match
+
+Complete
+========
+    <C-e>       go back to originally typed text and exit completion mode
+    <C-y>       accept currently selected entry and exit completion mode
+    <C-n>       go to next match
+    <C-p>       go to previous match
+
+Visual
+======
     y           yank
     d           delete
     >           indent text

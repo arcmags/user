@@ -40,8 +40,9 @@ files_src=(
     .user/.config/nordvpn/
     .user/.config/picom.conf
     .user/.config/pycodestyle
-    .user/.config/qutebrowser/css/
     .user/.config/qutebrowser/config.py
+    .user/.config/qutebrowser/css/
+    .user/.config/qutebrowser/greasemonkey/
     .user/.config/ranger/
     .user/.config/ttyper/
     .user/.config/wal/

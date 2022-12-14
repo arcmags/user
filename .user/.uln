@@ -24,8 +24,9 @@
 .config/picom.conf
 .config/pycodestyle
 .config/qmk/qmk.ini
-.config/qutebrowser/css/
 .config/qutebrowser/config.py
+.config/qutebrowser/css/
+.config/qutebrowser/greasemonkey/
 .config/ranger/
 .config/shodan/
 .config/transmission-daemon/settings.json

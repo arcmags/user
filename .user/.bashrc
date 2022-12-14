@@ -3,6 +3,7 @@
 
 [[ $- != *i* ]] && return 0
 [ -f "$HOME/.profile" ] && . "$HOME/.profile"
+[ -f /usr/share/fzf/key-bindings.bash ] && . /usr/share/fzf/key-bindings.bash
 
 set -o vi
 shopt -s globstar dotglob
@@ -19,6 +20,3 @@ reload() {
     [ -f "$HOME/.inputrc" ] && bind -f "$HOME/.inputrc"
     . "$HOME/.bashrc"
 }
-
-## fzf ::
-[ -f /usr/share/fzf/key-bindings.bash ] && . /usr/share/fzf/key-bindings.bash

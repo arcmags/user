@@ -89,11 +89,9 @@ export FZF_DEFAULT_OPTS="--height 60% --reverse --tac --no-unicode --no-separato
   --color='hl+:13:regular' --color='hl:13' --color='info:12' --color='label:8:bold' \
   --color='marker:10:bold' --color='pointer:10:bold' --color='preview-bg:-1' \
   --color='preview-fg:-1' --color='prompt:10:bold' --color='query:15:regular' \
-  --color='separator:8:bold' --color='spinner:12:bold' --bind 'ctrl-d:half-page-down' \
-  --bind 'ctrl-u:half-page-up' --bind 'ctrl-n:page-down' --bind 'ctrl-p:page-up' \
-  --bind 'alt-d:half-page-down' --bind 'alt-u:half-page-up' --bind 'alt-n:page-down' \
-  --bind 'alt-p:page-up' --bind 'alt-j:down' --bind 'alt-k:up' --bind 'alt-h:backward-char' \
-  --bind 'alt-l:forward-char' --bind 'alt-t:first' --bind 'alt-b:last' --bind 'alt-v:toggle-preview' \
+  --color='separator:8:bold' --color='spinner:12:bold' --bind 'alt-d:half-page-down' \
+  --bind 'alt-u:half-page-up' --bind 'alt-n:page-down' --bind 'alt-p:page-up' \
+  --bind 'alt-a:first' --bind 'alt-e:last' --bind 'alt-v:toggle-preview' \
   --preview='cat {}' --preview-window hidden"
 
 is_bin gpg && gpg --list-secret-keys '4742C8240A64DA01' >/dev/null 2>&1 && export GPGKEY='4742C8240A64DA01'

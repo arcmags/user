@@ -14,7 +14,7 @@ set editing-mode vi
 
 set keymap vi-command
 "|": "A | "
-"()": "A)I $(I"
+"()": "A)\eI $(\eI"
 "\C-a": beginning-of-line
 "\C-b": backward-char
 "\C-d": delete-char
@@ -22,18 +22,14 @@ set keymap vi-command
 "\C-f": forward-char
 "\C-j": next-history
 "\C-k": previous-history
-"\C-l": clear-screen
+"\C-l": "ddiclear\C-m"
 "G": end-of-history
 Tab: complete
 "ciW": "lBcW"
 "ciw": "lbcw"
 "diW": "lBdW"
 "diw": "lbdw"
-"\e": clear-display
-"\eh": "OD"
-"\ej": "OB"
-"\ek": "OA"
-"\el": "OC"
+"\ev": edit-and-execute-command
 "\ex": backward-kill-line
 "gg": beginning-of-history
 "yiW": "lByW"
@@ -47,17 +43,13 @@ set keymap vi-insert
 "\C-f": forward-char
 "\C-j": next-history
 "\C-k": previous-history
-"\C-l": clear-screen
+"\C-l": "\e\eddiclear\C-m"
 Tab: complete
-"\e": clear-display
+"\ev": edit-and-execute-command
 "\eb": backward-word
 "\ed": kill-word
 "\ef": forward-word
 "\eg": shell-backward-word
-"\eh": "OD"
-"\ej": "OB"
-"\ek": "OA"
-"\el": "OC"
 "\er": backward-kill-word
 "\eu": kill-line
 "\ew": shell-forward-word

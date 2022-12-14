@@ -10,6 +10,10 @@ import subprocess
 dir_dl = '/tmp/web-dl'
 exe_term = ['xterm', '-T', 'xterm_float', '-e']
 
+def bind_hint(key, command):
+    config.bind(',' + key, command)
+    config.bind(key, command, mode='hint')
+
 def hex_to_rgba(hex, alpha):
     hex = hex.strip('#')
     return 'rgba(' + str(int('0x' + hex[0:2], 0)) + ',' + str(int('0x' + \
@@ -299,7 +303,7 @@ c.logging.level.console = 'critical'
 c.logging.level.ram = 'debug'
 
 ## messages ::
-c.messages.timeout = 4000
+c.messages.timeout = 3000
 
 ## new instance ::
 #c.new_instance_open_target = 'tab'
@@ -414,21 +418,36 @@ config.set('content.register_protocol_handler', True, 'https://mail.google.com?e
     #'<Shift-Enter>': '<Return>',
     #'<Ctrl-Enter>': '<Ctrl-Return>'
 #}
+config.unbind(';I')
+config.unbind(';Y')
+config.unbind(';b')
+config.unbind(';d')
+config.unbind(';f')
+config.unbind(';h')
+config.unbind(';i')
+config.unbind(';r')
+config.unbind('r')
 config.unbind('<Ctrl-Shift-w>')
 config.unbind('<Ctrl-w>')
 config.unbind('D')
 config.unbind('d')
-config.bind(';i', 'hint images download')
-config.bind(';p', 'hint links run open -p {hint-url}')
+config.bind(';B', 'hint links tab-bg')
+config.bind(';F', 'hint all')
+config.bind(';I', ':hint images run open -t -- {hint-url}')
+config.bind(';P', 'hint links run open -p {hint-url}')
+config.bind(';R', 'hint --rapid links tab-bg')
+config.bind(';T', 'hint links tab-fg')
+config.bind(';W', 'hint links window')
+config.bind(';m', 'hint all hover')
 config.bind(';x', 'hint all delete')
-config.bind('<Alt-b>', 'fake-key <End>')
+config.bind('<Alt-a>', 'fake-key <Home>')
+config.bind('<Alt-d>', 'fake-key <PgDown>')
+config.bind('<Alt-e>', 'fake-key <End>')
 config.bind('<Alt-h>', 'fake-key <Left>')
 config.bind('<Alt-j>', 'fake-key <Down>')
 config.bind('<Alt-k>', 'fake-key <Up>')
 config.bind('<Alt-l>', 'fake-key <Right>')
-config.bind('<Alt-n>', 'fake-key <PgDown>')
-config.bind('<Alt-p>', 'fake-key <PgUp>')
-config.bind('<Alt-t>', 'fake-key <Home>')
+config.bind('<Alt-u>', 'fake-key <PgUp>')
 config.bind('<Ctrl-Shift-c>', 'fake-key <Ctrl-c>')
 config.bind('<Ctrl-Shift-q>', 'quit')
 config.bind('<Ctrl-c>', 'tab-close')
@@ -443,7 +462,6 @@ config.bind('<Ctrl-p>', 'fake-key <Shift-Tab>')
 config.bind('<Ctrl-q>', 'tab-close')
 config.bind('<Ctrl-r>', 'reload -f')
 config.bind('<Shift-Escape>', 'fake-key <Escape>')
-config.bind('cm', 'clear-messages')
 config.bind('EM', 'hint links userscript mpv.sh')
 config.bind('Em', 'hint links userscript yt-dlp-mpv.sh')
 config.bind('Ev', 'hint links userscript vim.sh')
@@ -453,14 +471,18 @@ config.bind('I', 'hint images run open -t -- {hint-url}')
 config.bind('R', 'hint --rapid links tab-bg')
 config.bind('T', 'hint links tab-fg')
 config.bind('W', 'hint links window')
+config.bind('cm', 'clear-messages')
+config.bind('df', 'hint links download')
+config.bind('di', 'hint images download')
 config.bind('eM', 'spawn -u mpv.sh')
 config.bind('em', 'spawn -u yt-dlp-mpv.sh')
 config.bind('ev', 'spawn -u vim.sh')
 config.bind('ey', 'spawn -u yt-dlp.sh')
 config.bind('gT', 'tab-prev')
 config.bind('gt', 'tab-next')
-config.bind('tb', 'config-cycle statusbar.show always in-mode never')
-config.bind('tt', 'config-cycle tabs.show always multiple never')
+config.bind('tb', 'config-cycle -p -t statusbar.show always in-mode')
+config.bind('tg', 'config-cycle -p -t content.javascript.enabled ;; reload')
+config.bind('tt', 'config-cycle -p -t tabs.show always multiple never')
 
 # caret:
 config.bind('<Alt-h>', 'fake-key <Left>', mode='caret')
@@ -481,6 +503,7 @@ config.bind('<Alt-r>', 'rl-backward-kill-word', mode='command')
 config.bind('<Alt-u>', 'rl-kill-line', mode='command')
 config.bind('<Ctrl-Shift-c>', 'fake-key --global <Ctrl-c>', mode='command')
 config.bind('<Ctrl-Shift-v>', 'fake-key --global <Ctrl-v>', mode='command')
+config.bind('<Ctrl-c>', 'mode-leave', mode='command')
 config.bind('<Ctrl-d>', 'rl-delete-char', mode='command')
 config.bind('<Ctrl-j>', 'command-history-next', mode='command')
 config.bind('<Ctrl-k>', 'command-history-prev', mode='command')
@@ -489,20 +512,20 @@ config.bind('<Ctrl-p>', 'completion-item-focus prev', mode='command')
 config.bind('<Ctrl-x>', 'completion-item-del', mode='command')
 
 # hint:
+config.bind('<Ctrl-c>', 'mode-leave', mode='hint')
 config.bind('B', 'hint links tab-bg', mode='hint')
-config.bind('D', 'hint links download', mode='hint')
 config.bind('F', 'hint all', mode='hint')
-config.bind('H', 'hint all hover', mode='hint')
-config.bind('I', ':hint images run open -t -- {hint-url}', mode='hint')
-config.bind('L', 'hint links', mode='hint')
-config.bind('O', 'hint links fill :open {hint-url}', mode='hint')
+config.bind('m', 'hint all hover', mode='hint')
+config.bind('I', 'hint images run open -t -- {hint-url}', mode='hint')
+config.bind('O', 'hint links fill :open -r -t {hint-url}', mode='hint')
 config.bind('P', 'hint links run open -p {hint-url}', mode='hint')
 config.bind('R', 'hint --rapid links tab-bg', mode='hint')
 config.bind('T', 'hint links tab-fg', mode='hint')
 config.bind('W', 'hint links window', mode='hint')
-config.bind('Y', 'hint links yank', mode='hint')
-config.bind('i', 'hint inputs', mode='hint')
+config.bind('o', 'hint links fill :open {hint-url}', mode='hint')
+config.bind('t', 'hint inputs', mode='hint')
 config.bind('x', 'hint all delete', mode='hint')
+config.bind('y', 'hint links yank', mode='hint')
 
 # insert:
 config.bind('<Alt-b>', 'fake-key <Ctrl-Left>', mode='insert')

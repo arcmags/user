@@ -125,14 +125,6 @@ nnoremap <silent> <C-w>m <C-w>x
 nnoremap <silent> <leader>V <ScriptCmd>call VisMode('V')<CR>
 nnoremap <silent> <leader>v <ScriptCmd>call VisMode('v')<CR>
 nnoremap <silent> <leader>w <ScriptCmd>call WinMode()<CR>
-noremap <silent> <M-b> <End>
-noremap <silent> <M-h> <Left>
-noremap <silent> <M-j> <Down>
-noremap <silent> <M-k> <Up>
-noremap <silent> <M-l> <Right>
-noremap <silent> <M-n> <PageDown>
-noremap <silent> <M-p> <PageUp>
-noremap <silent> <M-t> <Home>
 noremap <silent> <M-x> <C-x>
 noremap \ ;
 
@@ -249,8 +241,6 @@ noremap <silent> ]- <ScriptCmd>call IndentNav(['next', 'less'])<CR>
 noremap <silent> ]= <ScriptCmd>call IndentNav(['next', 'same'])<CR>
 
 # navigation: line:
-noremap <silent> <Space> <C-d>
-noremap <silent> <S-Space> <C-u>
 noremap <silent> <C-j> gj
 noremap <silent> <C-k> gk
 
@@ -261,12 +251,12 @@ nnoremap <silent> <leader>'N <Cmd>setlocal relativenumber!<Bar>setlocal relative
 nnoremap <silent> <leader>'R <Cmd>setlocal readonly!<Bar>setlocal readonly?<CR>
 nnoremap <silent> <leader>'b <Cmd>setlocal buflisted!<Bar>setlocal buflisted?<CR>
 nnoremap <silent> <leader>'c <Cmd>setlocal cursorcolumn!<Bar>setlocal cursorcolumn?<CR>
-nnoremap <silent> <leader>'i <Cmd>execute 'set showtabline=' .. (&showtabline + 1) % 3<Bar>set showtabline?<CR>
 nnoremap <silent> <leader>'l <Cmd>setlocal cursorline!<Bar>setlocal cursorline?<CR>
 nnoremap <silent> <leader>'m <Cmd>setlocal modified!<Bar>setlocal modified?<CR>
 nnoremap <silent> <leader>'n <Cmd>setlocal number!<Bar>setlocal number?<CR>
 nnoremap <silent> <leader>'p <Cmd>setlocal paste!<Bar>setlocal paste?<CR>
 nnoremap <silent> <leader>'s <Cmd>setlocal spell!<Bar>setlocal spell?<CR>
+nnoremap <silent> <leader>'t <Cmd>execute 'set showtabline=' .. (&showtabline + 1) % 3<Bar>set showtabline?<CR>
 nnoremap <silent> <leader>'w <Cmd>setlocal wrap!<Bar>setlocal wrap?<CR>
 nnoremap <silent> <leader>'z <ScriptCmd>call ScrollToggle()<CR>
 nnoremap <silent> <leader><Space> <Cmd>execute v:hlsearch ? ':noh<Bar>echo "nohlsearch"' : ':set hls<Bar>echo "  hlsearch"'<CR>
@@ -293,14 +283,11 @@ cnoremap <C-k> <Up>
 cnoremap <C-l> <C-e>
 cnoremap <M-b> <S-Left>
 cnoremap <M-f> <S-Right>
-cnoremap <M-h> <Left>
 cnoremap <M-k> <C-k>
-cnoremap <M-l> <Right>
 cnoremap <M-v> <C-q>
+cnoremap <expr> <C-c> pumvisible() ? '<C-e>' : '<C-c>'
 cnoremap <expr> <C-e> pumvisible() ? '<C-e>' : '<End>'
 cnoremap <expr> <C-u> pumvisible() ? '<C-e>' : '<C-u>'
-cnoremap <m-j> <Down>
-cnoremap <m-k> <Up>
 
 # insert mode:
 inoremap <C-a> <Home>
@@ -311,17 +298,8 @@ inoremap <C-g> <C-d>
 inoremap <C-h> <BS>
 inoremap <C-l> <C-e>
 inoremap <M-b> <S-Left>
-inoremap <M-d> <C-o>dw
 inoremap <M-f> <S-Right>
-inoremap <M-g> <C-o>B
-inoremap <M-h> <Left>
-inoremap <m-j> <Down>
-inoremap <m-k> <Up>
-inoremap <M-l> <Right>
-inoremap <M-r> <C-o>db
-inoremap <M-u> <C-o>D
-inoremap <M-w> <C-o>W
-inoremap <M-x> <C-o>d0
+inoremap <expr> <C-c> pumvisible() ? '<C-e>' : '<C-c>'
 inoremap <expr> <C-e> pumvisible() ? '<C-e>' : '<End>'
 inoremap <expr> <C-u> pumvisible() ? '<C-e>' : '<C-u>'
 

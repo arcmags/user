@@ -336,12 +336,9 @@ keyboard = (
   { key = "^F"; id = "forward_character"; data = ""; },
   { key = "^K"; id = "backward_history"; data = ""; },
   { key = "^J"; id = "forward_history"; data = ""; },
-  { key = "meta-b"; id = "scroll_backward"; data = ""; },
-  { key = "meta-f"; id = "scroll_forward"; data = ""; },
-  { key = "meta-h"; id = "backward_character"; data = ""; },
-  { key = "meta-j"; id = "forward_history"; data = ""; },
-  { key = "meta-k"; id = "backward_history"; data = ""; },
-  { key = "meta-l"; id = "forward_character"; data = ""; }
+  { key = "^O"; id = "active_window"; data = ""; },
+  { key = "meta-a"; id = "scroll_start"; data = ""; },
+  { key = "meta-e"; id = "scroll_end"; data = ""; }
 );
 
 logs = { };
