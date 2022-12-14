@@ -74,6 +74,8 @@ export VISUAL="$EDITOR"
 export FCEDIT="$EDITOR"
 export SYSTEMD_EDITOR="$EDITOR"
 
+export DICTIONARY='en_US'
+
 if [ -f "$HOME/.lscolors" ]; then
     eval "$(dircolors "$HOME/.lscolors")"
 else
