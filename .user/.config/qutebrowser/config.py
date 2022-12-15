@@ -41,7 +41,7 @@ c.fonts.completion.entry = 'default_size default_family'
 c.fonts.contextmenu = 'default_size default_family'
 c.fonts.debug_console = 'default_size default_family'
 c.fonts.downloads = 'default_size default_family'
-c.fonts.hints = 'bold default_size default_family'
+c.fonts.hints = 'bold 12px default_family'
 c.fonts.keyhint = 'default_size default_family'
 c.fonts.messages.error = 'default_size default_family'
 c.fonts.messages.info = 'default_size default_family'
@@ -187,7 +187,7 @@ c.colors.tabs.selected.odd.fg = color_good
 c.colors.webpage.preferred_color_scheme = 'dark'
 c.colors.webpage.darkmode.enabled = True
 c.colors.webpage.darkmode.algorithm = 'lightness-cielab'
-c.colors.webpage.darkmode.policy.images = 'never'
+c.colors.webpage.darkmode.policy.images = 'smart'
 c.colors.webpage.darkmode.threshold.text = 150
 c.colors.webpage.darkmode.threshold.background = 180
 
@@ -408,6 +408,7 @@ config.set('content.javascript.enabled', True, 'chrome://*/*')
 config.set('content.javascript.enabled', True, 'devtools://*')
 config.set('content.javascript.enabled', True, 'qute://*/*')
 config.set('content.register_protocol_handler', True, 'https://mail.google.com?extsrc=mailto&url=%25s')
+config.set('content.cookies.accept', 'never', '*.leadertelegram.com/*')
 
 ## bindings ::
 #c.bindings.key_mappings = {

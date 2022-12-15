@@ -12,13 +12,23 @@
 // @include     *://*.wiktionary.org/*
 // ==/UserScript==
 
+/* ~/.config/qutebrowser/greasemonkey/wikimedia.css.js :: */
+/* intended for use in qutebrowser with darkmode enabled */
+
 GM_addStyle(`
-    body, #mw-head, #mw-panel, .mw-list-item {
+    body,
+    #mw-head,
+    #mw-panel,
+    .mw-list-item {
         background: #ffffff !important;
     }
-    .vector-menu-heading, .vector-menu-tabs, .vector-menu-tabs a {
+
+    .vector-menu-heading,
+    .vector-menu-tabs a,
+    .vector-menu-tabs {
         background: none !important;
     }
+
     .vector-menu-heading {
         border-bottom: 1px solid #606060 !important;
     }
