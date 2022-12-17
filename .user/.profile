@@ -84,24 +84,14 @@ fi
 
 export GREP_COLORS='mt=38;5;3:mc=48;5;3;38;5;0:fn=38;5;14:ln=38;5;8:bn=38;5;4:se=1;38;5;5'
 
-export FZF_DEFAULT_COMMAND="find -type f -printf '%P\n'"
-export FZF_DEFAULT_OPTS="--height 60% --reverse --tac --no-unicode --no-separator --marker='*' \
-  --color='bg+:4' --color='bg:-1' --color='border:8:bold' --color='disabled:8' \
-  --color='fg+:10:regular' --color='fg:-1' --color='gutter:-1' --color='header:12:bold' \
-  --color='hl+:13:regular' --color='hl:13' --color='info:12' --color='label:8:bold' \
-  --color='marker:10:bold' --color='pointer:10:bold' --color='preview-bg:-1' \
-  --color='preview-fg:-1' --color='prompt:10:bold' --color='query:15:regular' \
-  --color='separator:8:bold' --color='spinner:12:bold' --bind 'alt-d:half-page-down' \
-  --bind 'alt-u:half-page-up' --bind 'alt-n:page-down' --bind 'alt-p:page-up' \
-  --bind 'alt-a:first' --bind 'alt-e:last' --bind 'alt-v:toggle-preview' \
-  --preview='cat {}' --preview-window hidden"
+is_bin fzf && [ -f "$HOME/.config/fzf/profile.sh" ] && . "$HOME/.config/fzf/profile.sh"
 
 is_bin gpg && gpg --list-secret-keys '4742C8240A64DA01' >/dev/null 2>&1 && export GPGKEY='4742C8240A64DA01'
 
 export HISTSIZE=1000
 export HISTFILESIZE=1000
-export HISTCONTROL='ignoredups:ignorespace'
-export HISTIGNORE='ls:ls1:lsl:bg:fg:exit:poweroff:reboot:startx'
+export HISTCONTROL='ignoredups:ignorespace:erasedups'
+export HISTIGNORE='cd[dgilmpst./-]:cdtt*:ls:ls[1l]:bg:builtin cd*:fg:fzf:exit:poweroff:reboot:startx'
 export CDHISTSIZE=20
 
 LESS='-i -x4 -M -R --mouse --wheel-lines=4 -PM ?f%f:[stdin]. ?m(%i/%m) .| %L lines | ?eBot:%Pb\%. | %lt-%lb $'

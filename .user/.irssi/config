@@ -338,7 +338,9 @@ keyboard = (
   { key = "^J"; id = "forward_history"; data = ""; },
   { key = "^O"; id = "active_window"; data = ""; },
   { key = "meta-a"; id = "scroll_start"; data = ""; },
-  { key = "meta-e"; id = "scroll_end"; data = ""; }
+  { key = "meta-d"; id = "scroll_forward"; data = ""; },
+  { key = "meta-e"; id = "scroll_end"; data = ""; },
+  { key = "meta-u"; id = "scroll_backward"; data = ""; }
 );
 
 logs = { };

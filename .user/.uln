@@ -3,6 +3,7 @@
 
 [targets]
 .config/feh/
+.config/fzf/
 .config/gallery-dl/config.json
 .config/geany/colorschemes/
 .config/geany/filedefs/

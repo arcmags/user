@@ -2,8 +2,16 @@
 ## ~/.bashrc ::
 
 [[ $- != *i* ]] && return 0
+
 [ -f "$HOME/.profile" ] && . "$HOME/.profile"
-[ -f /usr/share/fzf/key-bindings.bash ] && . /usr/share/fzf/key-bindings.bash
+
+if is_bin fzf; then
+    if [ -f "$HOME/.config/fzf/profile.bash" ]; then
+        . "$HOME/.config/fzf/profile.bash"
+    elif [ -f /usr/share/fzf/key-bindings.bash ]; then
+        . /usr/share/fzf/key-bindings.bash
+    fi
+fi
 
 set -o vi
 shopt -s globstar dotglob

@@ -381,9 +381,8 @@ c.url.searchengines = {
     'gh': 'https://github.com/search?q={}',
     'imdb': 'https://www.imdb.com/find?q={}',
     'irc': 'https://netsplit.de/channels/?chat={}',
-    'lw': 'https://en.wikibooks.org/wiki/Special:Search?prefix=LaTeX%2F&search={}',
     'mc': 'https://minecraft.fandom.com/wiki/Special:Search?query={}',
-    'wp': 'https://en.wikipedia.org/w/index.php?search={}',
+    'w': 'https://en.wikipedia.org/w/index.php?search={}',
     'yt': 'https://www.youtube.com/results?search_query={}'
 }
 c.url.start_pages = 'file:///home/mags/user/sync/www/link/index.html'
@@ -432,6 +431,7 @@ config.unbind('<Ctrl-Shift-w>')
 config.unbind('<Ctrl-w>')
 config.unbind('D')
 config.unbind('d')
+config.bind(';;', 'hint links')
 config.bind(';B', 'hint links tab-bg')
 config.bind(';F', 'hint all')
 config.bind(';I', ':hint images run open -t -- {hint-url}')
@@ -514,6 +514,7 @@ config.bind('<Ctrl-x>', 'completion-item-del', mode='command')
 
 # hint:
 config.bind('<Ctrl-c>', 'mode-leave', mode='hint')
+config.bind(';', 'hint links', mode='hint')
 config.bind('B', 'hint links tab-bg', mode='hint')
 config.bind('F', 'hint all', mode='hint')
 config.bind('m', 'hint all hover', mode='hint')
