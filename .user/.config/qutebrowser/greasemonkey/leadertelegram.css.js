@@ -7,8 +7,10 @@
 /* intended for qutebrowser with darkmode enabled */
 
 GM_addStyle(`
+    #app,
     #asset-below,
     #main-bottom-container,
+    #main-top-container,
     #site-footer-container,
     #site-header,
     #site-header-container,
@@ -16,18 +18,23 @@ GM_addStyle(`
     #tncms-region-article_bottom,
     #tncms-region-front-full-top,
     .ad-col,
-    .col-md-12,
+    .dfp-ad,
     .fixed-col-right,
+    .grecaptcha-badge,
     .header-promo,
+    .hidden-print,
     .main-sidebar,
     .modal-body,
     .nav-home,
+    .navbar-header,
     .not-logged-in,
     .paging-link,
     .row-senary,
     .site-logo-container,
     .subscription-required,
-    .tnt-photo-purchase {
+    .tnt-ads,
+    .tnt-photo-purchase,
+    .tnt-stack {
         display: none !important;
     }
 `)

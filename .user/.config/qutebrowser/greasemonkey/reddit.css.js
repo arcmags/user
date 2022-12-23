@@ -17,9 +17,17 @@ GM_addStyle(`
     }
 
     body,
+    body:before,
     #header,
+    .commentarea,
     .option,
-    .side {
+    .side,
+    .titlebox,
+    .usertext-body {
         background: none !important;
+    }
+
+    textarea {
+        background: #000000 !important;
     }
 `)

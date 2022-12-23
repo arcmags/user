@@ -2,7 +2,7 @@
 # required:
 #   apps: mpv, ranger, vim, xterm, yt-dlp, zathura
 #   fonts: Hack
-#   userscripts: mpv.sh, vim.sh, yt-dlp.sh, zathura.sh
+#   userscripts: mpv.sh, vim.sh, yt-dlp.sh, yt-dlp-mpv.sh, zathura.sh
 #   xresources: *.color_0 - *.color_15
 
 import subprocess
@@ -184,12 +184,12 @@ c.colors.tabs.selected.odd.bg = color_bar
 c.colors.tabs.selected.odd.fg = color_good
 
 # darkmode:
-c.colors.webpage.preferred_color_scheme = 'dark'
-c.colors.webpage.darkmode.enabled = True
 c.colors.webpage.darkmode.algorithm = 'lightness-cielab'
+c.colors.webpage.darkmode.enabled = True
 c.colors.webpage.darkmode.policy.images = 'smart'
-c.colors.webpage.darkmode.threshold.text = 150
-c.colors.webpage.darkmode.threshold.background = 180
+c.colors.webpage.darkmode.threshold.background = 160
+c.colors.webpage.darkmode.threshold.text = 128
+c.colors.webpage.preferred_color_scheme = 'dark'
 
 ## content  ::
 c.content.default_encoding = 'utf-8'
@@ -407,7 +407,6 @@ config.set('content.javascript.enabled', True, 'chrome://*/*')
 config.set('content.javascript.enabled', True, 'devtools://*')
 config.set('content.javascript.enabled', True, 'qute://*/*')
 config.set('content.register_protocol_handler', True, 'https://mail.google.com?extsrc=mailto&url=%25s')
-config.set('content.cookies.accept', 'never', '*.leadertelegram.com/*')
 
 ## bindings ::
 #c.bindings.key_mappings = {
@@ -461,7 +460,6 @@ config.bind('<Ctrl-o>', 'set-cmd-text -s :open -w')
 config.bind('<Ctrl-o>', 'set-cmd-text -s :open -w')
 config.bind('<Ctrl-p>', 'fake-key <Shift-Tab>')
 config.bind('<Ctrl-q>', 'tab-close')
-config.bind('<Ctrl-r>', 'reload -f')
 config.bind('<Shift-Escape>', 'fake-key <Escape>')
 config.bind('EM', 'hint links userscript mpv.sh')
 config.bind('Em', 'hint links userscript yt-dlp-mpv.sh')
@@ -490,6 +488,7 @@ config.bind('<Alt-h>', 'fake-key <Left>', mode='caret')
 config.bind('<Alt-j>', 'fake-key <Down>', mode='caret')
 config.bind('<Alt-k>', 'fake-key <Up>', mode='caret')
 config.bind('<Alt-l>', 'fake-key <Right>', mode='caret')
+config.bind('<Ctrl-c>', 'mode-leave', mode='caret')
 config.bind('<Ctrl-d>', 'run-with-count 8 move-to-next-line', mode='caret')
 config.bind('<Ctrl-e>', 'scroll down', mode='caret')
 config.bind('<Ctrl-u>', 'run-with-count 8 move-to-prev-line', mode='caret')
@@ -557,6 +556,7 @@ config.bind('<Ctrl-w>', 'fake-key <Ctrl-Backspace>', mode='insert')
 # prompt:
 config.bind('<Alt-k>', 'rl-kill-line', mode='command')
 config.bind('<Alt-r>', 'rl-backward-kill-word', mode='command')
+config.bind('<Ctrl-c>', 'mode-leave', mode='prompt')
 config.bind('<Ctrl-d>', 'rl-delete-char', mode='command')
 config.bind('<Ctrl-j>', 'command-history-next', mode='command')
 config.bind('<Ctrl-k>', 'command-history-prev', mode='command')
