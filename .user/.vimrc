@@ -126,6 +126,8 @@ nnoremap <silent> <leader>V <ScriptCmd>call VisMode('V')<CR>
 nnoremap <silent> <leader>v <ScriptCmd>call VisMode('v')<CR>
 nnoremap <silent> <leader>w <ScriptCmd>call WinMode()<CR>
 noremap <silent> <M-x> <C-x>
+noremap <silent> <leader>Q Q
+noremap Q <Nop>
 noremap \ ;
 
 # buffer: new:
