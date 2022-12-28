@@ -21,7 +21,7 @@ set keymap vi-command
 "\C-f": forward-char
 "\C-j": next-history
 "\C-k": previous-history
-"\C-l": "ddiclear\C-m"
+"\C-l": clear-display
 "\ea": beginning-of-history
 "\ee": end-of-history
 "\ev": edit-and-execute-command
@@ -43,7 +43,7 @@ set keymap vi-insert
 "\C-f": forward-char
 "\C-j": next-history
 "\C-k": previous-history
-"\C-l": "\e\eddiclear\C-m"
+"\C-l": clear-display
 "\ea": beginning-of-history
 "\eb": backward-word
 "\ed": kill-word

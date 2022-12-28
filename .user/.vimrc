@@ -129,6 +129,8 @@ noremap <silent> <M-x> <C-x>
 noremap <silent> <leader>Q Q
 noremap Q <Nop>
 noremap \ ;
+noremap R gR
+noremap gR R
 
 # buffer: new:
 nnoremap <silent> <C-w><C-e> <Cmd>Explore<CR>

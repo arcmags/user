@@ -276,7 +276,7 @@ c.editor.encoding = 'utf-8'
 c.editor.remove_file = True
 
 c.fileselect.handler = 'external'
-c.fileselect.folder.command = exe_term = ['ranger', '--choosedir={}']
+c.fileselect.folder.command = exe_term + ['ranger', '--choosedir={}']
 c.fileselect.multiple_files.command = exe_term + ['ranger', '--choosefiles={}']
 c.fileselect.single_file.command = exe_term + ['ranger', '--choosefile={}']
 
