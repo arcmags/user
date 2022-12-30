@@ -205,8 +205,8 @@ Insert
     <C-o>X      issue command X in normal mode
     <Esc>       exit insert mode
 
-Command
-=======
+Command/Search
+==============
     <C-f>       move right (`cnoremap <C-f> <Right>`)
     <C-b>       move left (`cnoremap <C-b> <Left>`)
     <C-a>       move to beginning of line (`cnoremap <C-a> <Home>`)
@@ -215,7 +215,10 @@ Command
     <C-d>       delete character under cursor (`cnoremap <C-d> <Del>`)
     <C-w>       delete word before cursor
     <C-r>X      insert contents of register X
-    <Esc>       exit command mode
+    <C-r><C-w>  insert word under cursor
+    <C-r><C-a>  insert WORD under cursor
+    <C-r><C-l>  insert line under cursor
+    <Esc>       exit command/search mode
 
 Search
 ======

@@ -12,4 +12,4 @@ set page-cache-size 32
 set zoom-step 4
 set recolor true
 
-map ;'i toggle_statusbar
+map ;s toggle_statusbar

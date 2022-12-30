@@ -149,6 +149,7 @@ is_bin gpg && gpg() { command gpg --no-greeting -q "$@"; }
 
 ip() { command ip -color=auto "$@"; }
 
+lls() { ls --color=always | less -R; }
 ls() { LANG=C command ls -ALh --color=auto --group-directories-first "$@"; }
 ls1() { ls -1 "$@"; }
 lsl() { ls -l "$@"; }

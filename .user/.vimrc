@@ -16,6 +16,7 @@ filetype plugin on
 # TODO: path substitution $HOME > ~ in statusbar
 # TODO: add comments to everything
 # TODO: make BufClose take args: hidden, all, etc, ...
+# TODO: tweak xclip/paste, maybe make function...
 
 # file:
 set autoread
@@ -171,7 +172,7 @@ nnoremap <C-w>B <ScriptCmd>BufList!<CR>:buf<Space>
 nnoremap <C-w>b <ScriptCmd>BufList<CR>:buf<Space>
 
 # window: new:
-nnoremap <silent> <C-w>` <Cmd>terminal ++noclose<CR><Cmd>resize 8<CR>
+nnoremap <silent> <C-w>` <Cmd>3split<CR><Cmd>terminal ++curwin ++noclose<CR>
 
 # window: close:
 nnoremap <silent> <C-c> <ScriptCmd>call WinClose('')<CR>
@@ -249,21 +250,21 @@ noremap <silent> <C-j> gj
 noremap <silent> <C-k> gk
 
 # vim: toggle:
-nnoremap <silent> <leader>'<Space> <Cmd>let @/=''<Bar>echo '"/ = ""'<CR>
-nnoremap <silent> <leader>'M <Cmd>setlocal modifiable!<Bar>setlocal modifiable?<CR>
-nnoremap <silent> <leader>'N <Cmd>setlocal relativenumber!<Bar>setlocal relativenumber?<CR>
-nnoremap <silent> <leader>'R <Cmd>setlocal readonly!<Bar>setlocal readonly?<CR>
-nnoremap <silent> <leader>'b <Cmd>setlocal buflisted!<Bar>setlocal buflisted?<CR>
-nnoremap <silent> <leader>'c <Cmd>setlocal cursorcolumn!<Bar>setlocal cursorcolumn?<CR>
-nnoremap <silent> <leader>'l <Cmd>setlocal cursorline!<Bar>setlocal cursorline?<CR>
-nnoremap <silent> <leader>'m <Cmd>setlocal modified!<Bar>setlocal modified?<CR>
-nnoremap <silent> <leader>'n <Cmd>setlocal number!<Bar>setlocal number?<CR>
-nnoremap <silent> <leader>'p <Cmd>setlocal paste!<Bar>setlocal paste?<CR>
-nnoremap <silent> <leader>'s <Cmd>setlocal spell!<Bar>setlocal spell?<CR>
-nnoremap <silent> <leader>'t <Cmd>execute 'set showtabline=' .. (&showtabline + 1) % 3<Bar>set showtabline?<CR>
-nnoremap <silent> <leader>'w <Cmd>setlocal wrap!<Bar>setlocal wrap?<CR>
-nnoremap <silent> <leader>'z <ScriptCmd>call ScrollToggle()<CR>
 nnoremap <silent> <leader><Space> <Cmd>execute v:hlsearch ? ':noh<Bar>echo "nohlsearch"' : ':set hls<Bar>echo "  hlsearch"'<CR>
+nnoremap <silent> <leader>t/ <Cmd>let @/=''<Bar>echo '"/ = ""'<CR>
+nnoremap <silent> <leader>tM <Cmd>setlocal modifiable!<Bar>setlocal modifiable?<CR>
+nnoremap <silent> <leader>tR <Cmd>setlocal readonly!<Bar>setlocal readonly?<CR>
+nnoremap <silent> <leader>tb <Cmd>setlocal buflisted!<Bar>setlocal buflisted?<CR>
+nnoremap <silent> <leader>tc <Cmd>setlocal cursorcolumn!<Bar>setlocal cursorcolumn?<CR>
+nnoremap <silent> <leader>tl <Cmd>setlocal cursorline!<Bar>setlocal cursorline?<CR>
+nnoremap <silent> <leader>tm <Cmd>setlocal modified!<Bar>setlocal modified?<CR>
+nnoremap <silent> <leader>tn <Cmd>setlocal number!<Bar>setlocal number?<CR>
+nnoremap <silent> <leader>tp <Cmd>setlocal paste!<Bar>setlocal paste?<CR>
+nnoremap <silent> <leader>tr <Cmd>setlocal relativenumber!<Bar>setlocal relativenumber?<CR>
+nnoremap <silent> <leader>ts <Cmd>setlocal spell!<Bar>setlocal spell?<CR>
+nnoremap <silent> <leader>tt <Cmd>execute 'set showtabline=' .. (&showtabline + 1) % 3<Bar>set showtabline?<CR>
+nnoremap <silent> <leader>tw <Cmd>setlocal wrap!<Bar>setlocal wrap?<CR>
+nnoremap <silent> <leader>tz <ScriptCmd>call ScrollToggle()<CR>
 
 # vim: query:
 nnoremap <silent> <leader>"M <Cmd>setlocal modifiable?<CR>
@@ -309,6 +310,7 @@ inoremap <expr> <C-u> pumvisible() ? '<C-e>' : '<C-u>'
 
 # terminal mode:
 tnoremap <C-w><C-w> <C-w>w
+tnoremap <silent> <C-w>` <ScriptCmd>call BufClose('')<CR><ScriptCmd>call WinClose('')<CR>
 tnoremap <silent> <C-\><C-n> <C-\><C-n><Cmd>setlocal nonumber<CR>
 tnoremap <silent> <C-\>N <C-\><C-n><Cmd>setlocal nonumber<CR>
 tnoremap <silent> <C-\>n <C-\><C-n><Cmd>setlocal nonumber<CR>
