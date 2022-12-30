@@ -3,7 +3,7 @@
 ## update.sh ::
 # Copy source files to target directory preserving relative paths.
 
-dir_target="$PWD"
+dir_script="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 dir_src="$HOME/user"
 files_src=(
     bin/img-web
@@ -93,6 +93,13 @@ files=()
 for file in "${files_src[@]}"; do
     [ -e "$file" ] && files+=("$file")
 done
-cp -r --parents "${files[@]}" "$dir_target"
+cp -r --parents "${files[@]}" "$dir_script"
+
+if [ "$1" = '--git' ] || [ "$1" = '-G' ]; then
+    cd "$dir_script"
+    git add --all
+    git commit -m "update.sh $(date +'%F %R')" -S
+    git push
+fi
 
 # vim: set ft=bash

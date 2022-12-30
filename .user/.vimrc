@@ -229,14 +229,6 @@ if exists('$DISPLAY') && executable('xclip')
     noremap <silent> <leader>p :let @x = system('xclip -sel clipboard -o')<CR>"xp
 endif
 
-# text: search:
-nnoremap <leader>/ /<C-r><C-w>
-nnoremap <leader>? ?<C-r><C-w>
-nnoremap <leader>r :%s/<C-r><C-w>/
-vnoremap <leader>/ y/\V<C-R>=escape(@",'/\')<CR>
-vnoremap <leader>? y?\V<C-R>=escape(@",'/\')<CR>
-vnoremap <leader>r y:%s/\V<C-R>=escape(@",'/\')<CR>/
-
 # navigation: indent:
 noremap <silent> [+ <ScriptCmd>call IndentNav(['prev', 'more'])<CR>
 noremap <silent> [- <ScriptCmd>call IndentNav(['prev', 'less'])<CR>
@@ -267,12 +259,13 @@ nnoremap <silent> <leader>tw <Cmd>setlocal wrap!<Bar>setlocal wrap?<CR>
 nnoremap <silent> <leader>tz <ScriptCmd>call ScrollToggle()<CR>
 
 # vim: query:
-nnoremap <silent> <leader>"M <Cmd>setlocal modifiable?<CR>
-nnoremap <silent> <leader>"R <Cmd>setlocal readonly?<CR>
-nnoremap <silent> <leader>"b <Cmd>setlocal buflisted?<CR>
-nnoremap <silent> <leader>"f <Cmd>echo &filetype<CR>
-nnoremap <silent> <leader>"h <ScriptCmd>call HiGroup()<CR>
-nnoremap <silent> <leader>"p <Cmd>setlocal paste?<CR>
+nnoremap <silent> <leader>rM <Cmd>setlocal modifiable?<CR>
+nnoremap <silent> <leader>rR <Cmd>setlocal readonly?<CR>
+nnoremap <silent> <leader>rb <Cmd>setlocal buflisted?<CR>
+nnoremap <silent> <leader>rf <Cmd>echo &filetype<CR>
+nnoremap <silent> <leader>rh <ScriptCmd>call HiGroup()<CR>
+nnoremap <silent> <leader>rp <Cmd>setlocal paste?<CR>
+nnoremap <silent> <leader>rs <Cmd>setlocal spell?<CR>
 
 # vim: reload:
 noremap <silent> <leader><C-l> <Cmd>source ~/.vimrc<Bar>nohlsearch<CR><Cmd>echo 'source ~/.vimrc'<CR>
