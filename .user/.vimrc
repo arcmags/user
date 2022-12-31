@@ -15,7 +15,6 @@ filetype plugin on
 # TODO: fix <C-Space> mapping inside tmux?
 # TODO: path substitution $HOME > ~ in statusbar
 # TODO: add comments to everything
-# TODO: make BufClose take args: hidden, all, etc, ...
 # TODO: tweak xclip/paste, maybe make function...
 
 # file:
@@ -114,8 +113,10 @@ set wildoptions=pum
 ## autocommands ::
 augroup vimrc
     autocmd!
+    autocmd FileChangedRO * setlocal noreadonly | MsgWarn('W: readonly buffer')
     autocmd BufEnter * silent! lcd %:p:h
-    autocmd BufWritePre * SpaceTrim() | LineTrim()
+    autocmd BufWritePre * TextTrim()
+    autocmd TerminalWinOpen * setlocal nonumber
 augroup END
 
 ## mappings ::
@@ -145,75 +146,68 @@ inoremap <silent> <C-s> <Esc><Cmd>write<CR>
 nnoremap <silent> <C-s> <Cmd>write<CR>
 vnoremap <silent> <C-s> <Esc><Cmd>write<CR>
 
-# buffer: close:
-nnoremap <silent> <C-w><C-x> <ScriptCmd>call BufClose('')<CR>
-nnoremap <silent> <C-w>X <ScriptCmd>call BufClose('!')<CR>
-nnoremap <silent> <C-w>x <ScriptCmd>call BufClose('')<CR>
-nnoremap <silent> <C-x> <ScriptCmd>call BufClose('')<CR>
-tnoremap <silent> <C-w><C-x> <ScriptCmd>call BufClose('')<CR>
-tnoremap <silent> <C-w>X <ScriptCmd>call BufClose('!')<CR>
-tnoremap <silent> <C-w>x <ScriptCmd>call BufClose('')<CR>
-tnoremap <silent> <C-x> <ScriptCmd>call BufClose('')<CR>
-
 # buffer: next/previous:
-nnoremap <silent> <C-n> <ScriptCmd>call BufNext()<CR>
-nnoremap <silent> <C-p> <ScriptCmd>call BufPrev()<CR>
-nnoremap <silent> <C-w><C-n> <ScriptCmd>call BufNext()<CR>
-nnoremap <silent> <C-w><C-p> <ScriptCmd>call BufPrev()<CR>
-nnoremap <silent> <C-w>n <ScriptCmd>call BufNext()<CR>
-nnoremap <silent> <C-w>p <ScriptCmd>call BufPrev()<CR>
-tnoremap <silent> <C-w><C-n> <ScriptCmd>call BufNext()<CR>
-tnoremap <silent> <C-w><C-p> <ScriptCmd>call BufPrev()<CR>
-tnoremap <silent> <C-w>n <ScriptCmd>call BufNext()<CR>
-tnoremap <silent> <C-w>p <ScriptCmd>call BufPrev()<CR>
+nnoremap <silent> <C-n> <Cmd>silent bnext<CR>
+nnoremap <silent> <C-p> <Cmd>silent bprevious<CR>
+nnoremap <silent> <C-w><C-n> <Cmd>silent bnext<CR>
+nnoremap <silent> <C-w><C-p> <Cmd>silent bprevious<CR>
+nnoremap <silent> <C-w>n <Cmd>silent bnext<CR>
+nnoremap <silent> <C-w>p <Cmd>silent bprevious<CR>
+tnoremap <silent> <C-w><C-n> <Cmd>silent bnext<CR>
+tnoremap <silent> <C-w><C-p> <Cmd>silent bprevious<CR>
+tnoremap <silent> <C-w>n <Cmd>silent bnext<CR>
+tnoremap <silent> <C-w>p <Cmd>silent bprevious<CR>
 
 # buffer: list
-nnoremap <C-w>B <ScriptCmd>BufList!<CR>:buf<Space>
-nnoremap <C-w>b <ScriptCmd>BufList<CR>:buf<Space>
+nnoremap <C-w>B <ScriptCmd>call BufList('!')<CR>:buf<Space>
+nnoremap <C-w>b <ScriptCmd>call BufList()<CR>:buf<Space>
+
+# buffer: wipe:
+nnoremap <silent> <C-w><C-x> <ScriptCmd>call BufWipe()<CR>
+nnoremap <silent> <C-w>X <ScriptCmd>call BufWipe('!')<CR>
+nnoremap <silent> <C-w>x <ScriptCmd>call BufWipe()<CR>
+nnoremap <silent> <C-x> <ScriptCmd>call BufWipe()<CR>
+tnoremap <silent> <C-w><C-x> <ScriptCmd>call BufWipe()<CR>
+tnoremap <silent> <C-w>X <ScriptCmd>call BufWipe('!')<CR>
+tnoremap <silent> <C-w>x <ScriptCmd>call BufWipe()<CR>
+tnoremap <silent> <C-x> <ScriptCmd>call BufWipe()<CR>
 
 # window: new:
 nnoremap <silent> <C-w>` <Cmd>3split<CR><Cmd>terminal ++curwin ++noclose<CR>
 
 # window: close:
-nnoremap <silent> <C-c> <ScriptCmd>call WinClose('')<CR>
-nnoremap <silent> <C-q> <ScriptCmd>call WinClose('')<CR>
-nnoremap <silent> <C-w><C-c> <ScriptCmd>call WinClose('')<CR>
-nnoremap <silent> <C-w><C-q> <ScriptCmd>call WinClose('')<CR>
-nnoremap <silent> <C-w>C <ScriptCmd>call WinClose('!')<CR>
+nnoremap <silent> <C-q> <ScriptCmd>call WinClose()<CR>
+nnoremap <silent> <C-w><C-q> <ScriptCmd>call WinClose()<CR>
 nnoremap <silent> <C-w>Q <ScriptCmd>call WinClose('!')<CR>
-nnoremap <silent> <C-w>c <ScriptCmd>call WinClose('')<CR>
-nnoremap <silent> <C-w>q <ScriptCmd>call WinClose('')<CR>
-tnoremap <silent> <C-w><C-c> <ScriptCmd>call WinClose('')<CR>
-tnoremap <silent> <C-w><C-q> <ScriptCmd>call WinClose('')<CR>
-tnoremap <silent> <C-w>C <ScriptCmd>call WinClose('!')<CR>
+nnoremap <silent> <C-w>q <ScriptCmd>call WinClose()<CR>
+tnoremap <silent> <C-w><C-q> <ScriptCmd>call WinClose()<CR>
 tnoremap <silent> <C-w>Q <ScriptCmd>call WinClose('!')<CR>
-tnoremap <silent> <C-w>c <ScriptCmd>call WinClose('')<CR>
-tnoremap <silent> <C-w>q <ScriptCmd>call WinClose('')<CR>
+tnoremap <silent> <C-w>q <ScriptCmd>call WinClose()<CR>
 
 # tab: move:
-nnoremap <silent> <C-w>GT <ScriptCmd>call TabLeft()<CR>
-nnoremap <silent> <C-w>Gt <ScriptCmd>call TabRight()<CR>
+nnoremap <silent> <C-w>GT <ScriptCmd>call TabMove('left')<CR>
+nnoremap <silent> <C-w>Gt <ScriptCmd>call TabMove('right')<CR>
 
 # tab: new:
 nnoremap <silent> <C-w><C-t> <Cmd>execute 'tabnew' .. (@% == "" ? "" : " %")<CR>
 nnoremap <silent> <C-w>t <Cmd>execute 'tabnew' .. (@% == "" ? "" : " %")<CR>
 
 # text: format:
-nnoremap <silent> <leader>0 <ScriptCmd>call SpaceTrim()<CR><ScriptCmd>call LineTrim()<CR>
+nnoremap <silent> <leader>0 <ScriptCmd>call TextTrim()<CR>
 nnoremap <silent> <leader>1 Vip:keeppatterns s/ \+/\r/g<CR>
 nnoremap <silent> <leader>D <ScriptCmd>call Date('!')<CR>
 nnoremap <silent> <leader>J VipJ
 nnoremap <silent> <leader>d <ScriptCmd>call Date('')<CR>
 nnoremap <silent> <leader>f gqip
-nnoremap <silent> <leader>S Vip:sort<CR>:echo 'sorted'<CR>
-nnoremap <silent> <leader>s Vip:sort /^[^A-Za-z0-9]*/<CR>:echo 'sorted'<CR>
+nnoremap <silent> <leader>S Vip:sort<CR>
+nnoremap <silent> <leader>s Vip:sort /^[^A-Za-z0-9]*/<CR>
 noremap <silent> <leader>U <ScriptCmd>call CommentToggle('!')<CR>
 noremap <silent> <leader>h <ScriptCmd>call HTMLToggle()<CR>
 noremap <silent> <leader>u <ScriptCmd>call CommentToggle('')<CR>
-vnoremap <silent> <leader>1 :keeppatterns s/ \+/\r/g<CR>
+vnoremap <silent> <leader>1 <Cmd>keeppatterns s/ \+/\r/g<CR>
 vnoremap <silent> <leader>f gq
-vnoremap <silent> <leader>S :sort<CR>:echo 'sorted'<CR>
-vnoremap <silent> <leader>s :sort /^[^A-Za-z0-9]*/<CR>:echo 'sorted'<CR>
+vnoremap <silent> <leader>S <Cmd>sort<CR>
+vnoremap <silent> <leader>s <Cmd>sort /^[^A-Za-z0-9]*/<CR>
 
 # text: move lines:
 #nnoremap <silent> <M-j> mz:m+<CR>`z
@@ -225,8 +219,8 @@ vnoremap <silent> <leader>s :sort /^[^A-Za-z0-9]*/<CR>:echo 'sorted'<CR>
 noremap <silent> Y yg_
 if exists('$DISPLAY') && executable('xclip')
     nnoremap <silent> <leader>y <Cmd>yank<Bar>call system('xclip -sel clipboard',@0)<CR>
-    vnoremap <silent> <leader>y y<CR>:call system('xclip -sel clipboard',@0)<CR>
-    noremap <silent> <leader>p :let @x = system('xclip -sel clipboard -o')<CR>"xp
+    vnoremap <silent> <leader>y y<CR><Cmd>call system('xclip -sel clipboard',@0)<CR>
+    noremap <silent> <leader>p <Cmd>let @x = system('xclip -sel clipboard -o')<CR>"xp
 endif
 
 # navigation: indent:
@@ -242,7 +236,7 @@ noremap <silent> <C-j> gj
 noremap <silent> <C-k> gk
 
 # vim: toggle:
-nnoremap <silent> <leader><Space> <Cmd>execute v:hlsearch ? ':noh<Bar>echo "nohlsearch"' : ':set hls<Bar>echo "  hlsearch"'<CR>
+nnoremap <silent> <leader><Space> <Cmd>execute v:hlsearch ? ':noh<Bar>echo ":noh"' : ':set hls<Bar>echo "  hlsearch"'<CR>
 nnoremap <silent> <leader>t/ <Cmd>let @/=''<Bar>echo '"/ = ""'<CR>
 nnoremap <silent> <leader>tM <Cmd>setlocal modifiable!<Bar>setlocal modifiable?<CR>
 nnoremap <silent> <leader>tR <Cmd>setlocal readonly!<Bar>setlocal readonly?<CR>
@@ -256,7 +250,7 @@ nnoremap <silent> <leader>tr <Cmd>setlocal relativenumber!<Bar>setlocal relative
 nnoremap <silent> <leader>ts <Cmd>setlocal spell!<Bar>setlocal spell?<CR>
 nnoremap <silent> <leader>tt <Cmd>execute 'set showtabline=' .. (&showtabline + 1) % 3<Bar>set showtabline?<CR>
 nnoremap <silent> <leader>tw <Cmd>setlocal wrap!<Bar>setlocal wrap?<CR>
-nnoremap <silent> <leader>tz <ScriptCmd>call ScrollToggle()<CR>
+nnoremap <silent> <leader>tz <Cmd>if &scrolloff == 999<Bar>setlocal scrolloff<<Bar>else<Bar>setlocal scrolloff=999<Bar>endif<Bar>setlocal scrolloff?<CR>
 
 # vim: query:
 nnoremap <silent> <leader>rM <Cmd>setlocal modifiable?<CR>
@@ -303,57 +297,15 @@ inoremap <expr> <C-u> pumvisible() ? '<C-e>' : '<C-u>'
 
 # terminal mode:
 tnoremap <C-w><C-w> <C-w>w
-tnoremap <silent> <C-w>` <ScriptCmd>call BufClose('')<CR><ScriptCmd>call WinClose('')<CR>
-tnoremap <silent> <C-\><C-n> <C-\><C-n><Cmd>setlocal nonumber<CR>
-tnoremap <silent> <C-\>N <C-\><C-n><Cmd>setlocal nonumber<CR>
-tnoremap <silent> <C-\>n <C-\><C-n><Cmd>setlocal nonumber<CR>
-tnoremap <silent> <C-w><C-n> <C-w>N<Cmd>setlocal nonumber<CR>
-tnoremap <silent> <C-w>N <C-w>N<Cmd>setlocal nonumber<CR>
+tnoremap <silent> <C-w>` <ScriptCmd>call BufWipe()<Bar>call WinClose()<CR>
 
 ## commands ::
 command! -bang BufList BufList(<q-bang>)
-command! -nargs=+ -complete=command OutCap OutCap(<q-args>)
-command! -nargs=? Cmd CmdExec(<q-args>)
 command! -nargs=? CntSet CntSet(<args>)
-command! -nargs=? Sh execute 'silent ! ' .. <q-args> | redraw!
-command! BufWipeHidden BufWipeHidden()
-command! TabLeft TabLeft()
-command! TabRight TabRight()
-command! VidirClean VidirClean()
-command! VidirTitle VidirTitle()
+command! -nargs=? Sh execute 'silent ! ' .. <q-args> <Bar> redraw!
+command! BufWipeUnlisted BufWipeUnlisted()
 
 ## functions ::
-def BufClose(bang = '')
-    const buf = bufnr('%')
-    const filetype = getbufvar(buf, '&filetype')
-    const buftype = filetype == 'netrw' ? 'netrw' : getbufvar(buf, '&buftype')
-    const wincurrent = winnr()
-    var cmd = 'bwipeout'
-    var cmdbang = bang
-    if index(['help', 'netrw', 'terminal'], buftype) >= 0
-        cmdbang = '!'
-    endif
-    if empty(cmdbang) && getbufvar(buf, '&modified')
-        MsgError('E: unsaved buffer modified')
-        return
-    endif
-    for tab in range(1, tabpagenr('$'))
-        tabnext
-        for win in filter(range(1, winnr('$')), 'winbufnr(v:val) == ' .. buf)
-            execute ':' .. win .. 'wincmd w'
-            if len(filter(range(1, bufnr('$')), 'buflisted(v:val) && v:val != ' .. buf)) > 0
-                silent bprevious
-            else
-                execute 'enew'
-            endif
-        endfor
-    endfor
-    execute ':' .. wincurrent .. 'wincmd w'
-    if bufexists(buf)
-        execute cmd .. cmdbang .. ' ' .. buf
-    endif
-enddef
-
 def BufList(bang = '')
     const bufs = bang == '!' ? filter(range(1, bufnr('$')), 'bufexists(v:val)') :
       filter(range(1, bufnr('$')), 'buflisted(v:val)')
@@ -415,45 +367,43 @@ def BufList(bang = '')
     echohl NONE
 enddef
 
-def BufNext()
-    if ! &buflisted && &filetype == 'netrw'
-        echo 'netrw'
-        const buf = bufnr('%')
-        if len(filter(range(1, bufnr('$')), 'buflisted(v:val)')) == 0
-            silent enew
-        else
-            silent bnext
-        endif
-        execute 'bwipeout! ' .. buf
+def BufWipe(bang = '')
+    const buf = bufnr('%')
+    const wincur = winnr()
+    var cmd = 'bwipeout'
+    if index(['help', 'netrw', 'terminal'], &filetype == 'netrw' ? 'netrw' : &buftype) >= 0
+        cmd ..= '!'
+    elseif empty(bang) && &modified
+        MsgError('E: unsaved buffer modified')
+        return
     else
-        silent bnext
+        cmd ..= bang
+    endif
+    for tab in range(1, tabpagenr('$'))
+        tabnext
+        for win in filter(range(1, winnr('$')), 'winbufnr(v:val) == ' .. buf)
+            execute ':' .. win .. 'wincmd w'
+            if len(filter(range(1, bufnr('$')), 'buflisted(v:val) && v:val != ' .. buf)) > 0
+                silent bprevious
+            else
+                enew
+            endif
+        endfor
+    endfor
+    execute ':' .. wincur .. 'wincmd w'
+    if bufexists(buf)
+        execute cmd .. ' ' .. buf
     endif
 enddef
 
-def BufPrev()
-    if ! &buflisted && &filetype == 'netrw'
-        echo 'netrw'
-        const buf = bufnr('%')
-        if len(filter(range(1, bufnr('$')), 'buflisted(v:val)')) == 0
-            silent enew
-        else
-            silent bprevious
-        endif
-        execute 'bwipeout! ' .. buf
-    else
-        silent bprevious
-    endif
-enddef
-
-def BufWipeHidden()
-    const bufs = filter(range(1, bufnr('$')), 'bufexists(v:val) && !(bufloaded(v:val)) && !(buflisted(v:val))')
-    for buf in bufs
+def BufWipeUnlisted()
+    for buf in filter(range(1, bufnr('$')), 'bufexists(v:val) && ! buflisted(v:val) && bufwinnr(v:val) == -1')
         execute 'bwipeout! ' .. buf
     endfor
 enddef
 
 def CommentToggle(bang = '')
-    if &modifiable == false
+    if ! &modifiable
         return
     endif
     var line1 = line('.')
@@ -512,7 +462,10 @@ def CommentToggle(bang = '')
             text_out = substitute(text, regex_comment, sub_line, '')
         endif
         if text != text_out
-            setline(line, text_out)
+            try
+                setline(line, text_out)
+            catch
+            endtry
         endif
     endfor
 enddef
@@ -606,15 +559,6 @@ def IndentNav(move = ['next', 'same'])
     endif
 enddef
 
-def LineTrim()
-    if &readonly
-        return
-    endif
-    var pos = getpos(".")
-    :%s/\($\n\s*\)\+\%$//e
-    setpos(".", pos)
-enddef
-
 def MsgError(msg = '')
     echohl ErrorMsg
     echomsg msg
@@ -633,37 +577,23 @@ def MsgMode(msg = '')
     echohl NONE
 enddef
 
-def OutCap(cmd = '')
-    if cmd == ''
-        return
-    endif
-    var output = ''
-    redir => output
-    silent execute 'legacy ' .. cmd
-    redir END
-    if !empty(output)
-        enew
-        silent put =output
-        setlocal nomodified
-    endif
+def MsgWarn(msg = '')
+    echohl WarningMsg
+    echomsg msg
+    echohl NONE
 enddef
 
-def ScrollToggle()
-    if &scrolloff == 999
-        setlocal scrolloff<
-    else
-        setlocal scrolloff=999
-    endif
-    setlocal scrolloff?
-enddef
-
-def SpaceTrim()
-    if &readonly
+def TextTrim()
+    if ! &modifiable
         return
     endif
-    var pos = getpos(".")
-    :%s/\s\+$//e
-    setpos(".", pos)
+    const pos = getpos('.')
+    try
+        keeppatterns :%s/\s\+$//e
+        keeppatterns :%s/\($\n\s*\)\+\%$//e
+    catch
+    endtry
+    setpos('.', pos)
 enddef
 
 def g:StatusLine(): string
@@ -707,14 +637,6 @@ def g:StatusLine(): string
     endif
     line ..= '%2{strlen(getline("."))}' .. sepcolon .. '%2c %)'
     return line
-enddef
-
-def TabLeft()
-    if tabpagenr() == 1
-        tabmove
-    else
-        tabmove -1
-    endif
 enddef
 
 def g:TabLine(): string
@@ -778,23 +700,20 @@ def g:TabLine(): string
     return line
 enddef
 
-def TabRight()
-    if tabpagenr() == tabpagenr('$')
-        tabmove 0
-    else
-        tabmove +
+def TabMove(move = 'left')
+    if move == 'left'
+        if tabpagenr() == 1
+            tabmove
+        else
+            tabmove -1
+        endif
+    elseif move == 'right'
+        if tabpagenr() == tabpagenr('$')
+            tabmove 0
+        else
+            tabmove +
+        endif
     endif
-enddef
-
-def VidirClean()
-    silent keeppatterns :%s/\.\([A-Za-z0-9]\{1,4\}\)$/\L.\1/e
-enddef
-
-def VidirTitle()
-    VidirClean()
-    silent keeppatterns :%s/\(^\| \+\)\(\w\)\(\w*\)/\u\2\L\3/ge
-    silent keeppatterns :%s/[^A-Za-z0-9 \t\.\/_-]//ge
-    silent keeppatterns :%s/ \+\(\w\)\(\w*\)/\u\1\L\2/ge
 enddef
 
 def VisMode(mode = 'v')
@@ -838,7 +757,7 @@ def WinClose(bang = '')
         const bufsclean = filter(copy(bufs), '!getbufvar(v:val, "&modified")')
         if empty(bang) && len(bufsclean) != len(bufs)
             if len(bufsclean) > 0
-                silent execute 'bdelete ' .. join(bufsclean, ' ')
+                silent execute 'bwipeout ' .. join(bufsclean, ' ')
             endif
             MsgError('E: unsaved buffer modified')
             return

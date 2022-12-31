@@ -4,7 +4,7 @@
 [targets]
 .config/feh/
 .config/fzf/
-.config/gallery-dl/config.json
+.config/gallery-dl/
 .config/geany/colorschemes/
 .config/geany/filedefs/
 .config/geany/filetype_extensions.conf
@@ -40,7 +40,10 @@
 .gnupg/gpg.conf
 .ipython/profile_default/ipython_config.py
 .ipython/profile_default/startup/ipythonrc.py
-.irssi/
+.irssi/certs/
+.irssi/scripts/
+.irssi/config
+.irssi/utheme.theme
 .local/share/applications/vim.desktop
 .local/share/fonts/
 .local/share/qutebrowser/qtwebengine_dictionaries/

@@ -117,5 +117,13 @@ Init and pull submodules::
     $ git submodule init
     $ git submodule update
 
+note
+----
+
+If any submodules fail to update, they all fail to checkout. You need to individually
+update each submodule then::
+
+    $ git submodule init
+    $ for sm in $(git submodule status | cut -f2 -d' '); do git submodule update "$sm"; done
 
 .. vim: set ft=rst:

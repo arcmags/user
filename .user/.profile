@@ -68,6 +68,7 @@ export PS2='\[\e[0m\] '
 [ -d "$UDIR/dat/figlet" ] && export FIGLET_FONTDIR="$UDIR/dat/figlet"
 
 export TMPDIR='/tmp'
+mkdir -p "$TMPDIR/web-dl"
 
 export EDITOR='vim'
 export VISUAL="$EDITOR"
@@ -126,6 +127,7 @@ export QT_QPA_PLATFORMTHEME='qt5ct'
 
 ## aliases ::
 [ -d "$UDIR/dat" ] && cdd() { cd "$UDIR/dat"; }
+[ -d "$TMPDIR/web-dl" ] && cde() { cd "$TMPDIR/web-dl"; }
 [ -d "$UDIR/git" ] && cdg() { cd "$UDIR/git"; }
 [ -d "$UDIR/sync/img" ] && cdi() { cd "$UDIR/sync/img"; }
 [ -d "$UDIR/local" ] && cdl() { cd "$UDIR/local"; }
