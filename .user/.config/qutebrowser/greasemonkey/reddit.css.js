@@ -19,9 +19,11 @@ GM_addStyle(`
     body,
     body:before,
     #header,
+    #siteTable,
     .commentarea,
     .option,
     .side,
+    .sitetable,
     .titlebox,
     .usertext-body {
         background: none !important;
