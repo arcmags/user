@@ -1,32 +1,46 @@
 ===================
 Vim Quick Reference
 ===================
-This is a quick reference list of commonly used Vim key bindings.
-It is not a complete list.
 
-Help
-====
-    :help X    view help for X
-    :help ^X   view help for <Ctrl-X>
-    :help m_X  view help for X in mode m
+Keybindings
+===========
 
-Normal
-======
+The standard vim notation of ``<cr>`` for Enter, ``<esc>`` for escape, and
+``<c-KEY>`` for Control-KEY is used below.
+
+A ``word`` refers to a sequence of letters, digits, and underscores, while a
+``WORD`` refers to a sequence of non-black characters.
+
+Any binding that is not default is indicated by the map command used to create
+it in parenthesis.
+
+Normal Mode
+-----------
+
+get help::
+
+    :h X<cr>    view help for X
+    :h ^X<cr>   view help for <Ctrl-X>
+    :h m_X<cr>  view help for X in mode m
+    K           view help word under cursor
+
+move cursor::
+
     h           left
     j           down
     k           up
     l           right
-    H           top of screen
-    M           middle of screen
-    L           bottom of screen
+    H           to top of screen
+    M           to middle of screen
+    L           to bottom of screen
     w           forward to start of word
-    W           forward to start of word (w/punctuation)
+    W           forward to start of WORD
     b           backward to start of word
-    B           backward to start of word (w/punctuation)
+    B           backward to start of WORD
     e           forward to end of word
-    E           forward to end of word (w/punctuation)
+    E           forward to end of WORD
     ge          backward to end of word
-    gE          backward to end of word (w/punctuation)
+    gE          backward to end of WORD
     0           to start of line
     ^           to first non-blank character in line
     $           to end of line
@@ -43,34 +57,25 @@ Normal
     TX          to after previous X
     ;           repeat previous f,t,F,T movement
     ,           repeat previous f,t,F,T movement backwards
-    <C-d>       down half page
-    <C-u>       up half page
-    <C-f>       down one page
-    <C-b>       up one page
-    <C-o>       to previous jump position
-    <C-i>       to next jump position
+    <c-d>       down half page
+    <c-u>       up half page
+    <c-f>       down one page
+    <c-b>       up one page
+    <c-o>       to previous jump position
+    <c-i>       to next jump position
     `X          to mark X`
     'X          to line with mark X
 
-scroll
-------
-    <C-e>       down one line without moving cursor
-    <C-y>       up one line without moving cursor
+scroll::
+
+    <c-e>       down one line without moving cursor
+    <c-y>       up one line without moving cursor
     zb          current line to bottom of window
     zz          current line to center of window
     zt          current line to top of window
 
-enter insert mode
------------------
-    i           before cursor
-    a           after cursor
-    I           at beginning of line
-    A           at end of line
-    o           on new line below
-    O           on new line above
+delete::
 
-delete
-------
     x           character
     dd          line
     D           to end of line
@@ -81,159 +86,225 @@ delete
     daw         word and space
     d^          to first non-blank character in line
 
-change
-------
+change::
+
     s           character
     cc          entire line
     C           to end of line
 
-replace
--------
+replace::
+
     r           single character
     R           enter replace mode
 
-format
-------
+format::
+
     gq          selected text
     gqip        paragraph
     gq}         to next blank line
 
-indent
-------
+indent::
+
     >>          indent line
     <<          de-indent line
 
-join
-----
+join::
+
     J           with line below with a space in between
     gJ          with line below without a space in between
 
-repeat
------
+repeat::
+
     .           repeat last text changing command
 
-undo/redo
----------
+undo/redo::
+
     u           undo
-    <C-r>       redo
+    <c-r>       redo
     U           restore last changed line
 
-yank/put
---------
+yank/put::
+
     yy          yank a line
-    Y           yank to end of line (`noremap Y y$`)
     p           put after cursor
     P           put before cursor
     ]p          put and indent to current line
 
-search
-------
-    /X          search for pattern X
-    ?X          search backwards for pattern X
+search::
+
+    /X<cr>      search for pattern X
+    ?X<cr>      search backwards for pattern X
     n           repeat search
     N           repeat search backwards
 
-enter visual mode
------------------
-    v           visual
-    V           visual line
-    <C-v>       visual block
-    gv          reselect last visual selection
+search and replace::
 
-spelling
---------
+    :%s/X/Y/<cr>    replace first X with Y on all lines
+    :%s/X/Y/g<cr>   replace every X with Y on all lines
+    :%s/X/Y/gc<cr>  replace every X with Y on all lines with confirmation prompt
+
+spelling::
+
     ]s          next misspelled word
     [s          previous misspelled word
     z=          show suggestions
     zg          add word to dictionary
     zw          remove word from dictionary
 
-buffers
--------
-    <C-n>       next (`noremap <C-n> :bnext<CR>`)
-    <C-p>       previous (`noremap <C-p> :bprevious<CR>`)
-    <C-s>       save (`noremap <C-s> :write<CR>`)
+buffers::
 
-registers
----------
+    :bn<cr>     go to next buffer
+    :bp<cr>     go to previous buffer
+    :bd<cr>     unload buffer
+    :bw<cr>     wipeout buffer (stronger than :bd)
+    :w<cr>      save buffer
+
+registers::
+
     "Xy         yank into register X
     "Xp         put from register X
 
-macros
-------
+macros::
+
     qX          record macro X
     q           stop recording macro
     @X          run macro X
     @@          rerun last macro
 
-windows
--------
-    <C-w>q      quit
-    <C-c>       quit (`noremap <C-c> <C-w>q`)
-    <C-w>s      split
-    <C-w>v      split vertically
-    <C-w>w      focus next
-    <C-w>h      focus left
-    <C-w>l      focus right
-    <C-w>j      focus below
-    <C-w>k      focus above
-    <C-w>H      move left
-    <C-w>L      move right
-    <C-w>J      move down
-    <C-w>L      move up
-    <C-w>x      exchange next
-    <C-w><      increase columns
-    <C-w>>      decrease columns
-    <C-w>+      increase rows
-    <C-w>-      decrease rows
-    <C-w>=      make all widows equal size
+windows::
 
-Insert
-======
-    <C-f>       move right (`inoremap <C-f> <Right>`)
-    <C-b>       move left (`inoremap <C-b> <Left>`)
-    <C-a>       move to beginning of line (`inoremap <C-a> <Home>`)
-    <C-e>       move to end of line (`inoremap <C-e> <End>`)
-    <C-t>       indent line
-    <C-g>       de-indent line (`inoremap <C-g> <C-d>`)
-    <C-h>       delete character before cursor (`inoremap <C-h> <BS>`)
-    <C-d>       delete character under cursor (`inoremap <C-d> <Del>`)
-    <C-w>       delete word before cursor
-    <C-n>       auto-complete next match
-    <C-p>       auto-complete previous match
-    <C-r>X      insert contents of register X
-    <C-o>X      issue command X in normal mode
-    <Esc>       exit insert mode
+    :close<cr>  close window
+    <c-w>c      "
+    <c-w>s      split
+    <c-w>v      split vertically
+    <c-w>w      focus next
+    <c-w>h      focus left
+    <c-w>l      focus right
+    <c-w>j      focus below
+    <c-w>k      focus above
+    <c-w>H      move left
+    <c-w>L      move right
+    <c-w>J      move down
+    <c-w>L      move up
+    <c-w>x      exchange next
+    <c-w><      increase columns
+    <c-w>>      decrease columns
+    <c-w>+      increase rows
+    <c-w>-      decrease rows
+    <c-w>=      make all widows equal size
 
-Command/Search
-==============
-    <C-f>       move right (`cnoremap <C-f> <Right>`)
-    <C-b>       move left (`cnoremap <C-b> <Left>`)
-    <C-a>       move to beginning of line (`cnoremap <C-a> <Home>`)
-    <C-e>       move to end of line (`cnoremap <C-e> <End>`)
-    <C-h>       delete character before cursor (`cnoremap <C-h> <BS>`)
-    <C-d>       delete character under cursor (`cnoremap <C-d> <Del>`)
-    <C-w>       delete word before cursor
-    <C-r>X      insert contents of register X
-    <C-r><C-w>  insert word under cursor
-    <C-r><C-a>  insert WORD under cursor
-    <C-r><C-l>  insert line under cursor
-    <Esc>       exit command/search mode
+quitting::
 
-Search
-======
-    <C-g>       move to next match
-    <C-t>       move to previous match
+    :q<cr>      close window, quit if last window and all buffers are unmodified
+    <c-w>q      "
+    :x<cr>      save buffer if modified, close window, quit if last window and all buffers are unmodified
+    ZZ          "
+    :q!<cr>     close window, quit if last window (without saving any buffers)
+    ZQ          "
+    :wq<cr>     save buffer, close window, quit if last window and all buffers are unmodified
+    :qa<cr>     quit if all buffers are unmodified
+    :xa<cr>     save all modified buffers, quit
+    :qa!<cr>    quit (without saving any buffers)
 
-Complete
-========
-    <C-e>       go back to originally typed text and exit completion mode
-    <C-y>       accept currently selected entry and exit completion mode
-    <C-n>       go to next match
-    <C-p>       go to previous match
+Insert Mode
+-----------
+
+enter insert mode from normal mode::
+
+    i           before cursor
+    a           after cursor
+    I           at beginning of line
+    A           at end of line
+    o           on new line below
+    O           on new line above
+
+insert mode mappings::
+
+    <c-f>       move right (`inoremap <c-f> <Right>`)
+    <c-b>       move left (`inoremap <c-b> <Left>`)
+    <c-a>       move to beginning of line (`inoremap <c-a> <Home>`)
+    <c-e>       move to end of line (`inoremap <c-e> <End>`)
+    <c-t>       indent line
+    <c-g>       de-indent line (`inoremap <c-g> <c-d>`)
+    <c-h>       delete character before cursor (`inoremap <c-h> <BS>`)
+    <c-d>       delete character under cursor (`inoremap <c-d> <Del>`)
+    <c-w>       delete word before cursor
+    <c-n>       show/select next completion match
+    <c-p>       show/select previous completion match
+    <c-r>X      insert contents of register X
+    <c-o>X      issue command X in normal mode
+    <esc>       exit insert mode
+    <c-c>       "
+
+Search Mode
+-----------
+
+enter search mode from normal/visual mode::
+
+    /           search forward
+    ?           search backward
+
+search mode mappings::
+
+    <c-g>       move to next match
+    <c-t>       move to previous match
+
+Command/Search Mode
+-------------------
+
+Enter command mode from normal or visual mode::
+
+    :
+
+command mode mappings::
+
+    <c-f>       move right (`cnoremap <c-f> <Right>`)
+    <c-q>       open command-line window (`set cedit=<c-q>`)
+    <c-b>       move left (`cnoremap <c-b> <Left>`)
+    <c-a>       move to beginning of line (`cnoremap <c-a> <Home>`)
+    <c-e>       move to end of line (`cnoremap <c-e> <End>`)
+    <c-h>       delete character before cursor (`cnoremap <c-h> <BS>`)
+    <c-d>       delete character under cursor (`cnoremap <c-d> <Del>`)
+    <c-w>       delete word before cursor
+    <c-r>X      insert contents of register X
+    <c-r><c-w>  insert word under cursor
+    <c-r><c-a>  insert WORD under cursor
+    <c-r><c-l>  insert line under cursor
+    <esc>       exit command/search mode
+    <c-c>       "
+
+
+Completion Menu
+---------------
+
+display completion menu in insert mode::
+
+    <c-n>
+
+display completion menu in command mode::
+
+    <tab>
+    <c-n>       (`set wildcar=<c-n>`)
+
+completion menu mappings::
+
+    <c-e>       go back to originally typed text and exit completion mode
+    <c-y>       accept currently selected entry and exit completion mode
+    <c-n>       go to next match
+    <c-p>       go to previous match
 
 Visual
-======
+------
+
+enter visual mode from normal mode::
+
+    v           visual
+    V           visual line
+    <c-v>       visual block
+    gv          reselect last visual selection
+
+visual mode mappings::
+
     y           yank
     d           delete
     >           indent text
@@ -244,22 +315,32 @@ Visual
     gq          format
 
 Terminal Mode
-=============
-    <C-f>       move right
-    <C-b>       move left
-    <C-a>       move to beginning of line
-    <C-e>       move to end of line
-    <C-h>       delete character before cursor
-    <C-d>       delete character under cursor
-    <C-\><C-n>  enter normal mode
-    <C-w>N      enter normal mode
+-------------
+
+launch terminal buffer from normal mode::
+
+    :term<cr>
+
+terminal mode mappings::
+
+    <c-f>       move right
+    <c-b>       move left
+    <c-a>       move to beginning of line
+    <c-e>       move to end of line
+    <c-h>       delete character before cursor
+    <c-d>       delete character under cursor
+    <c-\><c-n>  enter normal mode
+    <c-w>N      enter normal mode
 
 Regex
 =====
-This regex assumes `:set magic`. See `:help pattern.txt` for complete documentation.
+
+This regex assumes ``:set magic``. See ``:h pattern.txt`` for complete docs.
 
 characters
 ----------
+::
+
     .           anything
     ^           start of line
     $           end of line
@@ -267,13 +348,15 @@ characters
     \>          end of word
     \%V         inside visual selection
     \b          <BS>
-    \e          <Esc>
+    \e          <esc>
     \n          end of line
     \t          <Tab>
     \r          <CR>
 
 multiples
 ---------
+::
+
     X*          zero or more X
     X\+         one or more X
     X\?         zero or one X
@@ -285,11 +368,15 @@ multiples
 
 groups
 ------
+::
+
     \(\)        group
     \|          or
 
 collections/ranges
 ------------------
+::
+
     [A-Z]       every character from A to Z
     [^A-Z]      every character except A to Z
     [A-Za-z0-9] every character A to Z or a to z or 0 to 9
@@ -297,7 +384,9 @@ collections/ranges
 
 predefined collections
 ----------------------
-These generally cannot be nested inside brackets [].
+
+These generally cannot be nested inside brackets ``[]``::
+
     \a          alpha: [A-Za-z]
     \A          non-alpha: [^A-Za-z]
     \h          alpha, underscore: [A-Za-z_]
@@ -316,7 +405,9 @@ These generally cannot be nested inside brackets [].
 
 collection character classes
 ----------------------------
-Intended to include inside brackets [].
+
+Intended to include inside brackets []::
+
     [:alnum:]   alpha, digit: [A-Za-z0-9]
     [:alpha:]   alpha: [A-Za-z]
     [:blank:]   <Space>, <Tab>
@@ -324,18 +415,17 @@ Intended to include inside brackets [].
     [:lower:]   lowercase alpha: [a-z]
     [:upper:]   uppercase alpha: [A-Z]
 
-examples
---------
+useful examples
+---------------
+::
+
     "\_[^"]*"   text inside double quotes split over multiple lines
 
-Search and Replace
-==================
-    :%s/X/Y/    replace first on all lines X with Y
-    :%s/X/Y/g   replace all X with Y
-    :%s/X/Y/gc  replace all X with Y with confirmations
 
 Registers
 =========
+::
+
     0           last yank
     "           last delete, yank
     %           current file name
@@ -344,6 +434,8 @@ Registers
 
 Marks
 =====
+::
+
     <           first character of last selected visual area
     >           last character of last selected visual area
 

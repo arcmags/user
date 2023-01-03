@@ -23,7 +23,7 @@ hi FoldColumn ctermfg=08 ctermbg=00 cterm=bold term=bold
 hi Folded ctermfg=08 ctermbg=00 cterm=bold term=bold
 hi LineNr ctermfg=04 ctermbg=00 cterm=none term=none
 hi NonText ctermfg=04 cterm=none term=none
-hi SignColumn ctermfg=04 ctermbg=00 cterm=none term=none
+hi SignColumn ctermfg=07 ctermbg=00 cterm=none term=none
 hi VertSplit ctermfg=04 ctermbg=04 cterm=none term=none
 hi Visual ctermbg=04
 

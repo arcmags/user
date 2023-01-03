@@ -37,7 +37,8 @@ XTerm.vt100.faceSize: 10
 XTerm.vt100.metaSendsEscape: true
 XTerm.vt100.saveLines: 4096
 XTerm.vt100.scrollBar: false
-XTerm.vt100.scrollTtyKeypress: true
+XTerm.vt100.scrollKey: true
+XTerm.vt100.scrollTtyKeypress: false
 XTerm.vt100.scrollTtyOutput: false
 XTerm.vt100.selectToClipboard: true
 XTerm.vt100.utf8: true
