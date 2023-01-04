@@ -9,12 +9,8 @@ filetype plugin on
 # TODO: tweak indent navigation funcion
 # TODO: tweak vismode
 # TODO: comment navigation function
-# TODO: move line(s) function?
-# TODO: comment toggle comment char?
 # TODO: bool toggle function
-# TODO: fix <c-Space> mapping inside tmux?
 # TODO: path substitution $HOME > ~ in statusbar
-# TODO: add comments to everything
 # TODO: tweak xclip/paste, maybe make function...
 
 # file:
@@ -114,7 +110,7 @@ set wildoptions=pum
 ## autocommands ::
 augroup vimrc
     autocmd!
-    autocmd FileChangedRO * setl noreadonly | MsgWarn('W: readonly buffer')
+    autocmd FileChangedRO * setl noreadonly | Msg('W: readonly buffer')
     autocmd BufEnter * silent! lcd %:p:h
     autocmd BufWritePre * TextTrim()
     autocmd TerminalWinOpen * setl nonumber
@@ -200,18 +196,19 @@ nnoremap <silent> <c-w>t <cmd>exec 'tabnew' .. (@% == "" ? "" : " %")<cr>
 # text: format:
 nnoremap <silent> <leader>0 <scriptcmd>TextTrim()<cr>
 nnoremap <silent> <leader>1 Vip:keeppatterns s/ \+/\r/g<cr>
-nnoremap <silent> <leader>D <scriptcmd>Date('!')<cr>
+nnoremap <silent> <leader>D <scriptcmd>DateAdd('!')<cr>
 nnoremap <silent> <leader>J VipJ
-nnoremap <silent> <leader>d <scriptcmd>Date()<cr>
-nnoremap <silent> <leader>f gqip
 nnoremap <silent> <leader>S Vip:sort<cr>
+nnoremap <silent> <leader>d <scriptcmd>DateAdd()<cr>
+nnoremap <silent> <leader>f gqip
 nnoremap <silent> <leader>s Vip:sort /^[^A-Za-z0-9]*/<cr>
-nnoremap <silent> <leader>U <scriptcmd>CommentToggle('!')<cr>
-nnoremap <silent> <leader>h <scriptcmd>HTMLToggle()<cr>
-nnoremap <silent> <leader>u <scriptcmd>CommentToggle()<cr>
+noremap <silent> <leader>U <scriptcmd>CommentToggle('!')<cr>
+noremap <silent> <leader>h <scriptcmd>HTMLToggle()<cr>
+noremap <silent> <leader>H <scriptcmd>HTMLToggle('!')<cr>
+noremap <silent> <leader>u <scriptcmd>CommentToggle()<cr>
 vnoremap <silent> <leader>1 <esc><cmd>keeppatterns s/ \+/\r/g<cr>
-vnoremap <silent> <leader>f gq
 vnoremap <silent> <leader>S <esc><cmd>'<,'>sort<cr>
+vnoremap <silent> <leader>f gq
 vnoremap <silent> <leader>s <esc><cmd>'<,'>sort /^[^a-za-z0-9]*/<cr>
 vnoremap <silent> <leader>s <esc><cmd>'<,'>sort /^[^a-za-z0-9]*/<cr>
 
@@ -246,66 +243,56 @@ noremap <silent> <c-j> gj
 noremap <silent> <c-k> gk
 
 # vim: set/toggle local options:
-nnoremap <silent> <leader><space> <cmd>exec v:hlsearch ? ':noh<bar>echo ":noh"' : ':set hls<bar>echo "  hlsearch"'<cr>
+nnoremap <silent> <leader><space> <cmd>exec v:hlsearch ? 'noh<bar>echo ":noh"' : 'set hls<bar>echo "  hlsearch"'<cr>
 nnoremap <silent> <leader>t/ <cmd>let @/=''<bar>echo '"/ = ""'<cr>
 nnoremap <silent> <leader>tC <cmd>setl cursorcolumn!<bar>setl cuc?<cr>
+nnoremap <silent> <leader>tL <cmd>setl cursorline!<bar>setl cul?<cr>
 nnoremap <silent> <leader>tM <cmd>setl modifiable!<bar>setl ma?<cr>
 nnoremap <silent> <leader>tN <cmd>setl relativenumber!<bar>setl rnu?<cr>
 nnoremap <silent> <leader>tR <cmd>setl readonly!<bar>setl ro?<cr>
-nnoremap <silent> <leader>tS <cmd>exec &scl == 'number' ? 'setl scl=auto' : 'setl scl=number'<cr><cmd>setl scl?<cr>
-nnoremap <silent> <leader>tb <cmd>setl buflisted!<bar>setl bl?<cr>
-nnoremap <silent> <leader>tc <cmd>exec empty(&cc) ? 'setl cc=72' : &cc == 72 ? 'setl cc=80' : 'setl cc='<bar>setl cc?<cr>
-nnoremap <silent> <leader>tl <cmd>setl cursorline!<bar>setl cul?<cr>
+nnoremap <silent> <leader>tS <cmd>exec 'setl scl=' .. (&scl == 'number' ? 'no' : 'number')<cr><cmd>setl scl?<cr>
+nnoremap <silent> <leader>tc <cmd>exec 'setl cc=' .. (empty(&cc) ? '72' : (&cc == 72 ? '80' : ''))<bar>setl cc?<cr>
+nnoremap <silent> <leader>tl <cmd>setl buflisted!<bar>setl bl?<cr>
 nnoremap <silent> <leader>tm <cmd>setl modified!<bar>setl mod?<cr>
 nnoremap <silent> <leader>tn <cmd>setl number!<bar>setl nu?<cr>
 nnoremap <silent> <leader>tp <cmd>setl paste!<bar>setl paste?<cr>
 nnoremap <silent> <leader>ts <cmd>setl spell!<bar>setl spell?<cr>
 nnoremap <silent> <leader>tt <cmd>exec 'set stal=' .. (&stal + 1) % 3<bar>set stal?<cr>
 nnoremap <silent> <leader>tw <cmd>setl wrap!<bar>setl wrap?<cr>
-nnoremap <silent> <leader>tz <cmd>exec &so == 999 ? 'setl so<' : 'setl so=999'<bar>setl so?<cr>
+nnoremap <silent> <leader>tz <cmd>exec 'setl so' .. (&so == 999 ? '<' : '=999')<bar>setl so?<cr>
 
 # vim: query local options/attributes:
-nnoremap <silent> <leader>rm <cmd>setl modifiable?<cr>
-nnoremap <silent> <leader>rr <cmd>setl readonly?<cr>
-nnoremap <silent> <leader>rb <cmd>setl buflisted?<cr>
+nnoremap <silent> <leader>rM <cmd>setl modifiable?<cr>
+nnoremap <silent> <leader>rR <cmd>setl readonly?<cr>
 nnoremap <silent> <leader>rf <cmd>echo &filetype<cr>
-nnoremap <silent> <leader>rh <scriptcmd>HiGroup()<cr>
+nnoremap <silent> <leader>rh <scriptcmd>HiGroupPrint()<cr>
+nnoremap <silent> <leader>rl <cmd>setl buflisted?<cr>
 nnoremap <silent> <leader>rp <cmd>setl paste?<cr>
 nnoremap <silent> <leader>rs <cmd>setl spell?<cr>
 
 # vim: reload:
-noremap <silent> <leader><c-l> <cmd>source ~/.vimrc<bar>nohlsearch<cr><cmd>echo 'source ~/.vimrc'<cr>
+noremap <silent> <leader><c-l> <cmd>source ~/.vimrc<bar>noh<cr><cmd>echo 'source ~/.vimrc'<cr>
+
+## mappings: command/insert ::
+noremap! <c-a> <home>
+noremap! <c-b> <left>
+noremap! <c-d> <del>
+noremap! <c-f> <right>
+noremap! <c-h> <bs>
+noremap! <m-b> <s-left>
+noremap! <m-w> <s-right>
+noremap! <expr> <c-c> pumvisible() ? '<c-e>' : '<c-c>'
+noremap! <expr> <c-e> pumvisible() ? '<c-e>' : '<end>'
+noremap! <expr> <c-u> pumvisible() ? '<c-e>' : '<c-u>'
 
 ## mappings: command ::
-cnoremap <c-a> <home>
-cnoremap <c-b> <left>
-cnoremap <c-d> <del>
-cnoremap <c-f> <right>
-cnoremap <c-h> <bs>
 cnoremap <c-j> <down>
 cnoremap <c-k> <up>
-cnoremap <c-l> <c-e>
-cnoremap <m-b> <s-left>
-cnoremap <m-f> <s-right>
 cnoremap <m-k> <c-k>
 cnoremap <m-v> <c-q>
-cnoremap <expr> <c-c> pumvisible() ? '<c-e>' : '<c-c>'
-cnoremap <expr> <c-e> pumvisible() ? '<c-e>' : '<end>'
-cnoremap <expr> <c-u> pumvisible() ? '<c-e>' : '<c-u>'
 
 ## mappings: insert ::
-inoremap <c-a> <home>
-inoremap <c-b> <left>
-inoremap <c-d> <del>
-inoremap <c-f> <right>
 inoremap <c-g> <c-d>
-inoremap <c-h> <bs>
-inoremap <c-l> <c-e>
-inoremap <m-b> <s-left>
-inoremap <m-f> <s-right>
-inoremap <expr> <c-c> pumvisible() ? '<c-e>' : '<c-c>'
-inoremap <expr> <c-e> pumvisible() ? '<c-e>' : '<end>'
-inoremap <expr> <c-u> pumvisible() ? '<c-e>' : '<c-u>'
 
 ## mappings: terminal ::
 tnoremap <c-w><c-w> <c-w>w
@@ -320,8 +307,8 @@ command! -nargs=? Sh exec 'silent ! ' .. <q-args> <bar> redraw!
 
 ## functions ::
 def BufList(bang = '')
-    const bufs = bang == '!' ? filter(range(1, bufnr('$')), 'bufexists(v:val)') :
-      filter(range(1, bufnr('$')), 'buflisted(v:val)')
+    const bufs = empty(bang) ? filter(range(1, bufnr('$')),
+      'buflisted(v:val)') : filter(range(1, bufnr('$')), 'bufexists(v:val)')
     var bufname = ''
     var bufnamelen = 0
     var bufpath = ''
@@ -340,16 +327,13 @@ def BufList(bang = '')
         elseif buftype == 'quickfix'
             bufname = '[quickfix]'
         elseif buftype == 'nofile'
-            bufname = bufname =~ '\/.' ? substitute(bufname, '.*\/\ze.', '', '') : bufname
+            bufname = bufname =~ '\/.' ? substitute(bufname,
+              '.*\/\ze.', '', '') : bufname
         elseif buftype == 'terminal'
             bufname = '[terminal]'
             bufpath = term_gettitle(buf)
         else
-            if empty(bufname)
-                bufname = '[no name]'
-            else
-                bufname = fnamemodify(bufname, ':p:t')
-            endif
+            bufname = empty(bufname) ? '[no name]' : fnamemodify(bufname, ':p:t')
             buftag = getbufvar(buf, '&modified') ? '+' : ' '
         endif
         bufnamelen = max([len(bufname), bufnamelen])
@@ -387,7 +371,7 @@ def BufWipe(bang = '')
     if &buftype == 'terminal'
         cmd ..= '!'
     elseif empty(bang) && &modified
-        MsgError('E: unsaved buffer modified')
+        Msg('E: unsaved buffer modified')
         return
     else
         cmd ..= bang
@@ -396,7 +380,8 @@ def BufWipe(bang = '')
         tabnext
         for win in filter(range(1, winnr('$')), 'winbufnr(v:val) == ' .. buf)
             exec ':' .. win .. 'wincmd w'
-            if len(filter(range(1, bufnr('$')), 'buflisted(v:val) && v:val != ' .. buf)) > 0
+            if len(filter(range(1, bufnr('$')),
+              'buflisted(v:val) && v:val != ' .. buf)) > 0
                 silent bprevious
             else
                 enew
@@ -410,11 +395,12 @@ def BufWipe(bang = '')
 enddef
 
 def BufWipeHidden(bang = '')
-    for buf in filter(range(1, bufnr('$')), 'bufexists(v:val) && bufwinnr(v:val) == -1')
+    for buf in filter(range(1, bufnr('$')),
+      'bufexists(v:val) && bufwinnr(v:val) == -1')
         if getbufvar(buf, '&buftype') == 'terminal'
             exec 'bwipeout! ' .. buf
         elseif empty(bang) && getbufvar(buf, '&modified')
-            MsgError('E: unsaved buffer modified: ' .. buf)
+            Msg('E: unsaved buffer modified: ' .. buf)
         else
             exec 'bwipeout' .. bang .. ' ' .. buf
         endif
@@ -427,10 +413,10 @@ def CommentToggle(bang = '')
     endif
     var line0 = line('.')
     var line1 = line0
-    if index(['V', 'v'], mode()) >= 0
-        if line('v') < line('.')
+    if mode() ==? 'v'
+        if line('v') < line0
             line0 = line('v')
-        elseif line('v') > line('.')
+        else
             line1 = line('v')
         endif
         exec "normal! \<esc>"
@@ -439,7 +425,8 @@ def CommentToggle(bang = '')
     var cmt0 = '#'
     var cmt1 = ''
     if len(cmts) > 0
-        cmt0 = substitute(substitute(escape(cmts[0], '*.\'), '\s\+', '', 'g'), '^\\\.\\\.', '\\\.\\\. ', '')
+        cmt0 = substitute(substitute(escape(cmts[0], '*.\'),
+          '\s\+', '', 'g'), '^\\\.\\\.', '\\\.\\\. ', '')
     endif
     if len(cmts) > 1
         cmt1 = substitute(escape(cmts[1], '*.\'), '\s\+', '', 'g')
@@ -454,7 +441,8 @@ def CommentToggle(bang = '')
     for line in range(line0, line1)
         text0 = getline(line)
         text1 = text0
-        if match(text0, '^\s*$') >= 0 || match(text0, regex_heading) >= 0 || (bang == '!' && cmt1 == '\*/')
+        if match(text0, '^\s*$') >= 0 || match(text0, regex_heading) >= 0
+          || (bang == '!' && cmt1 == '\*/')
             continue
         endif
         if bang == '!' || match(text0, regex_comment) < 0
@@ -478,7 +466,7 @@ def CntSet(start = 1)
     C = start
 enddef
 
-def Date(bang = '')
+def DateAdd(bang = '')
     if ! &modifiable
         return
     endif
@@ -492,7 +480,8 @@ def Date(bang = '')
         regex_date = '\d\d\d\d-\d\d-\d\d_\d\d:\d\d'
     endif
     if match(text0, regex_date) >= 0
-        text1 = substitute(text0, '\(.\{-}\)' .. regex_date .. '\(.*\)', '\1' .. date .. '\2', '')
+        text1 = substitute(text0, '\(.\{-}\)' .. regex_date .. '\(.*\)',
+          '\1' .. date .. '\2', '')
     else
         text1 = text0[0 : c - 1] .. date .. text0[c : -1]
     endif
@@ -501,20 +490,22 @@ def Date(bang = '')
     endif
 enddef
 
-def HiGroup()
-    echo 'hi=' .. synIDattr(synID(line('.'), col('.'), 1), 'name') .. '  trans=' .. synIDattr(synID(line('.'), col('.'), 0), 'name') .. '  lo=' .. synIDattr(synIDtrans(synID(line('.'), col('.'), 1)), 'name')
+def HiGroupPrint()
+    echomsg [synIDattr(synID(line('.'), col('.'), 1), 'name'),
+      synIDattr(synID(line('.'), col('.'), 0), 'name'),
+      synIDattr(synIDtrans(synID(line('.'), col('.'), 1)), 'name')]
 enddef
 
-def HTMLToggle()
+def HTMLToggle(bang = '')
     if ! &modifiable
         return
     endif
     var line0 = line('.')
     var line1 = line0
-    if index(['V', 'v'], mode()) >= 0
-        if line('v') < line('.')
+    if mode() ==? 'v'
+        if line('v') < line0
             line0 = line('v')
-        elseif line('v') > line('.')
+        else
             line1 = line('v')
         endif
         exec "normal! \<esc>"
@@ -524,10 +515,12 @@ def HTMLToggle()
     for line in range(line0, line1)
         text0 = getline(line)
         text1 = text0
-        if match(text0, '&\(amp\|apos\|gt\|lt\|quot\);') >= 0
-            text1 = substitute(substitute(substitute(substitute(substitute(text0, '&amp;', '\&', 'g'), '&apos;', "'", 'g'), '&gt;', '>', 'g'), '&lt;', '<', 'g'), '&quot;', '"', 'g')
+        if empty(bang) && match(text0, '&\(amp\|apos\|gt\|lt\|quot\);') >= 0
+            text1 = substitute(substitute(substitute(text0,
+              '&amp;', '\&', 'g'), '&gt;', '>', 'g'), '&lt;', '<', 'g')
         else
-            text1 = substitute(substitute(substitute(substitute(substitute(text0, "&", '\&amp;', 'g'), "'", '\&apos;', 'g'), '>', '\&gt;', 'g'), '<', '\&lt;', 'g'), '"', '\&quot;', 'g')
+            text1 = substitute(substitute(substitute(text0,
+              "&", '\&amp;', 'g'), '>', '\&gt;', 'g'), '<', '\&lt;', 'g')
         endif
         if text0 != text1
             setline(line, text1)
@@ -535,7 +528,6 @@ def HTMLToggle()
     endfor
 enddef
 
-# TODO: next, prev, last, first; same, more, less, diff; skip blank lines
 def IndentNav(move = ['next', 'same'])
     const line = getpos('.')[1]
     var linenew = line
@@ -560,26 +552,16 @@ def IndentNav(move = ['next', 'same'])
     endif
 enddef
 
-def MsgError(msg = '')
-    echohl ErrorMsg
-    echomsg msg
-    echohl NONE
-enddef
-
-def MsgInfo(msg = '')
-    echohl InfoMsg
-    echomsg msg
-    echohl NONE
-enddef
-
-def MsgMode(msg = '')
-    echohl ModeMsg
-    echomsg msg
-    echohl NONE
-enddef
-
-def MsgWarn(msg = '')
-    echohl WarningMsg
+def Msg(msg = '')
+    if msg =~ '^[Ww]\d*:.*'
+        echohl WarningMsg
+    elseif msg =~ '^[Ee]\d*:.*'
+        echohl ErrorMsg
+    elseif msg =~ '^--.*--$'
+        echohl ModeMsg
+    else
+        echohl InfoMsg
+    endif
     echomsg msg
     echohl NONE
 enddef
@@ -600,7 +582,6 @@ def g:StatusLine(): string
     const buf = winbufnr(g:statusline_winid)
     const filetype = getbufvar(buf, '&filetype')
     const buftype = getbufvar(buf, '&buftype')
-    const wincur = winnr()
     var bufname = ''
     var bufpath = ''
     var buftag = ''
@@ -623,20 +604,18 @@ def g:StatusLine(): string
     else
         bufname = '%{expand("%:p:t")}'
     endif
-    if empty(bufpath)
-        bufpath = expand('#' .. buf .. ':p:h')
-    endif
-    if bufpath != '/' && buftype != 'terminal'
-        bufpath ..= '/'
-    endif
-    if empty(buftag)
-        buftag = '%{&modified ? "+" : " "}'
-    endif
+    bufpath = bufpath ?? expand('#' .. buf .. ':p:h')
+    bufpath ..= bufpath != '/' && buftype != 'terminal' ? '/' : ''
+    buftag = buftag ?? '%{&modified ? "+" : " "}'
     line =  buftag .. bufname .. sepbar .. '%*%<'
-    if g:statusline_winid == win_getid(wincur)
-        line ..= '%#StatusLinePath#' .. bufpath .. '%=%( %#StatusLineType#' .. filetype .. sepbar .. '%*%#StatusLinePct#%P' .. sepbar .. '%#StatusLineLen#%2L' .. sepcolon .. '%2l' .. sepbar .. '%#StatusLineLen#'
+    if g:statusline_winid == win_getid(winnr())
+        line ..= '%#StatusLinePath#' .. bufpath .. '%=%( %#StatusLineType#'
+          .. filetype .. sepbar .. '%*%#StatusLinePct#%P' .. sepbar
+          .. '%#StatusLineLen#%2L' .. sepcolon .. '%2l'
+          .. sepbar .. '%#StatusLineLen#'
     else
-        line ..= bufpath .. '%=%( ' .. filetype .. sepbar .. '%P' .. sepbar .. '%2L' .. sepcolon .. '%2l' .. sepbar
+        line ..= bufpath .. '%=%( ' .. filetype .. sepbar .. '%P'
+          .. sepbar .. '%2L' .. sepcolon .. '%2l' .. sepbar
     endif
     line ..= '%2{strlen(getline("."))}' .. sepcolon .. '%2c %)'
     return line
@@ -672,28 +651,21 @@ def g:TabLine(): string
         elseif buftype == 'terminal'
             bufname = '[terminal]'
         elseif buftype == 'nofile'
-            if bufname =~ '\/.'
-                bufname = substitute(bufname, '.*\/\ze.', '', '')
-            endif
+            bufname = bufname =~ '\/.' ? substitute(bufname,
+              '.*\/\ze.', '', '') : bufname
         else
             bufname = fnamemodify(bufname, ':p:t')
-            if empty(bufname)
-                bufname = '[no name]'
-            endif
-            if getbufvar(buf, '&modified') && buftype != 'terminal'
-                buftag = '+'
-            endif
+            bufname = bufname ?? '[no name]'
+            buftag = getbufvar(buf, '&modified') && buftype != 'terminal'
+              ? '+' : ' '
         endif
-        if len(buflist) > 1 && buftag == ' '
-            for b in buflist
-                if b != buf && getbufvar(b, '&modified')
-                && getbufvar(b, '&buftype') != 'terminal'
-                    buftag = '*'
-                    break
-                endif
-            endfor
+        if buftag != '+' && len(filter(buflist, buf
+          .. ' != v:val && getbufvar(v:val, "&modified")'
+          .. ' && getbufvar(v:val, "&buftype") != "terminal"')) > 0
+            buftag = '*'
         endif
-        line ..= (tabnum == tabpagenr() ? '%#TabLineSel#' : '%#TabLine#') .. buftag .. bufname .. ' ' .. '%#TabLineSep#|'
+        line ..= (tabnum == tabpagenr() ? '%#TabLineSel#' : '%#TabLine#')
+          .. buftag .. bufname .. ' ' .. '%#TabLineSep#|'
         tabnum = tabnum + 1
     endwhile
     line ..= '%T%#TabLineFill#'
@@ -733,9 +705,9 @@ def VisMode(mode = 'v')
         endif
         redraw
         if mode ==# 'v'
-            MsgMode('-- VISMODE --')
+            Msg('-- VISMODE --')
         else
-            MsgMode('-- VISMODE LINE --')
+            Msg('-- VISMODE LINE --')
         endif
         charnum = getchar()
         line = line('.')
@@ -751,7 +723,7 @@ def WinMode()
     var chars = ''
     while 1
         redraw
-        MsgMode('-- WINMODE --')
+        Msg('-- WINMODE --')
         charnum = getchar()
         if charnum == 27
             redraw
@@ -770,9 +742,11 @@ enddef
 
 def Test(arg0 = 0, arg1 = -1, arg2 = [])
     echomsg '-- Test --'
-    echomsg 'arg0 = ' .. string(arg0) .. '  arg1 = ' .. string(arg1) .. '  arg2 = ' .. string(arg2)
+    echomsg 'arg0 = ' .. string(arg0) .. '  arg1 = '
+      .. string(arg1) .. '  arg2 = ' .. string(arg2)
     echomsg "line('.') = " .. line('.') .. "  line('v') = " .. line('v')
     echomsg 'v:count = ' .. v:count .. '  v:count1 = ' .. v:count1
+    Msg('W: readonly buffer')
     echomsg '-- END --'
     #exec "normal! \<esc>"
 enddef
