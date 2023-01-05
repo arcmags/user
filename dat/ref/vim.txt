@@ -293,8 +293,8 @@ completion menu mappings::
     <c-n>       go to next match
     <c-p>       go to previous match
 
-Visual
-------
+Visual Mode
+-----------
 
 enter visual mode from normal mode::
 
@@ -305,8 +305,7 @@ enter visual mode from normal mode::
 
 visual mode mappings::
 
-    y           yank
-    d           delete
+    o           jump to other end of highlighted text
     >           indent text
     <           de-indent text
     u           change to lowercase

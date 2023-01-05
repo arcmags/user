@@ -224,7 +224,11 @@ fi
 
 if is_bin nc; then
     tb() {
-        nc termbin.com 9999
+        url="$(nc termbin.com 9999 | tr -d '\0')"
+        if [ -n "$DISPLAY" ] && is_bin xclip; then
+            printf '%s' "$url" | xclip
+        fi
+        printf '%s\n' "$url"
     }
 fi
 

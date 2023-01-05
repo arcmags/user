@@ -29,9 +29,11 @@ files_src=(
     dat/ramroot/
     dat/text/Meditations.txt
     .root/etc/X11/
+    .root/etc/fonts/local.conf
     .root/etc/vconsole.conf
     .root/etc/vconsole.map
     .user/.config/feh/
+    .user/.config/fontconfig/fonts.conf
     .user/.config/i3/
     .user/.config/i3status/
     .user/.config/imv/
@@ -50,8 +52,8 @@ files_src=(
     .user/.config/zathura/
     .user/.ipython/profile_default/ipython_config.py
     .user/.ipython/profile_default/startup/ipythonrc.py
-    .user/.irssi/scripts/
     .user/.irssi/config
+    .user/.irssi/scripts/
     .user/.irssi/utheme.theme
     .user/.local/share/applications/vim.desktop
     .user/.local/share/fonts/
