@@ -748,26 +748,24 @@ enddef
 defcompile
 
 ## testing area ::
-# normal and visual modes, may take a count:
-def Func1(mode = '')
-    const cnt = v:count1
+# normal and visual modes, may take a count in normal mode:
+def Func1()
     var line0 = line('.')
     var line1 = line0
-    if mode == 'v' || mode() ==? 'v'
+    if mode() ==? 'v'
         exec "normal! \<esc>"
         line0 = getpos("'<")[1]
         line1 = getpos("'>")[1]
     endif
     for line in range(line0, line1)
-        setline(line, '>' .. getline(line))
+        setline(line, repeat('>', v:count1) .. getline(line))
     endfor
 enddef
-nnoremap <leader>f1 <scriptcmd>Func1()<cr>
-vnoremap <leader>f1 <scriptcmd>Func1('v')<cr>
+nnoremap <leader>F1 <scriptcmd>Func1()<cr>
+vnoremap <leader>F1 <scriptcmd>Func1()<cr>
 
-# normal mode operator used before a motion, may take a count:
+# normal mode operator used before a motion, may take a count in normal mode:
 def Func2(mode = ''): string
-    const cnt = v:count1
     if empty(mode)
         set opfunc=Func2
         return 'g@'
@@ -776,15 +774,14 @@ def Func2(mode = ''): string
     var line0 = getpos("'[")[1]
     var line1 = getpos("']")[1]
     for line in range(line0, line1)
-        setline(line, '>' .. getline(line))
+        setline(line, repeat('>', v:count1) .. getline(line))
     endfor
     return ''
 enddef
-nnoremap <expr> <leader>f2 Func2()
+nnoremap <expr> <leader>F2 Func2()
 
-# normal and visual modes, may be used before a motion, may take a count:
+# normal and visual modes, may be used before a motion, may take a count in normal mode:
 def Func3(mode = ''): string
-    const cnt = v:count1
     if empty(mode)
         setl opfunc=Func3
         return 'g@'
@@ -801,25 +798,77 @@ def Func3(mode = ''): string
         line1 = getpos("']")[1]
     endif
     for line in range(line0, line1)
-        setline(line, '>' .. getline(line))
+        setline(line, repeat('>', v:count1) .. getline(line))
     endfor
     return ''
 enddef
-nnoremap <expr> <leader>f3 Func3()
-vnoremap <leader>f3 <scriptcmd>Func3('v')<cr>
-nnoremap <leader>f3f <scriptcmd>Func3('n')<cr>
+nnoremap <expr> <leader>F3 Func3()
+vnoremap <leader>F3 <scriptcmd>Func3('v')<cr>
+nnoremap <leader>F3f <scriptcmd>Func3('n')<cr>
 
 # normal mode, may take a count:
 def Func4()
-    const cnt = v:count1
     var line = line('.')
-    setline(line, '>' .. getline(line))
+    setline(line, repeat('>', v:count1) .. getline(line))
 enddef
-nnoremap <leader>f4 <scriptcmd>Func4()<cr>
+nnoremap <leader>F4 <scriptcmd>Func4()<cr>
 
-#nnoremap <leader>Y vg_y<cmd>call system('xclip -sel clipboard', @0)<cr>
-#nnoremap <leader>p <cmd>let @x = system('xclip -sel clipboard -o')<cr>"xp
-#nnoremap <leader>yY mz0vg_y<cmd>call system('xclip -sel clipboard', @0)<cr>`z
-#nnoremap <leader>yy yy<cmd>call system('xclip -sel clipboard', @0)<cr>
+# normal and visual modes, may be used before a motion, may take a count without a motion:
+# a count with a motion is buggy as hell
+def Func5(cnt = 1, mode = ''): string
+    if empty(mode)
+        &operatorfunc = function('Func5', [cnt])
+        return 'g@'
+    endif
+    &operatorfunc = ''
+    var line0 = line('.')
+    var line1 = line0
+    if mode == 'v' || mode() ==? 'v'
+        exec "normal! \<esc>"
+        line0 = getpos("'<")[1]
+        line1 = getpos("'>")[1]
+    elseif mode != 'n'
+        line0 = getpos("'[")[1]
+        line1 = getpos("']")[1]
+    endif
+    for line in range(line0, line1)
+        setline(line, repeat('>', cnt) .. getline(line))
+    endfor
+    echo cnt
+    return ''
+enddef
+nnoremap <expr> <leader>F5 Func5(v:count)
+vnoremap <leader>F5 <scriptcmd>Func5(v:count1, 'v')<cr>
+nnoremap <leader>F5f <scriptcmd>Func5(v:count1, 'n')<cr>
+
+# normal and visual modes, may be used before a motion, may take a count without a motion:
+# a count with a motion is buggy as hell
+def Func6(cnt = 1, mode = ''): string
+    if empty(mode)
+        &operatorfunc = function('Func6', [cnt])
+        return 'g@'
+    endif
+    &operatorfunc = ''
+    var line0 = line('.')
+    var line1 = line0
+    if mode == 'v' || mode() ==? 'v'
+        exec "normal! \<esc>"
+        line0 = getpos("'<")[1]
+        line1 = getpos("'>")[1]
+    elseif mode != 'n'
+        normal '[v']
+        Func6(cnt, 'v')
+        normal '[
+        return ''
+    endif
+    for line in range(line0, line1)
+        setline(line, repeat('>', cnt) .. getline(line))
+    endfor
+    echo cnt
+    return ''
+enddef
+nnoremap <expr> <leader>F6 Func6(v:count1)
+vnoremap <leader>F6 <scriptcmd>Func6(v:count1, 'v')<cr>
+nnoremap <leader>F6f <scriptcmd>Func6(v:count1, 'n')<cr>
 
 defcompile
