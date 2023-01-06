@@ -232,17 +232,16 @@ nnoremap <m-k> mz<cmd>m-2<cr>`z
 vnoremap <m-j> <esc><cmd>'<,'>m'>+<cr>gv
 vnoremap <m-k> <esc><cmd>'<,'>m'<-2<cr>gv
 
-# text: delete:
-nnoremap dD 0d$
-
 # text: put/yank: TODO: xterm escape sequences:
 nnoremap Y yg_
 nnoremap yY mz0yg_`z
 if exists('$DISPLAY') && executable('xclip')
     nnoremap <leader>Y vg_y<cmd>call system('xclip -sel clipboard', @0)<cr>
     nnoremap <leader>p <cmd>let @x = system('xclip -sel clipboard -o')<cr>"xp
-    nnoremap <leader>y mz^vg_y<cmd>call system('xclip -sel clipboard', @0)<cr>`z
-    vnoremap <leader>y y<cmd>call system('xclip -sel clipboard', @0)<cr>
+    nnoremap <leader>yY mz0vg_y<cmd>call system('xclip -sel clipboard', @0)<cr>`z
+    nnoremap <leader>yy yy<cmd>call system('xclip -sel clipboard', @0)<cr>
+    nnoremap <leader>xp <cmd>let @0 = system('xclip -sel clipboard -o')<cr>
+    nnoremap <leader>xy <cmd>call system('xclip -sel clipboard', @0)<cr>
 endif
 
 # navigation: indent: TODO:
@@ -327,7 +326,7 @@ tnoremap <expr> <c-w><c-q> winnr('$') > 1 ? '<cmd>clo<cr>' : '<cmd>q<cr>'
 tnoremap <expr> <c-w>q winnr('$') > 1 ? '<cmd>clo<cr>' : '<cmd>q<cr>'
 tnoremap <expr> <c-w>Q '<cmd>' .. (winnr('$') > 1 ? 'clo!' : tabpagenr('$') > 1 ? 'q!' : 'qa!') .. '<cr>'
 
-# buffer, window: wipe, close:
+# buffer, window: wipe, close: TODO:
 tnoremap <expr> <c-w>` '<scriptcmd>BufWipe("!")<bar>' .. (winnr("$") > 1 ? 'clo!<cr>' : 'q!<cr>')
 
 ## commands ::
@@ -439,12 +438,9 @@ def CommentToggle(bang = '')
     var line0 = line('.')
     var line1 = line0
     if mode() ==? 'v'
-        if line('v') < line0
-            line0 = line('v')
-        else
-            line1 = line('v')
-        endif
         exec "normal! \<esc>"
+        line0 = getpos("'<")[1]
+        line1 = getpos("'>")[1]
     endif
     const cmts = split(&commentstring, '%s')
     var cmt0 = '#'
@@ -528,19 +524,16 @@ def HTMLToggle(bang = '')
     var line0 = line('.')
     var line1 = line0
     if mode() ==? 'v'
-        if line('v') < line0
-            line0 = line('v')
-        else
-            line1 = line('v')
-        endif
         exec "normal! \<esc>"
+        line0 = getpos("'<")[1]
+        line1 = getpos("'>")[1]
     endif
     var text0 = ''
     var text1 = ''
     for line in range(line0, line1)
         text0 = getline(line)
         text1 = text0
-        if empty(bang) && match(text0, '&\(amp\|apos\|gt\|lt\|quot\);') >= 0
+        if empty(bang) && match(text0, '&\(amp\|gt\|lt\);') >= 0
             text1 = substitute(substitute(substitute(text0,
               '&amp;', '\&', 'g'), '&gt;', '>', 'g'), '&lt;', '<', 'g')
         else
@@ -752,17 +745,81 @@ def WinMode()
     endwhile
 enddef
 
-def Test(arg0 = 0, arg1 = -1, arg2 = [])
-    echomsg '-- Test --'
-    echomsg 'arg0 = ' .. string(arg0) .. '  arg1 = ' .. string(arg1) .. '  arg2 = ' .. string(arg2)
-    echomsg "line('.') = " .. line('.') .. "  line('v') = " .. line('v')
-    echomsg 'v:count = ' .. v:count .. '  v:count1 = ' .. v:count1
-    Msg('W: readonly buffer')
-    echomsg '-- END --'
-    #exec "normal! \<esc>"
+defcompile
+
+## testing area ::
+# normal and visual modes, may take a count:
+def Func1(mode = '')
+    const cnt = v:count1
+    var line0 = line('.')
+    var line1 = line0
+    if mode == 'v' || mode() ==? 'v'
+        exec "normal! \<esc>"
+        line0 = getpos("'<")[1]
+        line1 = getpos("'>")[1]
+    endif
+    for line in range(line0, line1)
+        setline(line, '>' .. getline(line))
+    endfor
 enddef
-nnoremap <silent> <leader>TT <scriptcmd>Test(0, 1, [0, 1, 2])<cr>
-#command! -range -nargs=? Test Test(<line1>, <line2>, <args>)
-#vnoremap <silent> <leader>TT :Test<cr>
+nnoremap <leader>f1 <scriptcmd>Func1()<cr>
+vnoremap <leader>f1 <scriptcmd>Func1('v')<cr>
+
+# normal mode operator used before a motion, may take a count:
+def Func2(mode = ''): string
+    const cnt = v:count1
+    if empty(mode)
+        set opfunc=Func2
+        return 'g@'
+    endif
+    set opfunc&
+    var line0 = getpos("'[")[1]
+    var line1 = getpos("']")[1]
+    for line in range(line0, line1)
+        setline(line, '>' .. getline(line))
+    endfor
+    return ''
+enddef
+nnoremap <expr> <leader>f2 Func2()
+
+# normal and visual modes, may be used before a motion, may take a count:
+def Func3(mode = ''): string
+    const cnt = v:count1
+    if empty(mode)
+        setl opfunc=Func3
+        return 'g@'
+    endif
+    set opfunc&
+    var line0 = line('.')
+    var line1 = line0
+    if mode == 'v' || mode() ==? 'v'
+        exec "normal! \<esc>"
+        line0 = getpos("'<")[1]
+        line1 = getpos("'>")[1]
+    elseif mode != 'n'
+        line0 = getpos("'[")[1]
+        line1 = getpos("']")[1]
+    endif
+    for line in range(line0, line1)
+        setline(line, '>' .. getline(line))
+    endfor
+    return ''
+enddef
+nnoremap <expr> <leader>f3 Func3()
+vnoremap <leader>f3 <scriptcmd>Func3('v')<cr>
+nnoremap <leader>f3f <scriptcmd>Func3('n')<cr>
+
+# normal mode, may take a count:
+def Func4()
+    const cnt = v:count1
+    var line = line('.')
+    setline(line, '>' .. getline(line))
+enddef
+nnoremap <leader>f4 <scriptcmd>Func4()<cr>
+
+#nnoremap <leader>Y vg_y<cmd>call system('xclip -sel clipboard', @0)<cr>
+#nnoremap <leader>p <cmd>let @x = system('xclip -sel clipboard -o')<cr>"xp
+#nnoremap <leader>yY mz0vg_y<cmd>call system('xclip -sel clipboard', @0)<cr>`z
+#nnoremap <leader>yy yy<cmd>call system('xclip -sel clipboard', @0)<cr>
 
 defcompile
