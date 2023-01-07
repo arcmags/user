@@ -63,7 +63,9 @@ files_src=(
     .user/.moc/themes/
     .user/.mozilla/firefox/default/chrome/
     .user/.themes/
+    .user/.vim/after/
     .user/.vim/colors/utheme.vim
+    .user/.vim/.vimrc
     .user/.w3m/config
     .user/.w3m/keymap
     .user/.Xmodmap
