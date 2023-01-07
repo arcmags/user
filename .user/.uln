@@ -6,14 +6,7 @@
 .config/fontconfig/
 .config/fzf/
 .config/gallery-dl/
-.config/geany/colorschemes/
-.config/geany/filedefs/
-.config/geany/filetype_extensions.conf
-.config/geany/keybindings.conf
-.config/geany/snippets.conf
-.config/geany/tags/
-.config/geany/templates/
-.config/geany/ui_toolbar.xml
+.config/geany/
 .config/i3/
 .config/i3status/
 .config/imv/
@@ -78,7 +71,6 @@
 .shellcheckrc
 .sqliterc
 .tmux.conf
-.vimrc
 .xhost
 .xinitrc
 .xprofile

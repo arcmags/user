@@ -83,7 +83,6 @@ files_src=(
     .user/.shellcheckrc
     .user/.sqliterc
     .user/.tmux.conf
-    .user/.vimrc
     .user/.xinitrc
     .user/.xprofile
     .user/.uln

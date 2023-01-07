@@ -58,10 +58,3 @@
         #undef RGB_MATRIX_DEFAULT_MODE
     #endif
 #endif
-
-#ifdef KEYBOARD_annepro2_c18
-    #undef MOUSEKEY_INTERVAL
-    #define MOUSEKEY_INTERVAL 6
-    #undef MOUSEKEY_TIME_TO_MAX
-    #define MOUSEKEY_TIME_TO_MAX 40
-#endif

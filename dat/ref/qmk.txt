@@ -6,7 +6,6 @@ Build firmare::
 
     $ qmk compile -kb <KEYBOARD> -km <KEYMAP>
 
-
 dztech/dz60rgb_ansi
 ===================
 
