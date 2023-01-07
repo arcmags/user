@@ -65,7 +65,7 @@ files_src=(
     .user/.themes/
     .user/.vim/after/
     .user/.vim/colors/utheme.vim
-    .user/.vim/.vimrc
+    .user/.vim/vimrc
     .user/.w3m/config
     .user/.w3m/keymap
     .user/.Xmodmap
