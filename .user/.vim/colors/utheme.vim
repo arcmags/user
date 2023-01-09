@@ -58,7 +58,7 @@ hi WildMenu ctermfg=10 ctermbg=04 cterm=bold term=bold
 hi ErrorMsg ctermfg=09 ctermbg=00 cterm=bold term=bold
 hi InfoMsg ctermfg=12 ctermbg=00 cterm=none term=none
 hi ModeMsg ctermfg=10 ctermbg=00 cterm=bold term=bold
-hi MoreMsg ctermfg=10 ctermbg=00 cterm=bold term=bold
+hi MoreMsg ctermfg=14 ctermbg=00 cterm=bold term=bold
 hi Question ctermfg=14 ctermbg=00 cterm=none term=none
 hi Title ctermfg=12 ctermbg=00 cterm=bold term=bold
 hi WarningMsg ctermfg=11 ctermbg=00 cterm=bold term=bold
@@ -71,7 +71,7 @@ hi DiffText ctermbg=02 cterm=none term=none
 
 # search:
 hi CurSearch ctermfg=11 ctermbg=04 cterm=none term=none
-hi IncSearch ctermfg=03 ctermbg=04 cterm=none term=none
+hi IncSearch ctermfg=11 ctermbg=04 cterm=none term=none
 hi Search ctermfg=03 ctermbg=04 cterm=none term=none
 
 # spell:
@@ -92,10 +92,10 @@ hi Ignore ctermfg=04 cterm=none term=none
 hi MatchParen ctermbg=08 cterm=bold term=bold
 hi PreProc ctermfg=11 cterm=none term=none
 hi Special ctermfg=06 cterm=none term=none
-hi SpecialKey ctermfg=09 cterm=none term=none
+hi SpecialKey ctermfg=06 cterm=none term=none
 hi Statement ctermfg=13 cterm=none term=none
 hi String ctermfg=10 cterm=none term=none
-hi Todo ctermfg=13 ctermbg=00 cterm=bold term=bold
+hi Todo ctermfg=11 ctermbg=00 cterm=bold term=bold
 hi Type ctermfg=12 cterm=none term=none
 hi Underlined ctermfg=14 cterm=none term=none
 

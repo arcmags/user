@@ -64,6 +64,7 @@ files_src=(
     .user/.mozilla/firefox/default/chrome/
     .user/.themes/
     .user/.vim/after/
+    .user/.vim/plugin/
     .user/.vim/colors/utheme.vim
     .user/.vim/vimrc
     .user/.w3m/config

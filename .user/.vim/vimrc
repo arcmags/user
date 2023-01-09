@@ -5,78 +5,59 @@ set nocompatible
 filetype plugin on
 
 # TODO: integrate fzf, ranger?, vifm?
-# TODO: tweak indent navigation funcion
-# TODO: tweak vismode
 # TODO: bool toggle function
-# TODO: tweak xclip/paste, maybe make function...
+# TODO: checkout clipboard
 
-## UDIR ::
-var UDIR = ''
-if isdirectory($UDIR)
-    UDIR = resolve($UDIR)
-endif
+## environment ::
+const HOME = isdirectory($HOME) ? resolve($HOME) : ''
+const UDIR = isdirectory($UDIR) ? resolve($UDIR) : ''
 
-# file:
+# files:
 set autoread
-set encoding=utf8
-set fileformats=unix,dos,mac
-set history=500
-set modeline
-set modelines=1
-set nobackup
-set noswapfile
-set nowritebackup
+set encoding=utf8 fileformats=unix,dos,mac
+set modeline modelines=1
+set nobackup noswapfile nowritebackup
+set tags=tags;/
 
-# control:
-set backspace=eol,indent,start
-set formatoptions=tcq
-set hidden
-set mouse=a
+# formatting:
+set autoindent
+set expandtab shiftwidth=4 smarttab tabstop=4
+set formatoptions=tcqj
 set nojoinspaces
 set nopaste
-set notimeout
 set nrformats=bin,hex
-set splitbelow
-set splitright
-set tags=tags;/
 set textwidth=0
-set timeoutlen=400
-set ttimeout
 
-# tab:
-set autoindent
-set expandtab
-set shiftwidth=4
-set smarttab
-set tabstop=4
-
-# bell:
-set noerrorbells
-set novisualbell
-set t_vb=
+# editor:
+set backspace=eol,indent,start
+set hidden
+set history=500
+set ignorecase incsearch magic smartcase wrapscan
+set mouse=a
+set noerrorbells novisualbell t_vb=
+set nospell spellcapcheck= spelllang=en_us spelloptions=camel
+set notimeout timeoutlen=400 ttimeout
+set shortmess=aIoOtT
+set splitbelow splitright
 
 # colors:
 set background=dark
 syntax enable
 colorscheme utheme
 
-# ui:
-set cmdheight=1
-set cursorline
-set foldcolumn=0
+# interface:
+set cursorline nocursorcolumn
 set hlsearch
-set laststatus=2
-set nofoldenable
-set number
+set laststatus=2 statusline=%!StatusLine()
+set nofoldenable foldcolumn=0
+set number norelativenumber
 set scrolloff=8
-set shortmess=aIoOtT
-set showcmd
-set showtabline=1
+set showcmd cmdheight=1
+set showtabline=1 tabline=%!TabLine()
 set signcolumn=number
-set statusline=%!StatusLine()
-set tabline=%!TabLine()
-set whichwrap+=h,l,s,<,>,[,]
-set wrap
+set wrap whichwrap+=h,l,s,<,>,[,]
+set wildmenu wildoptions=pum wildignore=*.o,*.pyc,*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
+set switchbuf=uselast
 
 # netrw:
 g:netrw_banner = 0
@@ -86,29 +67,8 @@ g:netrw_list_hide = '^\.\/$'
 g:netrw_silent = 1
 g:netrw_sort_sequence = '\/$'
 
-# quickfix:
-set switchbuf=uselast
-
-# search:
-set ignorecase
-set incsearch
-set magic
-set smartcase
-set wrapscan
-
-# spell:
-set nospell
-set spellcapcheck=
-set spelllang=en_us
-set spelloptions=camel
-
-# terminal:
+# terminal: TODO:
 set autoshelldir
-
-# wildmenu:
-set wildignore=*.o,*.pyc,*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
-set wildmenu
-set wildoptions=pum
 
 ## autocommands ::
 augroup vimrc
@@ -117,7 +77,7 @@ augroup vimrc
     autocmd BufEnter * silent! lcd %:p:h
     autocmd BufWritePre * TextTrim()
     autocmd TerminalWinOpen * setl nonumber
-augroup END
+augroup EnD
 
 ## mappings ::
 g:mapleader = ";"
@@ -170,10 +130,10 @@ nnoremap <c-x> <scriptcmd>BufWipe()<cr>
 nnoremap <c-w><space> <c-w><c-p>
 nnoremap <c-w><c-space> <c-w><c-p>
 
-# window: new:
+# window: terminal split:
 nnoremap <c-w>` <cmd>3split<cr><cmd>ter ++curwin ++noclose<cr>
 
-# window: close/quit: TODO:
+# window: close/quit:
 nnoremap <expr> <c-q> winnr('$') > 1 ? '<cmd>clo<cr>' : '<cmd>q<cr>'
 nnoremap <expr> <c-w><c-q> winnr('$') > 1 ? '<cmd>clo<cr>' : '<cmd>q<cr>'
 nnoremap <expr> <c-w>q winnr('$') > 1 ? '<cmd>clo<cr>' : '<cmd>q<cr>'
@@ -186,9 +146,6 @@ nnoremap <expr> <c-w>Gt tabpagenr() == tabpagenr('$') ? '<cmd>0tabm<cr>' : '<cmd
 # tab: new:
 nnoremap <c-w><c-t> <cmd>tab split<cr>
 nnoremap <c-w>t <cmd>tab split<cr>
-
-# cursor: toggle between start and end of last selection:
-nnoremap <expr> <leader>o getpos('.') == getpos("'<") ? "`>" : "`<"
 
 # cursor: down/up display line:
 noremap <silent> <c-j> gj
@@ -206,8 +163,7 @@ nnoremap <leader>1 vip<esc><cmd>'<,'>keeppatterns s/ \+/\r/ge<cr>
 vnoremap <leader>1 <esc><cmd>'<,'>keeppatterns s/ \+/\r/ge<cr>
 
 # text: insert/update date string:
-nnoremap <leader>D <scriptcmd>DateAdd('!')<cr>
-nnoremap <leader>d <scriptcmd>DateAdd()<cr>
+nnoremap <leader>d <scriptcmd>DateUpdate()<cr>
 
 # text: join lines:
 nnoremap <leader>J vipJ
@@ -287,7 +243,7 @@ nnoremap <leader>rp <cmd>setl paste?<cr>
 nnoremap <leader>rs <cmd>setl spell?<cr>
 
 # vim: reload:
-noremap <leader><c-l> <cmd>source ~/.vim/vimrc<bar>noh<cr><cmd>echo ':source ~/.vim/vimrc'<cr>
+noremap <leader><c-l> <cmd>source ~/.vim/vimrc<bar>runtime! plugin/*.vim<cr><cmd>echo 'vim reloaded'<cr>
 
 ## mappings: command/insert/search ::
 noremap! <c-a> <home>
@@ -321,25 +277,34 @@ tnoremap <c-w><c-n> <cmd>silent bnext<cr>
 tnoremap <c-w>p <cmd>silent bprevious<cr>
 tnoremap <c-w><c-p> <cmd>silent bprevious<cr>
 
-
+# buffer: wipe:
 tnoremap <c-w><c-x> <scriptcmd>BufWipe('!')<cr>
 tnoremap <c-w>X <scriptcmd>BufWipe('!')<cr>
 tnoremap <c-w>x <scriptcmd>BufWipe('!')<cr>
 tnoremap <c-x> <scriptcmd>BufWipe('!')<cr>
 
-# window: close: TODO:
+# buffer: list:
+tnoremap <c-w>B <scriptcmd>BufList('!')<cr>:b<Space>
+tnoremap <c-w>b <scriptcmd>BufList()<cr>:b<Space>
+
+# window: close:
 tnoremap <expr> <c-w><c-q> winnr('$') > 1 ? '<cmd>clo<cr>' : '<cmd>q<cr>'
 tnoremap <expr> <c-w>q winnr('$') > 1 ? '<cmd>clo<cr>' : '<cmd>q<cr>'
 tnoremap <expr> <c-w>Q '<cmd>' .. (winnr('$') > 1 ? 'clo!' : tabpagenr('$') > 1 ? 'q!' : 'qa!') .. '<cr>'
 
-# buffer, window: wipe, close: TODO:
+# buffer, window: wipe, close:
 tnoremap <expr> <c-w>` '<scriptcmd>BufWipe("!")<bar>' .. (winnr("$") > 1 ? 'clo!<cr>' : 'q!<cr>')
 
 ## commands ::
-command! -bang Buflist BufList(<q-bang>)
+command! -bang BufList BufList(<q-bang>)
 command! -bang BufWipe BufWipe(<q-bang>)
 command! -bang BufWipeHidden BufWipeHidden(<q-bang>)
+
+# set/reset CNT counter:
 command! -nargs=? CntSet CntSet(<args>)
+
+# display command output in new buffer:
+command! -nargs=1 -complete=command BufCmd enew<bar>redir @c<bar>silent <args><bar>redir END<bar>put c<bar>setl nomodified
 
 ## functions ::
 def BufList(bang = '')
@@ -385,7 +350,7 @@ def BufList(bang = '')
         elseif !buflisted(buf[0])
             echohl Comment
         else
-            echohl Normal
+            echohl normal
         endif
         echon printf('%1s%-*s', buf[3], bufnamelen, buf[1]) .. '  '
         if buf[0] == bufnr('%') || index(tabpagebuflist(), buf[0]) >= 0
@@ -393,11 +358,11 @@ def BufList(bang = '')
         elseif !buflisted(buf[0])
             echohl Comment
         else
-            echohl Normal
+            echohl normal
         endif
         echon buf[2]
     endfor
-    echohl NONE
+    echohl nONE
 enddef
 
 def BufWipe(bang = '')
@@ -483,37 +448,28 @@ def CommentToggle(bang = '')
     endfor
 enddef
 
-var C = 1
+var CNT = 1
 def g:Cnt(pad = 2): string
-	C = C + 1
-	return printf('%0' .. pad .. 'd', C - 1)
+	CNT = CNT + 1
+	return printf('%0' .. pad .. 'd', CNT - 1)
 enddef
 
 def CntSet(start = 1)
-    C = start
+    CNT = start
+    echo 'CNT = ' .. CNT
 enddef
 
-def DateAdd(bang = '')
+def DateUpdate()
     if ! &modifiable
         return
     endif
-    const c = getpos('.')[2]
-    const text0 = getline('.')
-    var date = strftime('%F')
-    var regex_date = '\d\d\d\d-\d\d-\d\d'
-    var text1 = ''
-    if bang == '!'
-        date = strftime('%F_%H:%M')
-        regex_date = '\d\d\d\d-\d\d-\d\d_\d\d:\d\d'
-    endif
-    if match(text0, regex_date) >= 0
-        text1 = substitute(text0, '\(.\{-}\)' .. regex_date .. '\(.*\)',
-          '\1' .. date .. '\2', '')
+    if match(getline('.'), '\d\d\d\d-\d\d-\d\d') >= 0
+        if match(getline('.'), strftime('%F')) < 0
+            silent keeppatterns s/\d\d\d\d-\d\d-\d\d/\=strftime('%F')/
+            normal ``
+        endif
     else
-        text1 = text0[0 : c - 1] .. date .. text0[c : -1]
-    endif
-    if text0 != text1
-        setline('.', text1)
+        exec 'normal a' .. strftime('%F') .. "\<esc>"
     endif
 enddef
 
@@ -587,7 +543,7 @@ def Msg(msg = '')
         echohl InfoMsg
     endif
     echomsg msg
-    echohl NONE
+    echohl nONE
 enddef
 
 def TextTrim()
@@ -628,13 +584,15 @@ def g:StatusLine(): string
     else
         bufname = '%{expand("%:p:t")}'
     endif
-    bufpath = bufpath ?? expand('#' .. buf .. ':p:h')
-    if ! empty(UDIR) && match(bufpath, '^' .. UDIR) > -1
-        bufpath = substitute(bufpath, '^' .. UDIR, '-', '')
-    else
-        bufpath = substitute(bufpath, '^' .. $HOME, '~', '')
+    if buftype != 'terminal'
+        bufpath = bufpath ?? expand('#' .. buf .. ':p:h')
+        if ! empty(UDIR) && match(bufpath, '^' .. UDIR) > -1
+            bufpath = substitute(bufpath, '^' .. UDIR, '-', '')
+        else
+            bufpath = substitute(bufpath, '^' .. HOME, '~', '')
+        endif
+        bufpath ..= bufpath != '/' ? '/' : ''
     endif
-    bufpath ..= bufpath != '/' && buftype != 'terminal' ? '/' : ''
     buftag = buftag ?? '%{&modified ? "+" : " "}'
     line =  buftag .. bufname .. sepbar .. '%*%<'
     if g:statusline_winid == win_getid(winnr())
@@ -717,7 +675,7 @@ def VisMode(mode = 'v')
         if mode ==# 'v'
             Msg('-- VISMODE --')
         else
-            Msg('-- VISMODE LINE --')
+            Msg('-- VISMODE LInE --')
         endif
         charnum = getchar()
         if charnum == 27
@@ -739,7 +697,7 @@ def WinMode()
     var chars = ''
     while 1
         redraw
-        Msg('-- WINMODE --')
+        Msg('-- WInMODE --')
         charnum = getchar()
         if charnum == 27
             redraw
@@ -755,136 +713,5 @@ def WinMode()
         chars = ''
     endwhile
 enddef
-
-defcompile
-
-## testing area ::
-# normal and visual modes, may take a count in normal mode:
-def Func1()
-    var line0 = line('.')
-    var line1 = line0
-    if mode() ==? 'v'
-        exec "normal! \<esc>"
-        line0 = getpos("'<")[1]
-        line1 = getpos("'>")[1]
-    endif
-    for line in range(line0, line1)
-        setline(line, repeat('>', v:count1) .. getline(line))
-    endfor
-enddef
-nnoremap <leader>F1 <scriptcmd>Func1()<cr>
-vnoremap <leader>F1 <scriptcmd>Func1()<cr>
-
-# normal mode operator used before a motion, may take a count in normal mode:
-def Func2(mode = ''): string
-    if empty(mode)
-        set opfunc=Func2
-        return 'g@'
-    endif
-    set opfunc&
-    var line0 = getpos("'[")[1]
-    var line1 = getpos("']")[1]
-    for line in range(line0, line1)
-        setline(line, repeat('>', v:count1) .. getline(line))
-    endfor
-    return ''
-enddef
-nnoremap <expr> <leader>F2 Func2()
-
-# normal and visual modes, may be used before a motion, may take a count in normal mode:
-def Func3(mode = ''): string
-    if empty(mode)
-        setl opfunc=Func3
-        return 'g@'
-    endif
-    set opfunc&
-    var line0 = line('.')
-    var line1 = line0
-    if mode == 'v' || mode() ==? 'v'
-        exec "normal! \<esc>"
-        line0 = getpos("'<")[1]
-        line1 = getpos("'>")[1]
-    elseif mode != 'n'
-        line0 = getpos("'[")[1]
-        line1 = getpos("']")[1]
-    endif
-    for line in range(line0, line1)
-        setline(line, repeat('>', v:count1) .. getline(line))
-    endfor
-    return ''
-enddef
-nnoremap <expr> <leader>F3 Func3()
-vnoremap <leader>F3 <scriptcmd>Func3('v')<cr>
-nnoremap <leader>F3f <scriptcmd>Func3('n')<cr>
-
-# normal mode, may take a count:
-def Func4()
-    var line = line('.')
-    setline(line, repeat('>', v:count1) .. getline(line))
-enddef
-nnoremap <leader>F4 <scriptcmd>Func4()<cr>
-
-# normal and visual modes, may be used before a motion, may take a count without a motion:
-# a count with a motion is buggy as hell
-def Func5(cnt = 1, mode = ''): string
-    if empty(mode)
-        &operatorfunc = function('Func5', [cnt])
-        return 'g@'
-    endif
-    &operatorfunc = ''
-    var line0 = line('.')
-    var line1 = line0
-    if mode == 'v' || mode() ==? 'v'
-        exec "normal! \<esc>"
-        line0 = getpos("'<")[1]
-        line1 = getpos("'>")[1]
-    elseif mode != 'n'
-        line0 = getpos("'[")[1]
-        line1 = getpos("']")[1]
-    endif
-    for line in range(line0, line1)
-        setline(line, repeat('>', cnt) .. getline(line))
-    endfor
-    echo cnt
-    return ''
-enddef
-nnoremap <expr> <leader>F5 Func5(v:count)
-vnoremap <leader>F5 <scriptcmd>Func5(v:count1, 'v')<cr>
-nnoremap <leader>F5f <scriptcmd>Func5(v:count1, 'n')<cr>
-
-# normal and visual modes, may be used before a motion, may take a count without a motion:
-# a count with a motion is buggy as hell
-def Func6(cnt = 1, mode = ''): string
-    if empty(mode)
-        &operatorfunc = function('Func6', [cnt])
-        return 'g@'
-    endif
-    &operatorfunc = ''
-    var line0 = line('.')
-    var line1 = line0
-    if mode == 'v' || mode() ==? 'v'
-        exec "normal! \<esc>"
-        line0 = getpos("'<")[1]
-        line1 = getpos("'>")[1]
-    elseif mode != 'n'
-        normal '[v']
-        Func6(cnt, 'v')
-        normal '[
-        return ''
-    endif
-    for line in range(line0, line1)
-        setline(line, repeat('>', cnt) .. getline(line))
-    endfor
-    echo cnt
-    return ''
-enddef
-nnoremap <expr> <leader>F6 Func6(v:count1)
-vnoremap <leader>F6 <scriptcmd>Func6(v:count1, 'v')<cr>
-nnoremap <leader>F6f <scriptcmd>Func6(v:count1, 'n')<cr>
-
-def Func7()
-    echo UDIR
-enddef
-nnoremap <leader>F7 <scriptcmd>Func7()<cr>
 
 defcompile

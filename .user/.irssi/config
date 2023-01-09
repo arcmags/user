@@ -207,23 +207,23 @@ aliases = {
 
 statusbar = {
   items = {
-    barstart = "{sbstart}";
+    act = "{sb_act $0-}";
     barend = "{sbend}";
-    topicbarstart = "{topicsbstart}";
-    topicbarend = "{topicsbend}";
-    time = "";
-    user = "{sb_user $N {sbmode $usermode}{sbaway $A}}";
+    barstart = "{sbstart}";
+    lag = "{sb Lag>$0-}";
+    more = "{sb_more -more-}";
+    prompt = "{prompt $winref $itemname}";
+    prompt_empty = "{prompt $winref $winname}";
     server = "{sb_server $tag}";
+    time = "";
+    topic = "{sb_topic $winref $itemname}";
+    topic_empty = "{sb_topic $winref {sbservertag $tag}}";
+    topicbarend = "{topicsbend}";
+    topicbarstart = "{topicsbstart}";
+    user = "{sb_user $N {sbmode $usermode}{sbaway $A}}";
     window = "{sb_topic $winref $tag/$itemname{sbmode $M}}";
     window_empty = "{sb_topic $winref {sbservertag $tag}}";
     window_title = "{sb_topic $winref $itemname}";
-    prompt = "{prompt $winref $itemname}";
-    prompt_empty = "{prompt $winref $winname}";
-    topic = "{sb_topic $winref $itemname}";
-    topic_empty = "{sb_topic $winref {sbservertag $tag}}";
-    lag = "{sb Lag>$0-}";
-    act = "{sb_act $0-}";
-    more = "{sb_more -more-}";
   };
   default = {
     window_active = {
@@ -251,10 +251,10 @@ statusbar = {
       visible = "inactive";
       items = {
         barstart = { priority = "100"; };
-        topic = { priority = "100"; };
-        topic_empty = { priority = "100"; };
-        server = { priority = "100"; };
-        user = { priority = "100"; };
+        topic= { priority = "100"; };
+        topic_empty= { priority = "100"; };
+        server= { priority = "100"; };
+        user= { priority = "100"; };
         more = { priority = "100"; };
         awl_shared = { priority = "10"; alignment = "right"; };
         barend = { priority = "100"; alignment = "right"; };
