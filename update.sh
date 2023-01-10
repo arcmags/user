@@ -28,6 +28,9 @@ files_src=(
     dat/ref/readline.txt
     dat/ramroot/
     dat/text/Meditations.txt
+    dat/text/words.txt
+    .root/etc/modprobe.d/
+    .root/etc/udev/
     .root/etc/X11/
     .root/etc/fonts/local.conf
     .root/etc/vconsole.conf
@@ -64,8 +67,9 @@ files_src=(
     .user/.mozilla/firefox/default/chrome/
     .user/.themes/
     .user/.vim/after/
-    .user/.vim/plugin/
+    .user/.vim/bugs.txt
     .user/.vim/colors/utheme.vim
+    .user/.vim/plugin/
     .user/.vim/vimrc
     .user/.w3m/config
     .user/.w3m/keymap

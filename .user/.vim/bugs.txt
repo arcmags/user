@@ -1,0 +1,45 @@
+========
+vim bugs
+========
+
+execute <esc>
+-------------
+
+Not entirely certain this is a bug; the following should act the same::
+
+    execute "normal! \<Esc>"
+    execute 'normal! \<Esc>'
+
+When run inside a function called while in visual mode, the first command above
+exits visual mode as expected, the command does not.
+
+numbers in listed help buffers
+------------------------------
+
+If numbers are set globally, and a listed help buffer has local numbers off,
+local numbers for that buffer are reset to on every time the buffer is entered.
+
+How to repeat in ``vim --clean <somefile>``::
+
+   :set number
+   :help help
+   <c-w>o
+   :setlocal buflisted
+   :bnext
+   :bnext
+   :setlocal nonumber
+   :bnext
+   :bnext
+
+Every time you return to the listed help buffer, numbers are magically
+re-enabled. I looked at */usr/share/vim/vim90/ftplugin/help.vim* but nothing
+there is turning numbers back on. I looked at all active autocommands and
+nothing appeared to be setting line numbers there.
+
+Is this really that big of a deal? I often browse several help files at once
+and it's annoying as f##k.
+
+readonly warning in vim9script functions
+----------------------------------------
+
+.. vim: set ft=rst:

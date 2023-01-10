@@ -331,6 +331,43 @@ terminal mode mappings::
     <c-\><c-n>  enter normal mode
     <c-w>N      enter normal mode
 
+Mappings
+========
+
+modes::
+
+         | Norm | Ins | Cmd | Vis | Sel | Opr | Term | Lang |
+         +------+-----+-----+-----+-----+-----+------+------+
+    map  | yes  |  -  |  -  | yes | yes | yes |  -   |  -   |
+    nmap | yes  |  -  |  -  |  -  |  -  |  -  |  -   |  -   |
+    map! |  -   | yes | yes |  -  |  -  |  -  |  -   |  -   |
+    imap |  -   | yes |  -  |  -  |  -  |  -  |  -   |  -   |
+    cmap |  -   |  -  | yes |  -  |  -  |  -  |  -   |  -   |
+    vmap |  -   |  -  |  -  | yes | yes |  -  |  -   |  -   |
+    xmap |  -   |  -  |  -  | yes |  -  |  -  |  -   |  -   |
+    smap |  -   |  -  |  -  |  -  | yes |  -  |  -   |  -   |
+    omap |  -   |  -  |  -  |  -  |  -  | yes |  -   |  -   |
+    tmap |  -   |  -  |  -  |  -  |  -  |  -  | yes  |  -   |
+    lmap |  -   | yes | yes |  -  |  -  |  -  |  -   | yes  |
+
+special {lhs} arguments::
+
+    <buffer>    create mapping only for current buffer
+    <nowait>    don't wait for more characters
+    <silent>    don't echo on command line
+    <specials>  use special <> keys even if < is not in cpoptions
+    <script>    only remap things in {rhs} using mappings defined in script
+    <expr>      mapping is an expression that's evaluated to obtain the {rhs}
+    <unique>    fail if mapping already exists
+
+special {rhs} arguments::
+
+    <scriptcmd> start of command, set context to script
+    <cmd>       start of command mode (use instead of :)
+    <bar>       command divider
+    <cr>        enter
+    <esc>       escape (leave command mode)
+
 Regex
 =====
 

@@ -1,16 +1,56 @@
 vim9script
+
 ## ~/.vim/plugin/test.vim ::
+# The snippets below demonstrate various ways counts, ranges, and
+# motions can be passed to or used in vim9script functions.
 
-# This script contains several example functions, mappings, and commands.
+# {}: mode
+# []: optional input
+# <>: required input
 
-# normal mode, may take a count:
+## normal ::
+# {normal}[count]<mapping>
+
+# pass [count] to funcion:
 def FuncNorm()
-    var line = line('.')
+    const line = line('.')
     setline(line, repeat('>', v:count1) .. getline(line))
 enddef
 nnoremap <leader>F1 <scriptcmd>FuncNorm()<cr>
 
-# normal/visual mode, may take a count:
+# pass [count] to funcion, use opfunc so command can be repeated with `.`:
+def FuncNorm2(count = 1, mode = '')
+    if empty(mode)
+        &opfunc = function('FuncNorm2', [v:count1])
+        return
+    endif
+    const line = line('.')
+    setline(line, repeat('>', count) .. getline(line))
+enddef
+nnoremap <leader>F2 <scriptcmd>FuncNorm2()<cr>g@_
+
+# parse [count] to do things other than just repetitions:
+def FuncNorm3()
+    const line = line('.')
+    if v:count1 == 1
+        setline(line, '>' .. getline(line))
+    elseif v:count1 == 2
+        setline(line, '+' .. getline(line))
+    elseif v:count1 == 3
+        setline(line, '#' .. getline(line))
+    elseif v:count1 == 4
+        setline(line - 1, getline(line))
+        setline(line + 1, getline(line))
+    else
+        setline(line, printf('%03d ', v:count1) .. getline(line))
+    endif
+enddef
+nnoremap <leader>F3 <scriptcmd>FuncNorm3()<cr>
+
+## normal/visual ::
+# {normal|visual}[count]<mapping>
+
+# pass [count] to function:
 def FuncNormVis(mode = 'n')
     const count = v:count1
     var line0 = line('.')
@@ -24,12 +64,28 @@ def FuncNormVis(mode = 'n')
         setline(line, repeat('>', count) .. getline(line))
     endfor
 enddef
-nnoremap <leader>F2 <scriptcmd>FuncNormVis()<cr>
-vnoremap <leader>F2 <scriptcmd>FuncNormVis('v')<cr>
+nnoremap <leader>F4 <scriptcmd>FuncNormVis()<cr>
+vnoremap <leader>F4 <scriptcmd>FuncNormVis('v')<cr>
 
-# operator (before motion), may take a count passed to function and motion:
-# action may be repeated with: ``.``
-# TODO: enable normal/visual mode repeats with ``.`` by calling this function:
+# pass [count] to function, use opfunc so command can be repeated with `.`:
+def FuncNormVis2(count = 1, mode = '')
+    if empty(mode)
+        &opfunc = function('FuncNormVis2', [v:count1])
+        return
+    endif
+    var line0 = getpos("'[")[1]
+    var line1 = getpos("']")[1]
+    for line in range(line0, line1)
+        setline(line, repeat('>', count) .. getline(line))
+    endfor
+enddef
+nnoremap <leader>F5 <scriptcmd>FuncNormVis2()<cr>g@_
+vnoremap <leader>F5 <scriptcmd>FuncNormVis2()<cr>g@_
+
+## operator ::
+# {normal}[count]<mapping>[count]<motion>
+
+# multiply [counts] and pass to both function and motion:
 def FuncOp(mode = ''): string
     if empty(mode)
         set opfunc=FuncOp
@@ -42,14 +98,28 @@ def FuncOp(mode = ''): string
     endfor
     return ''
 enddef
-nnoremap <expr> <leader>F3 FuncOp()
+nnoremap <expr> <leader>F6 FuncOp()
 
-# operator (before motion), may take a count passed to function or a motion:
-# A count (>1) before operator sets motion to <count> lines downward: ``<count><operator>``.
-# No count before operator waits for motion: ``<operator><motion>``.
-def FuncOp2(mode = ''): string
+# pass first [count] to function, pass second [count] to motion:
+def FuncOp2(count = 1, mode = '')
     if empty(mode)
-        set opfunc=FuncOp2
+        &opfunc = function('FuncOp2', [v:count1])
+        return
+    endif
+    var line0 = getpos("'[")[1]
+    var line1 = getpos("']")[1]
+    for line in range(line0, line1)
+        setline(line, repeat('>', count) .. getline(line))
+    endfor
+enddef
+nnoremap <leader>F7 <scriptcmd>FuncOp2()<cr>g@
+
+# if first [count] = 1, wait for [motion]:
+# if first [count] > 1, [count] lines downward as motion
+# multiply [counts], pass to function and motion:
+def FuncOp3(mode = ''): string
+    if empty(mode)
+        set opfunc=FuncOp3
         if v:count1 == 1
             return 'g@'
         else
@@ -59,57 +129,33 @@ def FuncOp2(mode = ''): string
     var line0 = getpos("'[")[1]
     var line1 = getpos("']")[1]
     for line in range(line0, line1)
-        setline(line, repeat('>', v:count1) .. getline(line))
+        setline(line, repeat('>', v:count) .. getline(line))
     endfor
     return ''
 enddef
-nnoremap <expr> <leader>F4 FuncOp2()
+nnoremap <expr> <leader>F8 FuncOp3()
 
-# TODO: get count before operator to pass to function but not motion:
-# A count before operator passes to the motion and the function: ``<count><operator><motion>``.
-# It would be great to have that count not pass to the motion.
-# A count can still pass to the motion by prefixing it directly: ``<operator><count><motion>``.
-# Ideally, both counts could be parsed separately: ``<count><operator><count><motion>``...
-def FuncOp3(mode = ''): string
+## normal/visual/operator ::
+# {normal}[count]<mapping><suffix>
+# {visual}[count]<mapping>
+# {normal}[count]<mapping>[count]<motion>
+
+# create <suffix> mappings for quick motions (i.e. like `yy` and  `dd`)
+
+# pass first [count] to function, pass second [count] to motion:
+def FuncNormVisOp(count = 1, mode = '')
     if empty(mode)
-        set opfunc=FuncOp3
-        return 'g@'
+        &opfunc = function('FuncNormVisOp', [v:count1])
+        return
     endif
     var line0 = getpos("'[")[1]
     var line1 = getpos("']")[1]
     for line in range(line0, line1)
-        setline(line, repeat('>', v:count1) .. getline(line))
-    endfor
-    return ''
-enddef
-nnoremap <expr> <leader>F5 FuncOp3()
-
-# normal/visual/operator, may be used before a motion, may take a count
-# (passed to motion or normal/visual modes):
-def FuncNormVisOp(mode = ''): string
-    if empty(mode)
-        setl opfunc=FuncNormVisOp
-        return 'g@'
-    endif
-    var count = v:count1
-    var line0 = line('.')
-    var line1 = line0
-    if mode == 'v'
-        exec "normal! \<esc>"
-        line0 = getpos("'<")[1]
-        line1 = getpos("'>")[1]
-    elseif mode != 'n'
-        count = 1
-        line0 = getpos("'[")[1]
-        line1 = getpos("']")[1]
-    endif
-    for line in range(line0, line1)
         setline(line, repeat('>', count) .. getline(line))
     endfor
-    return ''
 enddef
-nnoremap <expr> <leader>F6 FuncNormVisOp()
-vnoremap <leader>F6 <scriptcmd>FuncNormVisOp('v')<cr>
-nnoremap <leader>F6f <scriptcmd>FuncNormVisOp('n')<cr>
+nnoremap <leader>F9 <scriptcmd>FuncNormVisOp()<cr>g@
+vnoremap <leader>F9 <scriptcmd>FuncNormVisOp()<cr>g@_
+nnoremap <leader>F9f <scriptcmd>FuncNormVisOp()<cr>g@_
 
 defcompile
